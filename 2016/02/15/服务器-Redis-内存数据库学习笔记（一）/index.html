@@ -1,0 +1,620 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="数据库,NoSQL,内存数据," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="什么是 RedisRedis 是一个开源、支持网络、基于内存、键值对存储数据库。因为是基于内存，也就是将数据存储在内存的，所以存取速度非常的快。每秒能执行约 11 万集合，每秒约 81000+ 条记录。
+Redis 的特点
+Redis 数据库完全在内存中，使用磁盘仅用于持久性。
+相比许多键值数据存储，Redis 拥有一套较为丰富的数据类型。
+Redis 可以将数据复制到任意数量的从服务器。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[服务器] Redis 内存数据库学习笔记（一）">
+<meta property="og:url" content="hiarno.github.io/2016/02/15/服务器-Redis-内存数据库学习笔记（一）/index.html">
+<meta property="og:site_name" content="Arno's Blog">
+<meta property="og:description" content="什么是 RedisRedis 是一个开源、支持网络、基于内存、键值对存储数据库。因为是基于内存，也就是将数据存储在内存的，所以存取速度非常的快。每秒能执行约 11 万集合，每秒约 81000+ 条记录。
+Redis 的特点
+Redis 数据库完全在内存中，使用磁盘仅用于持久性。
+相比许多键值数据存储，Redis 拥有一套较为丰富的数据类型。
+Redis 可以将数据复制到任意数量的从服务器。">
+<meta property="og:image" content="http://blog.qiji.tech/wp-content/uploads/2016/03/vm.overcommit_memory-1错误.jpg">
+<meta property="og:image" content="http://blog.qiji.tech/wp-content/uploads/2016/03/CMD连接Redis.jpg">
+<meta property="og:image" content="http://blog.qiji.tech/wp-content/uploads/2016/03/Redis图形界面客户端.jpg">
+<meta property="og:updated_time" content="2016-04-01T07:36:30.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[服务器] Redis 内存数据库学习笔记（一）">
+<meta name="twitter:description" content="什么是 RedisRedis 是一个开源、支持网络、基于内存、键值对存储数据库。因为是基于内存，也就是将数据存储在内存的，所以存取速度非常的快。每秒能执行约 11 万集合，每秒约 81000+ 条记录。
+Redis 的特点
+Redis 数据库完全在内存中，使用磁盘仅用于持久性。
+相比许多键值数据存储，Redis 拥有一套较为丰富的数据类型。
+Redis 可以将数据复制到任意数量的从服务器。">
+<meta name="twitter:image" content="http://blog.qiji.tech/wp-content/uploads/2016/03/vm.overcommit_memory-1错误.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> [服务器] Redis 内存数据库学习笔记（一） | Arno's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Arno's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Simplicity is prerequisite for reliability.</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                [服务器] Redis 内存数据库学习笔记（一）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-02-15T15:48:45+08:00" content="2016-02-15">
+              2016-02-15
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="什么是-Redis"><a href="#什么是-Redis" class="headerlink" title="什么是 Redis"></a>什么是 Redis</h2><p>Redis 是一个开源、支持网络、基于内存、键值对存储数据库。因为是基于内存，也就是将数据存储在内存的，所以存取速度非常的快。每秒能执行约 11 万集合，每秒约 81000+ 条记录。</p>
+<h2 id="Redis-的特点"><a href="#Redis-的特点" class="headerlink" title="Redis 的特点"></a>Redis 的特点</h2><ul>
+<li>Redis 数据库完全在内存中，使用磁盘仅用于持久性。</li>
+<li>相比许多键值数据存储，Redis 拥有一套较为丰富的数据类型。</li>
+<li>Redis 可以将数据复制到任意数量的从服务器。</li>
+</ul>
+<a id="more"></a>
+<h2 id="Redis-安装调试"><a href="#Redis-安装调试" class="headerlink" title="Redis 安装调试"></a>Redis 安装调试</h2><p>因为 Redis 官方不支持 Windows，我选择在 Ubuntu 的环境进行安装 Redis。当然 github 也有非官方的 Win 版本。<br>废话不多说，开始搭建</p>
+<h3 id="安装-Redis"><a href="#安装-Redis" class="headerlink" title="安装 Redis"></a>安装 Redis</h3><p>打开终端，然后键入以下命令：</p>
+<pre><code>sudo apt-get update
+sudo apt-get install redis-server
+</code></pre><h3 id="启动-Redis"><a href="#启动-Redis" class="headerlink" title="启动 Redis"></a>启动 Redis</h3><p>在终端输入下列命令：</p>
+<pre><code>redis-server
+</code></pre><p>如图所示，我们会遇到一个警告提示<br><a href="http://blog.qiji.tech/wp-content/uploads/2016/03/vm.overcommit_memory-1错误.jpg" target="_blank" rel="external"><img src="http://blog.qiji.tech/wp-content/uploads/2016/03/vm.overcommit_memory-1错误.jpg" alt="vm.overcommit_memory = 1错误"></a><br>启动redis后看到报了一个警告信息，，我们按照提示将<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vm.overcommit_memory = 1</span><br></pre></td></tr></table></figure></p>
+<p>添加至<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/sysctl.conf</span><br></pre></td></tr></table></figure></p>
+<p>文件的末尾。</p>
+<h3 id="解决警告提示"><a href="#解决警告提示" class="headerlink" title="解决警告提示"></a>解决警告提示</h3><p>详细操作步骤：</p>
+<ol>
+<li>Ctrl+c结束当前任务</li>
+<li>vi /etc/sysctl.conf 进入文件</li>
+<li>光标移动至最下面，按 i 进入编辑模式</li>
+<li>粘贴上 vm.overcommit_memory = 1 </li>
+<li>按 Esc 键退出编辑模式</li>
+<li>输入 :wq! 表示强制保存并退出。</li>
+<li>最后在终端执行 sysctl vm.overcommit_memory=1 </li>
+</ol>
+<p>重新启动 Redis，没有其他错误提示的话，说明成功。</p>
+<h3 id="让Redis服务器被远程访问"><a href="#让Redis服务器被远程访问" class="headerlink" title="让Redis服务器被远程访问"></a>让Redis服务器被远程访问</h3><p>默认情况下，Redis 服务器不允许远程访问，只允许本机访问。有需要的话，我们需要打开这个功能。用用vi 打开配置文件 redis.conf，并用 # 号注释掉127.0.0.1</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo vi /etc/redis/redis.conf</span><br><span class="line">#注释bind</span><br><span class="line">#bind 127.0.0.1</span><br></pre></td></tr></table></figure>
+<h3 id="使用-Windous-中的-CMD-连接-Redis"><a href="#使用-Windous-中的-CMD-连接-Redis" class="headerlink" title="使用 Windous 中的 CMD 连接 Redis"></a>使用 Windous 中的 CMD 连接 Redis</h3><p>下载地址：<a href="https://github.com/MSOpenTech/redis/releases" title="https://github.com/MSOpenTech/redis/releases" target="_blank" rel="external">https://github.com/MSOpenTech/redis/releases</a></p>
+<p>我下载的是 <em>Redis-x64-2.8.2400.zip</em> ，解压后，cd进入目录,输入下列命令</p>
+<pre><code>redis-cli -h Redis服务器地址 -p 默认端口
+</code></pre><p>如下图所示，说明连接时成功的。<br><a href="http://blog.qiji.tech/wp-content/uploads/2016/03/CMD连接Redis.jpg" target="_blank" rel="external"><img src="http://blog.qiji.tech/wp-content/uploads/2016/03/CMD连接Redis.jpg" alt="CMD连接Redis"></a></p>
+<h3 id="Windows图形界面客户端"><a href="#Windows图形界面客户端" class="headerlink" title="Windows图形界面客户端"></a>Windows图形界面客户端</h3><p>后来发现Redis是有Windows图形界面客户端，所以也下载来玩玩。</p>
+<p>下载地址：<a href="https://github.com/caoxinyu/RedisClient/" title="https://github.com/caoxinyu/RedisClient/" target="_blank" rel="external">https://github.com/caoxinyu/RedisClient/</a></p>
+<p>操作界面如下图所示：<br><a href="http://blog.qiji.tech/wp-content/uploads/2016/03/Redis图形界面客户端.jpg" target="_blank" rel="external"><img src="http://blog.qiji.tech/wp-content/uploads/2016/03/Redis图形界面客户端.jpg" alt="Redis图形界面客户端"></a></p>
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>遇到各种小问题，在这总结一下</p>
+<ul>
+<li>markdown语法还是有点小问题，和有道云笔记的不一样。明早在弄了。</li>
+<li>电脑就挂了，开机指示灯亮，硬盘灯不亮，风扇不转。后来拆机拆主板电池，电脑就突然恢复了。</li>
+<li>给家里电脑安装Win10和ubuntu双系统，装不上。后来发现硬盘是MBR引导的，最多支持4主分区。而ubuntu至少需要2个。只好备份资料，格盘重新分区。</li>
+<li>Ubuntu运行Redis启动命令后，终端反应，与教程中不一致。后来发现是可以另外启动终端测试的。归根到底是基本没有打好。</li>
+<li>这些文章写比较匆忙，我会继续更新，接下来的内容有：Spring集成Redis，WEB项目中的实际应用。</li>
+</ul>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li>Redis - 维基百科 <a href="https://zh.wikipedia.org/wiki/Redis" title="Redis - 维基百科，自由的百科全书" target="_blank" rel="external">https://zh.wikipedia.org/wiki/Redis</a></li>
+<li>Redis教程 <a href="http://www.yiibai.com/redis/" title="Redis教程" target="_blank" rel="external">http://www.yiibai.com/redis/</a></li>
+<li>Ubuntu 12.10下安装Redis <a href="http://www.linuxidc.com/Linux/2013-06/85816.htm" title="Ubuntu 12.10下安装Redis" target="_blank" rel="external">http://www.linuxidc.com/Linux/2013-06/85816.htm</a></li>
+<li>Ubuntu 14.04下Redis安装及简单测试 <a href="http://www.linuxidc.com/Linux/2014-05/101544.htm" title="Ubuntu 14.04下Redis安装及简单测试" target="_blank" rel="external">http://www.linuxidc.com/Linux/2014-05/101544.htm</a></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/数据库/" rel="tag">#数据库</a>
+          
+            <a href="/tags/NoSQL/" rel="tag">#NoSQL</a>
+          
+            <a href="/tags/内存数据/" rel="tag">#内存数据</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/06/08/JAVA-Spring-框架学习总结（一）/" rel="next" title="[JAVA] Spring 框架学习总结（一）">
+                <i class="fa fa-chevron-left"></i> [JAVA] Spring 框架学习总结（一）
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/02/16/服务器-Redis-内存数据库学习笔记（二）/" rel="prev" title="[服务器] Redis 内存数据库学习笔记（二）">
+                [服务器] Redis 内存数据库学习笔记（二） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Arno" />
+          <p class="site-author-name" itemprop="name">Arno</p>
+          <p class="site-description motion-element" itemprop="description">Simplicity is prerequisite for reliability</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是-Redis"><span class="nav-number">1.</span> <span class="nav-text">什么是 Redis</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis-的特点"><span class="nav-number">2.</span> <span class="nav-text">Redis 的特点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis-安装调试"><span class="nav-number">3.</span> <span class="nav-text">Redis 安装调试</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装-Redis"><span class="nav-number">3.1.</span> <span class="nav-text">安装 Redis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启动-Redis"><span class="nav-number">3.2.</span> <span class="nav-text">启动 Redis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解决警告提示"><span class="nav-number">3.3.</span> <span class="nav-text">解决警告提示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#让Redis服务器被远程访问"><span class="nav-number">3.4.</span> <span class="nav-text">让Redis服务器被远程访问</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用-Windous-中的-CMD-连接-Redis"><span class="nav-number">3.5.</span> <span class="nav-text">使用 Windous 中的 CMD 连接 Redis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Windows图形界面客户端"><span class="nav-number">3.6.</span> <span class="nav-text">Windows图形界面客户端</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#后记"><span class="nav-number">4.</span> <span class="nav-text">后记</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Arno</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,613 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="数据库,NoSQL,内存数据," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="Redis 常见参数配置Redis的设置，基本是在其根目录下的 redis.conf 文件里保存的。我们可以通过修改这个文件来配置一些参数。
+1vi /etc/redis/redis.conf
+修改为后台启动Redis 默认是在前台启动的，会阻塞当前终端，使用 Ctrl + C 即可关闭。在 redis.conf 将文件中 daemonize 为 yes 即可后台启动
+1daemonize yes">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[服务器] Redis 内存数据库学习笔记（二）">
+<meta property="og:url" content="hiarno.github.io/2016/02/16/服务器-Redis-内存数据库学习笔记（二）/index.html">
+<meta property="og:site_name" content="Arno's Blog">
+<meta property="og:description" content="Redis 常见参数配置Redis的设置，基本是在其根目录下的 redis.conf 文件里保存的。我们可以通过修改这个文件来配置一些参数。
+1vi /etc/redis/redis.conf
+修改为后台启动Redis 默认是在前台启动的，会阻塞当前终端，使用 Ctrl + C 即可关闭。在 redis.conf 将文件中 daemonize 为 yes 即可后台启动
+1daemonize yes">
+<meta property="og:image" content="http://blog.qiji.tech/wp-content/uploads/2016/03/Redis测试结果01.jpg">
+<meta property="og:image" content="http://blog.qiji.tech/wp-content/uploads/2016/03/Redis测试结果02.jpg">
+<meta property="og:updated_time" content="2016-04-01T07:36:42.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[服务器] Redis 内存数据库学习笔记（二）">
+<meta name="twitter:description" content="Redis 常见参数配置Redis的设置，基本是在其根目录下的 redis.conf 文件里保存的。我们可以通过修改这个文件来配置一些参数。
+1vi /etc/redis/redis.conf
+修改为后台启动Redis 默认是在前台启动的，会阻塞当前终端，使用 Ctrl + C 即可关闭。在 redis.conf 将文件中 daemonize 为 yes 即可后台启动
+1daemonize yes">
+<meta name="twitter:image" content="http://blog.qiji.tech/wp-content/uploads/2016/03/Redis测试结果01.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> [服务器] Redis 内存数据库学习笔记（二） | Arno's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Arno's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Simplicity is prerequisite for reliability.</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                [服务器] Redis 内存数据库学习笔记（二）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-02-16T15:50:12+08:00" content="2016-02-16">
+              2016-02-16
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Redis-常见参数配置"><a href="#Redis-常见参数配置" class="headerlink" title="Redis 常见参数配置"></a>Redis 常见参数配置</h2><p>Redis的设置，基本是在其根目录下的 redis.conf 文件里保存的。我们可以通过修改这个文件来配置一些参数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/redis/redis.conf</span><br></pre></td></tr></table></figure>
+<h3 id="修改为后台启动"><a href="#修改为后台启动" class="headerlink" title="修改为后台启动"></a>修改为后台启动</h3><p>Redis 默认是在前台启动的，会阻塞当前终端，使用 Ctrl + C 即可关闭。<br>在 redis.conf 将文件中 daemonize 为 yes 即可后台启动</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">daemonize yes</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h3 id="添加访问密码"><a href="#添加访问密码" class="headerlink" title="添加访问密码"></a>添加访问密码</h3><p>在redis.conf将文件中 为 requirepass 设定值。<br>范例（qiji.arno为密码）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">requirepass qiji.arno</span><br></pre></td></tr></table></figure>
+<h3 id="开启远程访问"><a href="#开启远程访问" class="headerlink" title="开启远程访问"></a>开启远程访问</h3><p>默认情况下，Redis 服务器关闭了远程访问。开启访问的话，将bing注释掉就好。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#bind 127.0.0.1</span><br></pre></td></tr></table></figure>
+<h3 id="设置日志和数据目录"><a href="#设置日志和数据目录" class="headerlink" title="设置日志和数据目录"></a>设置日志和数据目录</h3><p>使用终端创建如下所示的目录：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /opt/redis/logs</span><br><span class="line">mkdir -p /opt/redis/data</span><br></pre></td></tr></table></figure>
+<p>设置日志和数据目录：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">loglevel debug              #日志级别：默认为 notice</span><br><span class="line">logfile /opt/redis/logs/redis.log  #日志输出：默认为 stdout</span><br><span class="line">dbfilename redis.rdb        #默认为 dump.rdb</span><br><span class="line">dir /opt/redis/data         #默认为./</span><br></pre></td></tr></table></figure>
+<h3 id="设置最大内存："><a href="#设置最大内存：" class="headerlink" title="设置最大内存："></a>设置最大内存：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">maxmemory 128mb</span><br></pre></td></tr></table></figure>
+<ul>
+<li>尤其是在VPS上，不要设置太高，留有充足的内存供系统及其他应用程序使用。</li>
+</ul>
+<h3 id="备份策略"><a href="#备份策略" class="headerlink" title="备份策略"></a>备份策略</h3><h4 id="使用快照：snapshot"><a href="#使用快照：snapshot" class="headerlink" title="使用快照：snapshot"></a>使用快照：snapshot</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">save 60 1000</span><br></pre></td></tr></table></figure>
+<ul>
+<li>如上的设置，会在60s内、如果有1000个key发生改变就进行持久化。</li>
+<li>可设置多个save选项，默认持久化到dump.rdb。</li>
+</ul>
+<h4 id="文件追加-aof-：append-only-file模式。"><a href="#文件追加-aof-：append-only-file模式。" class="headerlink" title="文件追加(aof)：append-only-file模式。"></a>文件追加(aof)：append-only-file模式。</h4><ul>
+<li>Redis会将每个接收到的“写命令”通过write函数追加到appendonly.aof文件，重启Redis时通过该文件重建整个数据库。</li>
+<li>由于os内核会缓存write函数所做的“修改”，可以使用fsync函数指定写入到磁盘的方式。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">appendonly yes          #启动aof持久化方式</span><br><span class="line">appendfsync always      #对每条“写命令”立即写至磁盘</span><br><span class="line">appendfsync everysec    #默认每秒写入一次，在性能和可靠性之间的平衡</span><br><span class="line">appendfsync no          #依赖于os，不指定写入时机</span><br></pre></td></tr></table></figure>
+<h5 id="两种方式的比较："><a href="#两种方式的比较：" class="headerlink" title="两种方式的比较："></a>两种方式的比较：</h5><ul>
+<li>快照方式：性能较好，但是快照间隔期间，如果宕机将造成数据丢失。</li>
+<li>AOF 模式：影响性能，不容易造成数据丢失。</li>
+<li>如果 Redis 宕机：重启 Redis 即可，会自动使用 redis.rdb 和 appendonly.aof 恢复数据库。</li>
+</ul>
+<h5 id="主从备份：从数据安全性角度考虑。"><a href="#主从备份：从数据安全性角度考虑。" class="headerlink" title="主从备份：从数据安全性角度考虑。"></a>主从备份：从数据安全性角度考虑。</h5><ul>
+<li>关闭快照功能。</li>
+<li>同时设置主从服务器都为AOF模式。</li>
+<li>说明：如果仅对Slave进行持久化设置，重启时，Slave自动和Master进行同步，全部数据丢失.</li>
+</ul>
+<h2 id="Java-中使用-Redis"><a href="#Java-中使用-Redis" class="headerlink" title="Java 中使用 Redis"></a>Java 中使用 Redis</h2><p>Redis 官方推荐使用 Jedis 的 API 对 Redis 进行操作，所以就开始配置 Jedis 吧。</p>
+<h4 id="Maven-pom-添加依赖"><a href="#Maven-pom-添加依赖" class="headerlink" title="Maven pom 添加依赖"></a>Maven pom 添加依赖</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">   &lt;dependency&gt;</span><br><span class="line">       &lt;groupId&gt;redis.clients&lt;/groupId&gt;</span><br><span class="line">       &lt;artifactId&gt;jedis&lt;/artifactId&gt;</span><br><span class="line">       &lt;version&gt;2.6.2&lt;/version&gt;</span><br><span class="line">       &lt;type&gt;jar&lt;/type&gt;</span><br><span class="line">       &lt;scope&gt;compile&lt;/scope&gt;</span><br><span class="line">   &lt;/dependency&gt;</span><br><span class="line">   &lt;dependency&gt;</span><br><span class="line">   	&lt;groupId&gt;junit&lt;/groupId&gt;</span><br><span class="line">   	&lt;artifactId&gt;junit&lt;/artifactId&gt;</span><br><span class="line">   	&lt;version&gt;4.8.2&lt;/version&gt;</span><br><span class="line">   	&lt;scope&gt;test&lt;/scope&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="构建-redis-缓存插件"><a href="#构建-redis-缓存插件" class="headerlink" title="构建 redis 缓存插件"></a>构建 redis 缓存插件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">package com.eliteams.XXXX.core.feature.cache.redis;</span><br><span class="line"></span><br><span class="line">import org.springframework.stereotype.Component;</span><br><span class="line">import redis.clients.jedis.Jedis;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * RedisCache : redis 缓存 插件</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">@Component(value = &quot;redisCache&quot;)</span><br><span class="line">public class RedisCache &#123;</span><br><span class="line"></span><br><span class="line">    private int port = 6379;</span><br><span class="line">    private String host = &quot;115.29.143.109&quot;;</span><br><span class="line"></span><br><span class="line">    private Jedis jedis = new Jedis(host,port);</span><br><span class="line"></span><br><span class="line">    public String cache(String key, String value, int seconds) &#123;</span><br><span class="line">        String result = jedis.set(key, value);</span><br><span class="line">        jedis.expire(key, seconds);</span><br><span class="line">        return result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String get(String key) &#123;</span><br><span class="line">        return jedis.get(key);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="构建-JedisTest-的测试类"><a href="#构建-JedisTest-的测试类" class="headerlink" title="构建 JedisTest 的测试类"></a>构建 JedisTest 的测试类</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">package com.eliteams.XXXX.test.library.jedis;</span><br><span class="line"></span><br><span class="line">import com.eliteams.XXXX.core.feature.cache.redis.RedisCache;</span><br><span class="line">import com.eliteams.XXXX.core.feature.test.TestSupport;</span><br><span class="line">import org.junit.Test;</span><br><span class="line"></span><br><span class="line">import javax.annotation.Resource;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * JedisTest : 测试 jedis 功能</span><br><span class="line"> */</span><br><span class="line">public class JedisTest extends TestSupport &#123;</span><br><span class="line"></span><br><span class="line">    @Resource</span><br><span class="line">    private RedisCache redisCache;</span><br><span class="line"></span><br><span class="line">    @Test</span><br><span class="line">    public void testSet() &#123;</span><br><span class="line">        redisCache.cache(&quot;qiji&quot;, &quot;ARNO&quot;, 1 * 60 * 24);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Test</span><br><span class="line">    public void testGet() &#123;</span><br><span class="line">        System.out.printf(redisCache.get(&quot;qiji&quot;));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="测试结果"><a href="#测试结果" class="headerlink" title="测试结果"></a>测试结果</h3><p><a href="http://blog.qiji.tech/wp-content/uploads/2016/03/Redis测试结果01.jpg" target="_blank" rel="external"><img src="http://blog.qiji.tech/wp-content/uploads/2016/03/Redis测试结果01.jpg" alt="Redis测试结果01"></a></p>
+<p><a href="http://blog.qiji.tech/wp-content/uploads/2016/03/Redis测试结果02.jpg" target="_blank" rel="external"><img src="http://blog.qiji.tech/wp-content/uploads/2016/03/Redis测试结果02.jpg" alt="Redis测试结果02"></a></p>
+<h3 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h3><p>好好学基础，遇到坑了，才知道怎么解决。不说多了，先去填坑。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li>Redis - 维基百科 <a href="https://zh.wikipedia.org/wiki/Redis" title="Redis - 维基百科，自由的百科全书" target="_blank" rel="external">https://zh.wikipedia.org/wiki/Redis</a></li>
+<li>Redis教程 <a href="http://www.yiibai.com/redis/" title="Redis教程" target="_blank" rel="external">http://www.yiibai.com/redis/</a></li>
+<li>Ubuntu 12.10下安装Redis <a href="http://www.linuxidc.com/Linux/2013-06/85816.htm" title="Ubuntu 12.10下安装Redis" target="_blank" rel="external">http://www.linuxidc.com/Linux/2013-06/85816.htm</a></li>
+<li>Ubuntu 14.04下Redis安装及简单测试 <a href="http://www.linuxidc.com/Linux/2014-05/101544.htm" title="Ubuntu 14.04下Redis安装及简单测试" target="_blank" rel="external">http://www.linuxidc.com/Linux/2014-05/101544.htm</a></li>
+<li>Redis入门  <a href="http://hello-nick-xu.iteye.com/category/314998" title="Redis入门很简单" target="_blank" rel="external">http://hello-nick-xu.iteye.com/category/314998</a></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/数据库/" rel="tag">#数据库</a>
+          
+            <a href="/tags/NoSQL/" rel="tag">#NoSQL</a>
+          
+            <a href="/tags/内存数据/" rel="tag">#内存数据</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/02/15/服务器-Redis-内存数据库学习笔记（一）/" rel="next" title="[服务器] Redis 内存数据库学习笔记（一）">
+                <i class="fa fa-chevron-left"></i> [服务器] Redis 内存数据库学习笔记（一）
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Arno" />
+          <p class="site-author-name" itemprop="name">Arno</p>
+          <p class="site-description motion-element" itemprop="description">Simplicity is prerequisite for reliability</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis-常见参数配置"><span class="nav-number">1.</span> <span class="nav-text">Redis 常见参数配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#修改为后台启动"><span class="nav-number">1.1.</span> <span class="nav-text">修改为后台启动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加访问密码"><span class="nav-number">1.2.</span> <span class="nav-text">添加访问密码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开启远程访问"><span class="nav-number">1.3.</span> <span class="nav-text">开启远程访问</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置日志和数据目录"><span class="nav-number">1.4.</span> <span class="nav-text">设置日志和数据目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置最大内存："><span class="nav-number">1.5.</span> <span class="nav-text">设置最大内存：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#备份策略"><span class="nav-number">1.6.</span> <span class="nav-text">备份策略</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#使用快照：snapshot"><span class="nav-number">1.6.1.</span> <span class="nav-text">使用快照：snapshot</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#文件追加-aof-：append-only-file模式。"><span class="nav-number">1.6.2.</span> <span class="nav-text">文件追加(aof)：append-only-file模式。</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#两种方式的比较："><span class="nav-number">1.6.2.1.</span> <span class="nav-text">两种方式的比较：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#主从备份：从数据安全性角度考虑。"><span class="nav-number">1.6.2.2.</span> <span class="nav-text">主从备份：从数据安全性角度考虑。</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java-中使用-Redis"><span class="nav-number">2.</span> <span class="nav-text">Java 中使用 Redis</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Maven-pom-添加依赖"><span class="nav-number">2.0.1.</span> <span class="nav-text">Maven pom 添加依赖</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#构建-redis-缓存插件"><span class="nav-number">2.0.2.</span> <span class="nav-text">构建 redis 缓存插件</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#构建-JedisTest-的测试类"><span class="nav-number">2.1.</span> <span class="nav-text">构建 JedisTest 的测试类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#测试结果"><span class="nav-number">2.2.</span> <span class="nav-text">测试结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#后记"><span class="nav-number">2.3.</span> <span class="nav-text">后记</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Arno</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>

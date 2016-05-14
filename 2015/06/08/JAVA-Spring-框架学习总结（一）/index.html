@@ -1,0 +1,655 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JAVA,Spring,框架," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="Spring 框架算是 Java Web 开发中最热的一个框架了，接下来就来学习一下吧。
+什么是 Spring
+Spring 是一个开源的用于简化采用 Java 语言开发企业级程序的一个分层的框架
+Spring 是一个轻量级的控制反转（IoC）和面向切面（AOP）的容器框架
+
+
+
+从大小与开销两方面而言 Spring 都是轻量的
+通过控制反转（IoC）的技术达到松耦合的目的
+提供了面向切面的编程的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[JAVA] Spring 框架学习总结（一）">
+<meta property="og:url" content="hiarno.github.io/2015/06/08/JAVA-Spring-框架学习总结（一）/index.html">
+<meta property="og:site_name" content="Arno's Blog">
+<meta property="og:description" content="Spring 框架算是 Java Web 开发中最热的一个框架了，接下来就来学习一下吧。
+什么是 Spring
+Spring 是一个开源的用于简化采用 Java 语言开发企业级程序的一个分层的框架
+Spring 是一个轻量级的控制反转（IoC）和面向切面（AOP）的容器框架
+
+
+
+从大小与开销两方面而言 Spring 都是轻量的
+通过控制反转（IoC）的技术达到松耦合的目的
+提供了面向切面的编程的">
+<meta property="og:image" content="http://blog.qiji.tech/wp-content/uploads/2016/04/Spring-Framework-Runtime.png">
+<meta property="og:updated_time" content="2016-04-01T07:37:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[JAVA] Spring 框架学习总结（一）">
+<meta name="twitter:description" content="Spring 框架算是 Java Web 开发中最热的一个框架了，接下来就来学习一下吧。
+什么是 Spring
+Spring 是一个开源的用于简化采用 Java 语言开发企业级程序的一个分层的框架
+Spring 是一个轻量级的控制反转（IoC）和面向切面（AOP）的容器框架
+
+
+
+从大小与开销两方面而言 Spring 都是轻量的
+通过控制反转（IoC）的技术达到松耦合的目的
+提供了面向切面的编程的">
+<meta name="twitter:image" content="http://blog.qiji.tech/wp-content/uploads/2016/04/Spring-Framework-Runtime.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> [JAVA] Spring 框架学习总结（一） | Arno's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Arno's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Simplicity is prerequisite for reliability.</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                [JAVA] Spring 框架学习总结（一）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-06-08T15:24:44+08:00" content="2015-06-08">
+              2015-06-08
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Spring 框架算是 Java Web 开发中最热的一个框架了，接下来就来学习一下吧。</p>
+<h2 id="什么是-Spring"><a href="#什么是-Spring" class="headerlink" title="什么是 Spring"></a>什么是 Spring</h2><ul>
+<li>Spring 是一个开源的用于简化采用 Java 语言开发企业级程序的一个分层的框架</li>
+<li>Spring 是一个轻量级的控制反转（IoC）和面向切面（AOP）的容器框架</li>
+</ul>
+<blockquote>
+<ul>
+<li>从大小与开销两方面而言 Spring 都是轻量的</li>
+<li>通过控制反转（IoC）的技术达到松耦合的目的</li>
+<li>提供了面向切面的编程的丰富支持，允许通过分离应用的业务逻辑与系统级服务进行内聚性的开发。</li>
+<li>包含并管理 应用对象的配置和生命周期。（容器）</li>
+<li>将简单的组建配置、组合成为复杂的应用。（框架）</li>
+</ul>
+</blockquote>
+<a id="more"></a>
+<h2 id="为什么要使用-Spring"><a href="#为什么要使用-Spring" class="headerlink" title="为什么要使用 Spring"></a>为什么要使用 Spring</h2><ul>
+<li>在 Spring 上开发应用简单</li>
+<li>在 Spring 上开发应用方便</li>
+<li>在 Spring 上开发应用快捷</li>
+</ul>
+<p>下图为 Spring 组成，我们重点学习的是 IoC 和 AOP<br><a href="http://blog.qiji.tech/wp-content/uploads/2016/04/Spring-Framework-Runtime.png" target="_blank" rel="external"><img src="http://blog.qiji.tech/wp-content/uploads/2016/04/Spring-Framework-Runtime.png" alt="Spring Framework Runtime"></a></p>
+<h2 id="Spring-IoC-容器"><a href="#Spring-IoC-容器" class="headerlink" title="Spring IoC 容器"></a>Spring IoC 容器</h2><p>IoC - Inversion of Control，控制反转。控制权转移，应用程序本身不负责依赖对象的创建和维护，而是由外部容器负责创建和维护。</p>
+<blockquote>
+<p>DI - Dependency Injection，即“依赖注入”是其中一种实现方式。在 IoC 容器运行期间，动态的将某种依赖注入到对象之中。</p>
+</blockquote>
+<h3 id="IoC-是什么"><a href="#IoC-是什么" class="headerlink" title="IoC 是什么"></a>IoC 是什么</h3><p>IoC 不是一种技术，只是一种思想，一个重要的面向对象编程的法则，它能指导我们如何设计出松耦合、更优良的程序。传统应用程序都是由我们在类内部主动创建依赖对象，从而导致类与类之间高耦合，难于测试；有了 IoC 容器后，把创建和查找依赖对象的控制权交给了容器，由容器进行注入组合对象，所以对象与对象之间是 松散耦合，这样也方便测试，利于功能复用，更重要的是使得程序的整个体系结构变得非常灵活。</p>
+<blockquote>
+<p>IoC 很好的体现了面向对象设计法则之一—— 好莱坞法则：“别找我们，我们找你”；</p>
+</blockquote>
+<h3 id="IoC-和-DI-浅显易懂的解释"><a href="#IoC-和-DI-浅显易懂的解释" class="headerlink" title="IoC 和 DI 浅显易懂的解释"></a>IoC 和 DI 浅显易懂的解释</h3><p>现实生活中，我们也可以用一个不是很贴切的比喻，如下表格。</p>
+<table>
+<thead>
+<tr>
+<th>房屋中介</th>
+<th>IoC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>找中介</td>
+<td>找IoC容器</td>
+</tr>
+<tr>
+<td>中介介绍房子</td>
+<td>容器返回对象</td>
+</tr>
+<tr>
+<td>租房、入住</td>
+<td>使用对象</td>
+</tr>
+</tbody>
+</table>
+<h3 id="使用注解来构造-IoC-容器"><a href="#使用注解来构造-IoC-容器" class="headerlink" title="使用注解来构造 IoC 容器"></a>使用注解来构造 IoC 容器</h3><p>用注解来向Spring容器注册Bean。需要在applicationContext.xml中注册<br>如：在base-package指明一个包</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;context:component-scan base-package=&quot;com.doity.service&quot;/&gt;</span><br></pre></td></tr></table></figure>
+<p>表明com.doity.service包及其子包中，如果某个类的头上带有特定的注解【@Component/@Repository/@Service/@Controller】，就会将这个对象作为Bean注册进Spring容器。</p>
+<blockquote>
+<p>如果有多个包，用逗号隔开。</p>
+</blockquote>
+<h4 id="Controller"><a href="#Controller" class="headerlink" title="@Controller"></a>@Controller</h4><p>@Controller 对应表现层的 Bean，也就是Action，例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@Controller</span><br><span class="line">@Scope(&quot;prototype&quot;)</span><br><span class="line">public class UserAction extends BaseAction&lt;User&gt;&#123;</span><br><span class="line"> ………</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>####@ Service</p>
+<p>@Service 对应的是业务层 Bean，例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@Service(&quot;userService&quot;)</span><br><span class="line">public class UserServiceImpl implements UserService &#123;</span><br><span class="line">………</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="Resource"><a href="#Resource" class="headerlink" title="@Resource"></a>@Resource</h4><p>@Resource 默认是按照名称来装配注入的，只有当找不到与名称匹配的bean才会按照类型来装配注入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@Resource</span><br><span class="line">private BookService bookService;</span><br></pre></td></tr></table></figure>
+<p>##后记<br>要总结的内容太多啦，待续。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li>Spring 官网 <a href="https://spring.io/" title="Spring 官网" target="_blank" rel="external">https://spring.io/</a></li>
+<li>Spring wiki <a href="https://zh.wikipedia.org/wiki/Spring" title="Spring wiki" target="_blank" rel="external">https://zh.wikipedia.org/wiki/Spring</a></li>
+<li>Spring 的注解注入  <a href="http://blog.csdn.net/baple/article/details/17891755" title="Spring @Resource、@Autowired、@Qualifier的注解注入及区别" target="_blank" rel="external">http://blog.csdn.net/baple/article/details/17891755</a></li>
+<li>Spring 入门  <a href="http://www.imooc.com/learn/196" title="Spring 入门" target="_blank" rel="external">http://www.imooc.com/learn/196</a></li>
+<li>Spring 教程  <a href="http://www.yiibai.com/spring/" title="Spring 教程" target="_blank" rel="external">http://www.yiibai.com/spring/</a></li>
+<li>Spring 核心技术学习总结  <a href="http://penghuaiyi.iteye.com/blog/182616" title="Spring核心技术学习总结" target="_blank" rel="external">http://penghuaiyi.iteye.com/blog/182616</a></li>
+<li>Spring知识点总结大全 <a href="http://www.open-open.com/lib/view/open1329298931749.html" title="Spring知识点总结大全" target="_blank" rel="external">http://www.open-open.com/lib/view/open1329298931749.html</a></li>
+<li>Spring - 随笔分类 - 孤傲苍狼<a href="http://www.cnblogs.com/xdp-gacl/category/544380.html" title="Spring - 随笔分类 - 孤傲苍狼 - 博客园" target="_blank" rel="external">http://www.cnblogs.com/xdp-gacl/category/544380.html</a></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JAVA/" rel="tag">#JAVA</a>
+          
+            <a href="/tags/Spring/" rel="tag">#Spring</a>
+          
+            <a href="/tags/框架/" rel="tag">#框架</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/02/15/服务器-Redis-内存数据库学习笔记（一）/" rel="prev" title="[服务器] Redis 内存数据库学习笔记（一）">
+                [服务器] Redis 内存数据库学习笔记（一） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Arno" />
+          <p class="site-author-name" itemprop="name">Arno</p>
+          <p class="site-description motion-element" itemprop="description">Simplicity is prerequisite for reliability</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是-Spring"><span class="nav-number">1.</span> <span class="nav-text">什么是 Spring</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么要使用-Spring"><span class="nav-number">2.</span> <span class="nav-text">为什么要使用 Spring</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring-IoC-容器"><span class="nav-number">3.</span> <span class="nav-text">Spring IoC 容器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#IoC-是什么"><span class="nav-number">3.1.</span> <span class="nav-text">IoC 是什么</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IoC-和-DI-浅显易懂的解释"><span class="nav-number">3.2.</span> <span class="nav-text">IoC 和 DI 浅显易懂的解释</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用注解来构造-IoC-容器"><span class="nav-number">3.3.</span> <span class="nav-text">使用注解来构造 IoC 容器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Controller"><span class="nav-number">3.3.1.</span> <span class="nav-text">@Controller</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Resource"><span class="nav-number">3.3.2.</span> <span class="nav-text">@Resource</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Arno</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
