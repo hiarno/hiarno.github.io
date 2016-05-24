@@ -1,0 +1,643 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JAVA,Spring,框架," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="前言续上一节，继续学习 Spring 的一些概念和理论。
+什么是 AOPAOP，Aspect-Oriented Programming，面向切面编程。（是一种程序设计思想）
+AOP：通过预编译方式和运行期间动态代理实现程序功能的统一维护的一种技术。
+主要的功能是：日志记录，性能统计，安全控制，事务处理，异常处理等等，如下图">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[JAVA] Spring 框架学习总结（二）">
+<meta property="og:url" content="hiarno.github.io/2015/06/15/JAVA-Spring-框架学习总结（二）/index.html">
+<meta property="og:site_name" content="Arno's Blog">
+<meta property="og:description" content="前言续上一节，继续学习 Spring 的一些概念和理论。
+什么是 AOPAOP，Aspect-Oriented Programming，面向切面编程。（是一种程序设计思想）
+AOP：通过预编译方式和运行期间动态代理实现程序功能的统一维护的一种技术。
+主要的功能是：日志记录，性能统计，安全控制，事务处理，异常处理等等，如下图">
+<meta property="og:image" content="http://blog.qiji.tech/wp-content/uploads/2016/04/切面.jpg">
+<meta property="og:updated_time" content="2016-05-24T08:56:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[JAVA] Spring 框架学习总结（二）">
+<meta name="twitter:description" content="前言续上一节，继续学习 Spring 的一些概念和理论。
+什么是 AOPAOP，Aspect-Oriented Programming，面向切面编程。（是一种程序设计思想）
+AOP：通过预编译方式和运行期间动态代理实现程序功能的统一维护的一种技术。
+主要的功能是：日志记录，性能统计，安全控制，事务处理，异常处理等等，如下图">
+<meta name="twitter:image" content="http://blog.qiji.tech/wp-content/uploads/2016/04/切面.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> [JAVA] Spring 框架学习总结（二） | Arno's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Arno's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Simplicity is prerequisite for reliability.</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                [JAVA] Spring 框架学习总结（二）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-06-15T15:24:44+08:00" content="2015-06-15">
+              2015-06-15
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>续上一节，继续学习 Spring 的一些概念和理论。</p>
+<h2 id="什么是-AOP"><a href="#什么是-AOP" class="headerlink" title="什么是 AOP"></a>什么是 AOP</h2><p>AOP，Aspect-Oriented Programming，面向切面编程。（是一种程序设计思想）</p>
+<p>AOP：通过预编译方式和运行期间动态代理实现程序功能的统一维护的一种技术。</p>
+<p>主要的功能是：日志记录，性能统计，安全控制，事务处理，异常处理等等，如下图</p>
+<p><a href="http://blog.qiji.tech/wp-content/uploads/2016/04/切面.jpg" target="_blank" rel="external"><img src="http://blog.qiji.tech/wp-content/uploads/2016/04/切面.jpg" alt="切面"></a></p>
+<a id="more"></a>
+<h3 id="AOP-实现方式"><a href="#AOP-实现方式" class="headerlink" title="AOP 实现方式"></a>AOP 实现方式</h3><p>预编译 </p>
+<ul>
+<li>AspectJ</li>
+</ul>
+<p>运行期动态代理（JDK动态代理、CGLib动态代理）</p>
+<ul>
+<li>SpringAOP</li>
+<li>JbossAOP</li>
+</ul>
+<h2 id="Spring-的-AOP-实现"><a href="#Spring-的-AOP-实现" class="headerlink" title="Spring 的 AOP 实现"></a>Spring 的 AOP 实现</h2><ul>
+<li>纯 Java 实现，无需特殊的编译莞城，不需要控制加载器层次</li>
+<li>目前只支持方法执行连接点</li>
+<li>侧重于提供一种 AOP 实现和 Spring IoC 容器之间的整合，用于帮助解决企业应用中的常见问题</li>
+<li>Spring AOP 默认使用标准的 JavaSE 动态代理作为 AOP 代理，这使得任何接口（接口集）都可以被代理</li>
+<li>Spring AOP 中可以使用 CGLib 代理</li>
+</ul>
+<h2 id="AOP-基本概念"><a href="#AOP-基本概念" class="headerlink" title="AOP 基本概念"></a>AOP 基本概念</h2><p>工欲善其事，必先利其器。还是得继续学习这些基本概念</p>
+<h3 id="Aspect（切面）"><a href="#Aspect（切面）" class="headerlink" title="Aspect（切面）"></a>Aspect（切面）</h3><p>切面，是对交叉业务逻辑的统称。</p>
+<h3 id="Joinpoint（连接点）"><a href="#Joinpoint（连接点）" class="headerlink" title="Joinpoint（连接点）"></a>Joinpoint（连接点）</h3><p>连接点，指切面可以织入到目标对象的位置（方法，属性等）。</p>
+<h3 id="Advice（通知）"><a href="#Advice（通知）" class="headerlink" title="Advice（通知）"></a>Advice（通知）</h3><p>通知，指切面的具体实现。</p>
+<h3 id="Pointcut（切入点）"><a href="#Pointcut（切入点）" class="headerlink" title="Pointcut（切入点）"></a>Pointcut（切入点）</h3><p>切入点，指通知应用到哪些类的哪些方法或属性之上的规则。</p>
+<h3 id="Introduction（引入）"><a href="#Introduction（引入）" class="headerlink" title="Introduction（引入）"></a>Introduction（引入）</h3><p>引入，指动态地给一个对象增加方法或属性的一种特殊的通知。</p>
+<h3 id="Weaving（织入）"><a href="#Weaving（织入）" class="headerlink" title="Weaving（织入）"></a>Weaving（织入）</h3><p>织入，指将通知插入到目标对象。</p>
+<h3 id="Target（目标对象）"><a href="#Target（目标对象）" class="headerlink" title="Target（目标对象）"></a>Target（目标对象）</h3><p>目标对象，指需要织入切面的对象。</p>
+<h3 id="Proxy（代理对象）"><a href="#Proxy（代理对象）" class="headerlink" title="Proxy（代理对象）"></a>Proxy（代理对象）</h3><p>代理对象，指切面织入目标对象之后形成的对象。</p>
+<h2 id="Spring-Advice-类型"><a href="#Spring-Advice-类型" class="headerlink" title="Spring Advice 类型"></a>Spring Advice 类型</h2><h3 id="Before-Advice（前置通知）"><a href="#Before-Advice（前置通知）" class="headerlink" title="Before Advice（前置通知）"></a>Before Advice（前置通知）</h3><p>类全名：org.springframework.aop.MethodBeforeAdvice</p>
+<p>在方法调用之前，做处理。</p>
+<ul>
+<li><p>不能够改变返回值</p>
+</li>
+<li><p>不能够改变目标方法的流程，也不能中断流程的处理过程（除非抛出异常）</p>
+</li>
+</ul>
+<h3 id="After-Returning-Advice-（返回后通知）"><a href="#After-Returning-Advice-（返回后通知）" class="headerlink" title="After Returning Advice （返回后通知）"></a>After Returning Advice （返回后通知）</h3><p>类全名：org.springframework.aop.AfterReturningAdvice  </p>
+<p>在方法调用之后，做处理。</p>
+<ul>
+<li><p>不能够改变返回值</p>
+</li>
+<li><p>不能够改变目标方法的流程，也不能中断流程的处理过程（除非抛出异常）</p>
+</li>
+</ul>
+<h3 id="MethodInterceptor-拦截器"><a href="#MethodInterceptor-拦截器" class="headerlink" title="MethodInterceptor (拦截器)"></a>MethodInterceptor (拦截器)</h3><p>类全名：org.aopalliance.intercept.MethodInterceptor</p>
+<p>在方法调用之前以及之后，做处理。</p>
+<ul>
+<li>可以改变返回值，也可以改变流程。</li>
+</ul>
+<h3 id="ThrowsAdvice-（抛出异常后通知）"><a href="#ThrowsAdvice-（抛出异常后通知）" class="headerlink" title="ThrowsAdvice （抛出异常后通知）"></a>ThrowsAdvice （抛出异常后通知）</h3><p>类全名：org.springframework.aop.ThrowsAdvice</p>
+<p>在方法抛出异常后，做处理。</p>
+<ul>
+<li>当该通知处理完异常后，会简单地将异常再次抛出给目标调用方法。</li>
+</ul>
+<h2 id="AOP-实现"><a href="#AOP-实现" class="headerlink" title="AOP 实现"></a>AOP 实现</h2><p>理论看太多，该实际操作实践一下</p>
+<h3 id="基于-AspectJ-语言的实现方式"><a href="#基于-AspectJ-语言的实现方式" class="headerlink" title="基于 AspectJ 语言的实现方式"></a>基于 AspectJ 语言的实现方式</h3><h4 id="先新建两个简单的类"><a href="#先新建两个简单的类" class="headerlink" title="先新建两个简单的类"></a>先新建两个简单的类</h4><p>代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">package com.eliteams.quick4j.test.aopTest;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Created by ARNO on 2016/4/11/011.</span><br><span class="line"> * desc:</span><br><span class="line"> */</span><br><span class="line">public class A &#123;</span><br><span class="line">    private static final String TAG = &quot;A&quot;;</span><br><span class="line"></span><br><span class="line">    public void sayHello()&#123;</span><br><span class="line">        System.out.println(&quot;I&apos;m A&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">package com.eliteams.quick4j.test.aopTest;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Created by ARNO on 2016/4/11/011.</span><br><span class="line"> * desc:</span><br><span class="line"> */</span><br><span class="line">public class B &#123;</span><br><span class="line">    private static final String TAG = &quot;B&quot;;</span><br><span class="line"></span><br><span class="line">    public void sayHello()&#123;</span><br><span class="line">        System.out.println(&quot;I&apos;m B&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="接下来编写切面类"><a href="#接下来编写切面类" class="headerlink" title="接下来编写切面类"></a>接下来编写切面类</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">package com.eliteams.quick4j.test.aopTest;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Created by ARNO on 2016/4/11/011.</span><br><span class="line"> * desc:</span><br><span class="line"> */</span><br><span class="line">import org.aspectj.lang.annotation.AfterReturning;</span><br><span class="line">import org.aspectj.lang.annotation.Aspect;</span><br><span class="line">import org.aspectj.lang.annotation.Pointcut;</span><br><span class="line"></span><br><span class="line">@Aspect</span><br><span class="line">public class testAspect &#123;</span><br><span class="line">    private static final String TAG = &quot;testAspect&quot;;</span><br><span class="line"></span><br><span class="line">    @Pointcut(&quot;execution(* com.eliteams.quick4j.test.aopTest.*.say*())&quot;)</span><br><span class="line">    //创建&quot;切入点&quot;，该&quot;切入点&quot;捕获了指定项目中相关类的方法（&quot;连接点&quot;）</span><br><span class="line">    public void testPointcut() &#123; &#125;</span><br><span class="line"></span><br><span class="line">    @AfterReturning(pointcut=&quot;testPointcut()&quot;)</span><br><span class="line"></span><br><span class="line">    //创建&quot;通知&quot;，该&quot;通知&quot;绑定了具体的&quot;切入点&quot;</span><br><span class="line">    public void simpleAdvice() //&quot;切入点&quot;的执行代码，将被&quot;目标对象&quot;的&quot;代理对象&quot;执行</span><br><span class="line">    &#123;</span><br><span class="line">        System.out.println(&quot;Hi qiji.tech&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="编写配置文件"><a href="#编写配置文件" class="headerlink" title="编写配置文件"></a>编写配置文件</h4><p>applicationContext.xml 的内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;GBK&quot;?&gt;</span><br><span class="line">&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;</span><br><span class="line">	     xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">	     xmlns:aop=&quot;http://www.springframework.org/schema/aop&quot;</span><br><span class="line">	     xmlns:tx=&quot;http://www.springframework.org/schema/tx&quot;</span><br><span class="line">	     xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd</span><br><span class="line">           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd</span><br><span class="line">           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd&quot;&gt; </span><br><span class="line">    </span><br><span class="line">    &lt;aop:aspectj-autoproxy /&gt; //织入&quot;目标对象&quot;和&quot;切面&quot;之间的关联关系 </span><br><span class="line">  </span><br><span class="line">    &lt;bean id=&quot;a&quot; class=&quot;com.eliteams.quick4j.test.aopTest.A&quot; &gt;&lt;/bean&gt;</span><br><span class="line">    &lt;bean id=&quot;b&quot; class=&quot;com.eliteams.quick4j.test.aopTest.B&quot; &gt;&lt;/bean&gt;</span><br><span class="line"></span><br><span class="line">    &lt;bean id=&quot;testAspect&quot; class=&quot;com.eliteams.quick4j.test.aopTest.testAspect&quot; &gt;&lt;/bean&gt; </span><br><span class="line">&lt;/beans&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="编写测试类"><a href="#编写测试类" class="headerlink" title="编写测试类"></a>编写测试类</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">package com.eliteams.quick4j.test.aopTest;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Created by ARNO on 2016/4/11/011.</span><br><span class="line"> * desc:</span><br><span class="line"> */</span><br><span class="line">import org.aspectj.lang.annotation.AfterReturning;</span><br><span class="line">import org.aspectj.lang.annotation.Aspect;</span><br><span class="line">import org.aspectj.lang.annotation.Pointcut;</span><br><span class="line"></span><br><span class="line">@Aspect</span><br><span class="line">public class testAspect &#123;</span><br><span class="line">    private static final String TAG = &quot;testAspect&quot;;</span><br><span class="line"></span><br><span class="line">    @Pointcut(&quot;execution(* com.eliteams.quick4j.test.aopTest.*.say*())&quot;)</span><br><span class="line">    //创建&quot;切入点&quot;，该&quot;切入点&quot;捕获了指定项目中相关类的方法（&quot;连接点&quot;）</span><br><span class="line">    public void testPointcut() &#123; &#125;</span><br><span class="line"></span><br><span class="line">    @AfterReturning(pointcut=&quot;testPointcut()&quot;)</span><br><span class="line"></span><br><span class="line">    //创建&quot;通知&quot;，该&quot;通知&quot;绑定了具体的&quot;切入点&quot;</span><br><span class="line">    public void simpleAdvice() //&quot;切入点&quot;的执行代码，将被&quot;目标对象&quot;的&quot;代理对象&quot;执行</span><br><span class="line">    &#123;</span><br><span class="line">        System.out.println(&quot;Hi qiji.tech&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="测试结果"><a href="#测试结果" class="headerlink" title="测试结果"></a>测试结果</h4><p>运行结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">I&apos;m A</span><br><span class="line">Hi qiji.tech</span><br><span class="line">I&apos;m B</span><br><span class="line">Hi qiji.tech</span><br></pre></td></tr></table></figure>
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>革命尚未成功，仍需努力</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li>Spring 官网 <a href="https://spring.io/" title="Spring 官网" target="_blank" rel="external">https://spring.io/</a></li>
+<li>Spring wiki <a href="https://zh.wikipedia.org/wiki/Spring" title="Spring wiki" target="_blank" rel="external">https://zh.wikipedia.org/wiki/Spring</a></li>
+<li>Spring 的注解注入  <a href="http://blog.csdn.net/baple/article/details/17891755" title="Spring @Resource、@Autowired、@Qualifier的注解注入及区别" target="_blank" rel="external">http://blog.csdn.net/baple/article/details/17891755</a></li>
+<li>Spring 入门  <a href="http://www.imooc.com/learn/196" title="Spring 入门" target="_blank" rel="external">http://www.imooc.com/learn/196</a></li>
+<li>Spring 教程  <a href="http://www.yiibai.com/spring/" title="Spring 教程" target="_blank" rel="external">http://www.yiibai.com/spring/</a></li>
+<li>Spring 核心技术学习总结  <a href="http://penghuaiyi.iteye.com/blog/182616" title="Spring核心技术学习总结" target="_blank" rel="external">http://penghuaiyi.iteye.com/blog/182616</a></li>
+<li>Spring知识点总结大全 <a href="http://www.open-open.com/lib/view/open1329298931749.html" title="Spring知识点总结大全" target="_blank" rel="external">http://www.open-open.com/lib/view/open1329298931749.html</a></li>
+<li>Spring - 随笔分类 - 孤傲苍狼<a href="http://www.cnblogs.com/xdp-gacl/category/544380.html" title="Spring - 随笔分类 - 孤傲苍狼 - 博客园" target="_blank" rel="external">http://www.cnblogs.com/xdp-gacl/category/544380.html</a></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JAVA/" rel="tag">#JAVA</a>
+          
+            <a href="/tags/Spring/" rel="tag">#Spring</a>
+          
+            <a href="/tags/框架/" rel="tag">#框架</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/06/08/JAVA-Spring-框架学习总结（一）/" rel="next" title="[JAVA] Spring 框架学习总结（一）">
+                <i class="fa fa-chevron-left"></i> [JAVA] Spring 框架学习总结（一）
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/06/15/JAVA-设计模式之模板方法模式/" rel="prev" title="[Java]设计模式之模板方法模式">
+                [Java]设计模式之模板方法模式 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Arno" />
+          <p class="site-author-name" itemprop="name">Arno</p>
+          <p class="site-description motion-element" itemprop="description">Simplicity is prerequisite for reliability</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">10</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是-AOP"><span class="nav-number">2.</span> <span class="nav-text">什么是 AOP</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#AOP-实现方式"><span class="nav-number">2.1.</span> <span class="nav-text">AOP 实现方式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring-的-AOP-实现"><span class="nav-number">3.</span> <span class="nav-text">Spring 的 AOP 实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AOP-基本概念"><span class="nav-number">4.</span> <span class="nav-text">AOP 基本概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Aspect（切面）"><span class="nav-number">4.1.</span> <span class="nav-text">Aspect（切面）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Joinpoint（连接点）"><span class="nav-number">4.2.</span> <span class="nav-text">Joinpoint（连接点）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Advice（通知）"><span class="nav-number">4.3.</span> <span class="nav-text">Advice（通知）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Pointcut（切入点）"><span class="nav-number">4.4.</span> <span class="nav-text">Pointcut（切入点）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Introduction（引入）"><span class="nav-number">4.5.</span> <span class="nav-text">Introduction（引入）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Weaving（织入）"><span class="nav-number">4.6.</span> <span class="nav-text">Weaving（织入）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Target（目标对象）"><span class="nav-number">4.7.</span> <span class="nav-text">Target（目标对象）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Proxy（代理对象）"><span class="nav-number">4.8.</span> <span class="nav-text">Proxy（代理对象）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring-Advice-类型"><span class="nav-number">5.</span> <span class="nav-text">Spring Advice 类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Before-Advice（前置通知）"><span class="nav-number">5.1.</span> <span class="nav-text">Before Advice（前置通知）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#After-Returning-Advice-（返回后通知）"><span class="nav-number">5.2.</span> <span class="nav-text">After Returning Advice （返回后通知）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MethodInterceptor-拦截器"><span class="nav-number">5.3.</span> <span class="nav-text">MethodInterceptor (拦截器)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ThrowsAdvice-（抛出异常后通知）"><span class="nav-number">5.4.</span> <span class="nav-text">ThrowsAdvice （抛出异常后通知）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AOP-实现"><span class="nav-number">6.</span> <span class="nav-text">AOP 实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基于-AspectJ-语言的实现方式"><span class="nav-number">6.1.</span> <span class="nav-text">基于 AspectJ 语言的实现方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#先新建两个简单的类"><span class="nav-number">6.1.1.</span> <span class="nav-text">先新建两个简单的类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#接下来编写切面类"><span class="nav-number">6.1.2.</span> <span class="nav-text">接下来编写切面类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#编写配置文件"><span class="nav-number">6.1.3.</span> <span class="nav-text">编写配置文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#编写测试类"><span class="nav-number">6.1.4.</span> <span class="nav-text">编写测试类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#测试结果"><span class="nav-number">6.1.5.</span> <span class="nav-text">测试结果</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#后记"><span class="nav-number">7.</span> <span class="nav-text">后记</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">8.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Arno</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,635 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JAVA,设计模式," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="什么是设计模式设计模式（Design pattern）是一套被反复使用、多数人知晓的，经过分类编目的、代码设计经验的总结。
+工厂模式的概念
+实例化对象，用工厂方法代替 new 操作
+工厂模式包括工厂方法模式和抽象工厂模式
+抽象工厂模式是工厂方法模式的扩展">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Java]设计模式之工厂模式">
+<meta property="og:url" content="hiarno.github.io/2015/08/01/JAVA-设计模式之工厂模式/index.html">
+<meta property="og:site_name" content="Arno's Blog">
+<meta property="og:description" content="什么是设计模式设计模式（Design pattern）是一套被反复使用、多数人知晓的，经过分类编目的、代码设计经验的总结。
+工厂模式的概念
+实例化对象，用工厂方法代替 new 操作
+工厂模式包括工厂方法模式和抽象工厂模式
+抽象工厂模式是工厂方法模式的扩展">
+<meta property="og:image" content="http://blog.qiji.tech/wp-content/uploads/2016/04/简单工厂.jpg">
+<meta property="og:image" content="http://blog.qiji.tech/wp-content/uploads/2016/04/抽象工厂.jpg">
+<meta property="og:updated_time" content="2016-05-24T09:05:32.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[Java]设计模式之工厂模式">
+<meta name="twitter:description" content="什么是设计模式设计模式（Design pattern）是一套被反复使用、多数人知晓的，经过分类编目的、代码设计经验的总结。
+工厂模式的概念
+实例化对象，用工厂方法代替 new 操作
+工厂模式包括工厂方法模式和抽象工厂模式
+抽象工厂模式是工厂方法模式的扩展">
+<meta name="twitter:image" content="http://blog.qiji.tech/wp-content/uploads/2016/04/简单工厂.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> [Java]设计模式之工厂模式 | Arno's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Arno's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Simplicity is prerequisite for reliability.</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                [Java]设计模式之工厂模式
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-08-01T21:00:00+08:00" content="2015-08-01">
+              2015-08-01
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="什么是设计模式"><a href="#什么是设计模式" class="headerlink" title="什么是设计模式"></a>什么是设计模式</h2><p>设计模式（Design pattern）是一套被反复使用、多数人知晓的，经过分类编目的、代码设计经验的总结。</p>
+<h3 id="工厂模式的概念"><a href="#工厂模式的概念" class="headerlink" title="工厂模式的概念"></a>工厂模式的概念</h3><ul>
+<li>实例化对象，用工厂方法代替 new 操作</li>
+<li>工厂模式包括工厂方法模式和抽象工厂模式</li>
+<li>抽象工厂模式是工厂方法模式的扩展</li>
+</ul>
+<a id="more"></a>
+<blockquote>
+<p>Spring 框架采用了这种设计模式。</p>
+</blockquote>
+<h3 id="工厂模式的意图"><a href="#工厂模式的意图" class="headerlink" title="工厂模式的意图"></a>工厂模式的意图</h3><p>定义一个接口来创建对象，但是让子类来决定哪些类需要被实例化。<br>工厂方法把实例化的工作推迟到子类中去实现。</p>
+<h3 id="什么情况下适合工厂模式？"><a href="#什么情况下适合工厂模式？" class="headerlink" title="什么情况下适合工厂模式？"></a>什么情况下适合工厂模式？</h3><ul>
+<li>有一组类似的对象需要创建</li>
+<li>在编码时不能预见需要创建哪种类的实例</li>
+<li>系统需要考虑扩展性，不依赖于产品类实例如何被创建、组合和表达的细节（低耦合）</li>
+</ul>
+<h3 id="简单工厂"><a href="#简单工厂" class="headerlink" title="简单工厂"></a>简单工厂</h3><p>先来直接代码示例吧~</p>
+<p>先建一个接口</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">package com.doity.factory.simple;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Created by ARNO on 2016/4/22/022.</span><br><span class="line"> * desc: office的接口</span><br><span class="line"> */</span><br><span class="line">public interface OfficeInterface &#123;</span><br><span class="line"></span><br><span class="line">    public void UseOffice();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>来建两个实体</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">package com.doity.factory.simple;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Created by ARNO on 2016/4/22/022.</span><br><span class="line"> * desc:</span><br><span class="line"> */</span><br><span class="line">public class Word implements OfficeInterface &#123;</span><br><span class="line">    private static final String TAG = &quot;Word&quot;;</span><br><span class="line"></span><br><span class="line">    public void UseOffice() &#123;</span><br><span class="line">        System.out.println(&quot;正在使用 Word&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">package com.doity.factory.simple;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Created by ARNO on 2016/4/22/022.</span><br><span class="line"> * desc:</span><br><span class="line"> */</span><br><span class="line">public class PowerPoint implements OfficeInterface &#123;</span><br><span class="line">    private static final String TAG = &quot;PowerPoint&quot;;</span><br><span class="line"></span><br><span class="line">    public void UseOffice() &#123;</span><br><span class="line">        System.out.println(&quot;正在使用 PowerPoint&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>建一个测试类，开始测试</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">package com.doity.factory.simple;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Created by ARNO on 2016/4/22/022.</span><br><span class="line"> * desc: office的测试类</span><br><span class="line"> */</span><br><span class="line">public class TestOffice &#123;</span><br><span class="line">    private static final String TAG = &quot;TestOffice&quot;;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args)  &#123;</span><br><span class="line"></span><br><span class="line">        //常规写法</span><br><span class="line">//        Word word = new Word();</span><br><span class="line">//        PowerPoint powerPoint = new PowerPoint();</span><br><span class="line">//        word.UseOffice();</span><br><span class="line">//        powerPoint.UseOffice();</span><br><span class="line"></span><br><span class="line">        //工厂模式写法</span><br><span class="line">        OfficeFactory officeFactory = new OfficeFactory();</span><br><span class="line">        OfficeInterface word =  officeFactory.getOfficeByClass(&quot;com.doity.factory.simple.Word&quot;);</span><br><span class="line">        word.UseOffice();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">正在使用 Word</span><br></pre></td></tr></table></figure>
+<h3 id="抽象工厂模式"><a href="#抽象工厂模式" class="headerlink" title="抽象工厂模式"></a>抽象工厂模式</h3><p>工厂模式这种设计方式非常棒，但是简单工厂这种方式适用场景还是比较狭窄的，所以产生了成抽象工厂模式。</p>
+<h4 id="简单工厂的模型图"><a href="#简单工厂的模型图" class="headerlink" title="简单工厂的模型图"></a>简单工厂的模型图</h4><p><a href="http://blog.qiji.tech/wp-content/uploads/2016/04/简单工厂.jpg" target="_blank" rel="external"><img src="http://blog.qiji.tech/wp-content/uploads/2016/04/简单工厂.jpg" alt="简单工厂"></a></p>
+<h4 id="抽象工厂的模型图"><a href="#抽象工厂的模型图" class="headerlink" title="抽象工厂的模型图"></a>抽象工厂的模型图</h4><p><a href="http://blog.qiji.tech/wp-content/uploads/2016/04/抽象工厂.jpg" target="_blank" rel="external"><img src="http://blog.qiji.tech/wp-content/uploads/2016/04/抽象工厂.jpg" alt="抽象工厂"></a></p>
+<h3 id="抽象工厂代码示例"><a href="#抽象工厂代码示例" class="headerlink" title="抽象工厂代码示例"></a>抽象工厂代码示例</h3><p>先来建立一个男孩接口，以及深圳男孩、上海男孩的实体类。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">package com.doity.factory.AbstractFactory;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Created by ARNO on 2016/4/22/022.</span><br><span class="line"> * desc: 男孩的接口</span><br><span class="line"> */</span><br><span class="line">public interface Boy &#123;</span><br><span class="line">    public void drawBoy();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">package com.doity.factory.AbstractFactory;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Created by ARNO on 2016/4/22/022.</span><br><span class="line"> * desc:</span><br><span class="line"> */</span><br><span class="line">public class ShanghaiBoy implements Girl &#123;</span><br><span class="line">    private static final String TAG = &quot;ShanghaiBoy&quot;;</span><br><span class="line"></span><br><span class="line">    public void drawGirl() &#123;</span><br><span class="line">        System.out.println(&quot;我是上海男孩&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">package com.doity.factory.AbstractFactory;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Created by ARNO on 2016/4/22/022.</span><br><span class="line"> * desc:</span><br><span class="line"> */</span><br><span class="line">public class ShenzhenBoy implements Boy&#123;</span><br><span class="line">    public void drawBoy() &#123;</span><br><span class="line">        System.out.println(&quot;我是深圳男生&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>先来建立一个女孩接口，以及深圳女孩、上海女孩的实体类。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">package com.doity.factory.AbstractFactory;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Created by ARNO on 2016/4/22/022.</span><br><span class="line"> * desc:</span><br><span class="line"> */</span><br><span class="line">public interface Girl &#123;</span><br><span class="line">    public void drawGirl();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">package com.doity.factory.AbstractFactory;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Created by ARNO on 2016/4/22/022.</span><br><span class="line"> * desc:</span><br><span class="line"> */</span><br><span class="line">public class ShanghaiGirl implements Girl &#123;</span><br><span class="line">    private static final String TAG = &quot;ShanghaiGirl&quot;;</span><br><span class="line"></span><br><span class="line">    public void drawGirl() &#123;</span><br><span class="line">        System.out.println(&quot;我是上海女孩&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">package com.doity.factory.AbstractFactory;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Created by ARNO on 2016/4/22/022.</span><br><span class="line"> * desc:</span><br><span class="line"> */</span><br><span class="line">public class ShenzhenGirl implements Girl&#123;</span><br><span class="line">    private static final String TAG = &quot;ShenzhenGirl&quot;;</span><br><span class="line"></span><br><span class="line">    public void drawGirl() &#123;</span><br><span class="line">        System.out.println(&quot;我是深圳女生&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>工厂的接口</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">package com.doity.factory.AbstractFactory;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Created by ARNO on 2016/4/22/022.</span><br><span class="line"> * desc:</span><br><span class="line"> */</span><br><span class="line">public interface PersonFactoryInterface &#123;</span><br><span class="line"></span><br><span class="line">    //男孩接口</span><br><span class="line">    public Boy getBoy();</span><br><span class="line">    //女孩接口</span><br><span class="line">    public Girl getGirl();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>深圳工厂<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">package com.doity.factory.AbstractFactory;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Created by ARNO on 2016/4/22/022.</span><br><span class="line"> * desc:</span><br><span class="line"> */</span><br><span class="line">public class ShenzhenFactory implements PersonFactoryInterface &#123;</span><br><span class="line">    private static final String TAG = &quot;ShenzhenFactory&quot;;</span><br><span class="line"></span><br><span class="line">    public Boy getBoy() &#123;</span><br><span class="line">        return new ShenzhenBoy();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public Girl getGirl() &#123;</span><br><span class="line">        return new ShenzhenGirl();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>上海工厂<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">package com.doity.factory.AbstractFactory;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Created by ARNO on 2016/4/22/022.</span><br><span class="line"> * desc:</span><br><span class="line"> */</span><br><span class="line">public class ShanghaiFactory implements PersonFactoryInterface &#123;</span><br><span class="line">    private static final String TAG = &quot;ShanghaiFactory&quot;;</span><br><span class="line"></span><br><span class="line">    public Boy getBoy() &#123;</span><br><span class="line">        return new ShenzhenBoy();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public Girl getGirl() &#123;</span><br><span class="line">        return new ShanghaiGirl();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>最后是测试类<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">package com.doity.factory.AbstractFactory;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Created by ARNO on 2016/4/22/022.</span><br><span class="line"> * desc:</span><br><span class="line"> */</span><br><span class="line">public class TestAbstractFactory &#123;</span><br><span class="line">    private static final String TAG = &quot;TestAbstractFactory&quot;;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        PersonFactoryInterface personFactory = new ShenzhenFactory();</span><br><span class="line">        personFactory.getBoy().drawBoy();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="运行结果-1"><a href="#运行结果-1" class="headerlink" title="运行结果"></a>运行结果</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">我是深圳男生</span><br></pre></td></tr></table></figure>
+<h3 id="工厂方法模式和抽象工厂模式对比"><a href="#工厂方法模式和抽象工厂模式对比" class="headerlink" title="工厂方法模式和抽象工厂模式对比"></a>工厂方法模式和抽象工厂模式对比</h3><ul>
+<li>工厂模式是一种极端情况的抽象工厂模式，而抽象工厂模式可以看成是工厂模式的推广</li>
+<li>工厂模式用来创建一个产品的等级结果，而抽象工厂模式是用来创建多个产品的等级结构</li>
+<li>工厂模式只有一个抽象产品类，而抽象工厂模式有多个抽象产品类</li>
+</ul>
+<h3 id="工厂模式的实现帮助我们"><a href="#工厂模式的实现帮助我们" class="headerlink" title="工厂模式的实现帮助我们"></a>工厂模式的实现帮助我们</h3><ul>
+<li>系统可以在不修改具体工厂角色的情况下引进新的产品</li>
+<li>客户端不必关心对象如果创建，明确了职责</li>
+<li>更好的理解面向对象的原则————面向接口编程，而不要面向实现编程</li>
+</ul>
+<h3 id="工厂模式适用于哪些场景"><a href="#工厂模式适用于哪些场景" class="headerlink" title="工厂模式适用于哪些场景"></a>工厂模式适用于哪些场景</h3><ul>
+<li>一个系统应当不依赖产品类实例被创立、组成和表示的细节，这对于所有形态的工厂模式都是重要的</li>
+<li>这个系统的产品有至少一个的产品族</li>
+<li>同属于同一个产品族的产品是设计成在一起使用的，这一约束必须得在系统的设计中体现出来</li>
+<li>不同的产品以一系列的接口的面貌出现，从而使系统不依赖于接口实现的细节</li>
+</ul>
+<h3 id="工厂模式的局限性"><a href="#工厂模式的局限性" class="headerlink" title="工厂模式的局限性"></a>工厂模式的局限性</h3><ul>
+<li>重构已经存在的类会破坏客户端代码</li>
+<li>因为工厂方法所实例化的类具有私有的构造方法，所- 以这些类就不能扩展了。</li>
+<li>如果确实扩展了工厂方法所实例化的类（例如将构造方法设为保护的，虽然有风险但也是可行的），子类必须具有所有工厂方法的一套实现。</li>
+</ul>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>无论如何使用工厂，我们只关心是否降低耦合度。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li>工厂模式 - 维基百科 <a href="https://zh.wikipedia.org/wiki/%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95" title="工厂模式 - 维基百科" target="_blank" rel="external">https://zh.wikipedia.org/wiki/工厂方法</a></li>
+<li>模式的秘密—工厂模式 <a href="http://www.imooc.com/learn/261" title="模式的秘密---工厂模式" target="_blank" rel="external">http://www.imooc.com/learn/261</a></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JAVA/" rel="tag">#JAVA</a>
+          
+            <a href="/tags/设计模式/" rel="tag">#设计模式</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/06/23/Spring-MVC-框架学习总结（一）/" rel="next" title="[JAVA] Spring MVC 框架学习总结（一）">
+                <i class="fa fa-chevron-left"></i> [JAVA] Spring MVC 框架学习总结（一）
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/08/15/JAVA-设计模式之单例模式/" rel="prev" title="[Java]设计模式之单例模式">
+                [Java]设计模式之单例模式 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Arno" />
+          <p class="site-author-name" itemprop="name">Arno</p>
+          <p class="site-description motion-element" itemprop="description">Simplicity is prerequisite for reliability</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">10</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是设计模式"><span class="nav-number">1.</span> <span class="nav-text">什么是设计模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#工厂模式的概念"><span class="nav-number">1.1.</span> <span class="nav-text">工厂模式的概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#工厂模式的意图"><span class="nav-number">1.2.</span> <span class="nav-text">工厂模式的意图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#什么情况下适合工厂模式？"><span class="nav-number">1.3.</span> <span class="nav-text">什么情况下适合工厂模式？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#简单工厂"><span class="nav-number">1.4.</span> <span class="nav-text">简单工厂</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#运行结果"><span class="nav-number">1.4.1.</span> <span class="nav-text">运行结果</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#抽象工厂模式"><span class="nav-number">1.5.</span> <span class="nav-text">抽象工厂模式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#简单工厂的模型图"><span class="nav-number">1.5.1.</span> <span class="nav-text">简单工厂的模型图</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#抽象工厂的模型图"><span class="nav-number">1.5.2.</span> <span class="nav-text">抽象工厂的模型图</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#抽象工厂代码示例"><span class="nav-number">1.6.</span> <span class="nav-text">抽象工厂代码示例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#运行结果-1"><span class="nav-number">1.6.1.</span> <span class="nav-text">运行结果</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#工厂方法模式和抽象工厂模式对比"><span class="nav-number">1.7.</span> <span class="nav-text">工厂方法模式和抽象工厂模式对比</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#工厂模式的实现帮助我们"><span class="nav-number">1.8.</span> <span class="nav-text">工厂模式的实现帮助我们</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#工厂模式适用于哪些场景"><span class="nav-number">1.9.</span> <span class="nav-text">工厂模式适用于哪些场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#工厂模式的局限性"><span class="nav-number">1.10.</span> <span class="nav-text">工厂模式的局限性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结"><span class="nav-number">2.</span> <span class="nav-text">小结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Arno</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>

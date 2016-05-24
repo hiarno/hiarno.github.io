@@ -1,0 +1,841 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JAVA,Spring,SpringMVC,框架," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="什么是 MVC首先 MVC，是我们开发 Web 应用的一种架构方式。Spring MVC 则是其中的一种框架，与 Spring 框架紧密结合。
+
+模型-视图-控制器（MVC）是一个众所周知的以设计界面应用程序为基础的设计模式。它主要通过分离模型、视图及控制器在应用程序中的角色将业务逻辑从界面中解耦。
+MVC 的核心思想就是业务数据抽取同业务数据呈现相分离。
+程序分层，分工合作，既相互独立，又协同工">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[JAVA] Spring MVC 框架学习总结（一）">
+<meta property="og:url" content="hiarno.github.io/2015/06/23/Spring-MVC-框架学习总结（一）/index.html">
+<meta property="og:site_name" content="Arno's Blog">
+<meta property="og:description" content="什么是 MVC首先 MVC，是我们开发 Web 应用的一种架构方式。Spring MVC 则是其中的一种框架，与 Spring 框架紧密结合。
+
+模型-视图-控制器（MVC）是一个众所周知的以设计界面应用程序为基础的设计模式。它主要通过分离模型、视图及控制器在应用程序中的角色将业务逻辑从界面中解耦。
+MVC 的核心思想就是业务数据抽取同业务数据呈现相分离。
+程序分层，分工合作，既相互独立，又协同工">
+<meta property="og:image" content="http://blog.qiji.tech/wp-content/uploads/2016/04/Spring-MVC前端视图控制器.jpg">
+<meta property="og:image" content="http://blog.qiji.tech/wp-content/uploads/2016/04/Spring-MVC-的基本概念.jpg">
+<meta property="og:image" content="http://blog.qiji.tech/wp-content/uploads/2016/04/Spring-MVC-详细运行流程图（通俗易懂）.png">
+<meta property="og:updated_time" content="2016-05-24T09:00:14.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[JAVA] Spring MVC 框架学习总结（一）">
+<meta name="twitter:description" content="什么是 MVC首先 MVC，是我们开发 Web 应用的一种架构方式。Spring MVC 则是其中的一种框架，与 Spring 框架紧密结合。
+
+模型-视图-控制器（MVC）是一个众所周知的以设计界面应用程序为基础的设计模式。它主要通过分离模型、视图及控制器在应用程序中的角色将业务逻辑从界面中解耦。
+MVC 的核心思想就是业务数据抽取同业务数据呈现相分离。
+程序分层，分工合作，既相互独立，又协同工">
+<meta name="twitter:image" content="http://blog.qiji.tech/wp-content/uploads/2016/04/Spring-MVC前端视图控制器.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> [JAVA] Spring MVC 框架学习总结（一） | Arno's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Arno's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Simplicity is prerequisite for reliability.</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                [JAVA] Spring MVC 框架学习总结（一）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-06-23T21:00:00+08:00" content="2015-06-23">
+              2015-06-23
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="什么是-MVC"><a href="#什么是-MVC" class="headerlink" title="什么是 MVC"></a>什么是 MVC</h2><p>首先 MVC，是我们开发 Web 应用的一种架构方式。Spring MVC 则是其中的一种框架，与 Spring 框架紧密结合。</p>
+<ul>
+<li>模型-视图-控制器（MVC）是一个众所周知的以设计界面应用程序为基础的设计模式。它主要通过分离模型、视图及控制器在应用程序中的角色将业务逻辑从界面中解耦。</li>
+<li>MVC 的核心思想就是业务数据抽取同业务数据呈现相分离。</li>
+<li>程序分层，分工合作，既相互独立，又协同工作</li>
+</ul>
+<p>Spring MVC 是采用前端控制方式（Front Controller），如图所示。 </p>
+<a id="more"></a>
+<p><a href="http://blog.qiji.tech/wp-content/uploads/2016/04/Spring-MVC前端视图控制器.jpg" target="_blank" rel="external"><img src="http://blog.qiji.tech/wp-content/uploads/2016/04/Spring-MVC前端视图控制器.jpg" alt="Spring MVC前端视图控制器"></a></p>
+<p>用户的 HTTP 的请求到达 Front Controller，将请求代理给 Controller ，Controller 调用业务逻辑生成业务数据，并数据返回给 Front Controller ，Front Controller 将数据分发给 View template，View template 呈现用户页面，并返回给 Front Controller ，Front Controller 返回给用户，此时用户就可以看见页面了。</p>
+<blockquote>
+<p>用通俗点是解释：其中 Front Controller 类似大医院里面的分诊台，负责将访客引导至对应的科室就诊。</p>
+</blockquote>
+<h2 id="Spring-MVC-的基本概念"><a href="#Spring-MVC-的基本概念" class="headerlink" title="Spring MVC 的基本概念"></a>Spring MVC 的基本概念</h2><p><a href="http://blog.qiji.tech/wp-content/uploads/2016/04/Spring-MVC-的基本概念.jpg" target="_blank" rel="external"><img src="http://blog.qiji.tech/wp-content/uploads/2016/04/Spring-MVC-的基本概念.jpg" alt="Spring MVC 的基本概念"></a> 图中 Dispatcher Servlet 就充当了 MVC 中的Front Controller 了，负责全局的调度分发，根据图中箭头方向进行运转。</p>
+<p>继续来看更加通俗易懂的图 </p>
+<p><a href="http://blog.qiji.tech/wp-content/uploads/2016/04/Spring-MVC-详细运行流程图（通俗易懂）.png" target="_blank" rel="external"><img src="http://blog.qiji.tech/wp-content/uploads/2016/04/Spring-MVC-详细运行流程图（通俗易懂）.png" alt="Spring MVC 详细运行流程图（通俗易懂）"></a></p>
+<h2 id="代码实践"><a href="#代码实践" class="headerlink" title="代码实践"></a>代码实践</h2><h3 id="Maven-引入依赖，管理项目"><a href="#Maven-引入依赖，管理项目" class="headerlink" title="Maven 引入依赖，管理项目"></a>Maven 引入依赖，管理项目</h3><pre><code>&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+    xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;
+    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+    &lt;groupId&gt;imooc-arthur&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-mvc-study&lt;/artifactId&gt;
+    &lt;version&gt;1.0.0-SNAPSHOT&lt;/version&gt;
+
+    &lt;properties&gt;
+        &lt;commons-lang.version&gt;2.6&lt;/commons-lang.version&gt;
+        &lt;slf4j.version&gt;1.7.6&lt;/slf4j.version&gt;
+        &lt;spring.version&gt;4.1.3.RELEASE&lt;/spring.version&gt;
+        &lt;jackson.version&gt;2.5.4&lt;/jackson.version&gt;
+    &lt;/properties&gt;
+
+
+    &lt;dependencyManagement&gt;
+        &lt;dependencies&gt;
+            &lt;dependency&gt;
+                &lt;groupId&gt;org.springframework&lt;/groupId&gt;
+                &lt;artifactId&gt;spring-framework-bom&lt;/artifactId&gt;
+                &lt;version&gt;${spring.version}&lt;/version&gt;
+                &lt;type&gt;pom&lt;/type&gt;
+                &lt;scope&gt;import&lt;/scope&gt;
+            &lt;/dependency&gt;
+        &lt;/dependencies&gt;
+    &lt;/dependencyManagement&gt;
+
+    &lt;dependencies&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-webmvc&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+
+        &lt;dependency&gt;
+            &lt;groupId&gt;commons-lang&lt;/groupId&gt;
+            &lt;artifactId&gt;commons-lang&lt;/artifactId&gt;
+            &lt;version&gt;${commons-lang.version}&lt;/version&gt;
+        &lt;/dependency&gt;
+
+
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.slf4j&lt;/groupId&gt;
+            &lt;artifactId&gt;slf4j-log4j12&lt;/artifactId&gt;
+            &lt;version&gt;${slf4j.version}&lt;/version&gt;
+            &lt;exclusions&gt;
+                &lt;exclusion&gt;
+                    &lt;artifactId&gt;slf4j-api&lt;/artifactId&gt;
+                    &lt;groupId&gt;org.slf4j&lt;/groupId&gt;
+                &lt;/exclusion&gt;
+            &lt;/exclusions&gt;
+        &lt;/dependency&gt;
+
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.slf4j&lt;/groupId&gt;
+            &lt;artifactId&gt;slf4j-api&lt;/artifactId&gt;
+            &lt;version&gt;${slf4j.version}&lt;/version&gt;
+        &lt;/dependency&gt;
+
+        &lt;dependency&gt;
+            &lt;groupId&gt;javax.servlet&lt;/groupId&gt;
+            &lt;artifactId&gt;servlet-api&lt;/artifactId&gt;
+            &lt;version&gt;2.5&lt;/version&gt;
+        &lt;/dependency&gt;
+
+        &lt;dependency&gt;
+            &lt;groupId&gt;commons-fileupload&lt;/groupId&gt;
+            &lt;artifactId&gt;commons-fileupload&lt;/artifactId&gt;
+            &lt;version&gt;1.3.1&lt;/version&gt;
+        &lt;/dependency&gt;
+
+        &lt;dependency&gt;
+            &lt;groupId&gt;com.fasterxml.jackson.core&lt;/groupId&gt;
+            &lt;artifactId&gt;jackson-databind&lt;/artifactId&gt;
+            &lt;version&gt;${jackson.version}&lt;/version&gt;
+        &lt;/dependency&gt;
+
+    &lt;/dependencies&gt;
+
+    &lt;build&gt;
+        &lt;plugins&gt;
+            &lt;plugin&gt;
+                &lt;groupId&gt;org.eclipse.jetty&lt;/groupId&gt;
+                &lt;artifactId&gt;jetty-maven-plugin&lt;/artifactId&gt;
+                &lt;version&gt;9.2.2.v20140723&lt;/version&gt;
+            &lt;/plugin&gt;
+        &lt;/plugins&gt;
+    &lt;/build&gt;
+
+&lt;/project&gt;
+</code></pre><h3 id="WEB-xml-的配置"><a href="#WEB-xml-的配置" class="headerlink" title="WEB.xml 的配置"></a>WEB.xml 的配置</h3><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;web-app version=&quot;2.4&quot; xmlns=&quot;http://java.sun.com/xml/ns/j2ee&quot;
+    xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+    xsi:schemaLocation=&quot;http://java.sun.com/xml/ns/j2ee 
+    http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd&quot;&gt;
+  &lt;display-name&gt;Spring MVC Study&lt;/display-name&gt;
+  &lt;!-- Spring应用上下文， 理解层次化的ApplicationContext --&gt;
+  &lt;context-param&gt;
+         &lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;
+        &lt;param-value&gt;/WEB-INF/configs/spring/applicationContext*.xml&lt;/param-value&gt;
+  &lt;/context-param&gt;
+
+  &lt;listener&gt;
+        &lt;listener-class&gt;
+            org.springframework.web.context.ContextLoaderListener
+        &lt;/listener-class&gt;
+  &lt;/listener&gt;
+
+  &lt;!-- DispatcherServlet, Spring MVC的核心 --&gt;
+  &lt;servlet&gt;
+        &lt;servlet-name&gt;mvc-dispatcher&lt;/servlet-name&gt;
+        &lt;servlet-class&gt; org.springframework.web.servlet.DispatcherServlet&lt;/servlet-class&gt;
+        &lt;!-- DispatcherServlet对应的上下文配置， 默认为/WEB-INF/$servlet-name$-servlet.xml
+         --&gt;
+        &lt;init-param&gt;
+          &lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;
+          &lt;param-value&gt;/WEB-INF/configs/spring/mvc-dispatcher-servlet.xml&lt;/param-value&gt;
+        &lt;/init-param&gt;
+        &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;
+    &lt;/servlet&gt;
+    &lt;servlet-mapping&gt;
+        &lt;servlet-name&gt;mvc-dispatcher&lt;/servlet-name&gt;
+        &lt;!-- mvc-dispatcher拦截所有的请求--&gt;
+        &lt;url-pattern&gt;/&lt;/url-pattern&gt;
+    &lt;/servlet-mapping&gt;
+&lt;/web-app&gt;
+</code></pre><h3 id="applicationContext-xml-的配置"><a href="#applicationContext-xml-的配置" class="headerlink" title="applicationContext.xml 的配置"></a>applicationContext.xml 的配置</h3><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+    xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:context=&quot;http://www.springframework.org/schema/context&quot;
+    xmlns:mvc=&quot;http://www.springframework.org/schema/mvc&quot;
+    xsi:schemaLocation=&quot;
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd&quot;&gt;
+
+    &lt;context:annotation-config /&gt;
+
+    &lt;context:component-scan base-package=&quot;com.imooc.mvcdemo&quot;&gt;
+        &lt;context:exclude-filter type=&quot;annotation&quot;
+            expression=&quot;org.springframework.stereotype.Controller&quot; /&gt;
+    &lt;/context:component-scan&gt;
+&lt;/beans&gt;
+</code></pre><h3 id="mvc-dispatcher-servlet-xml-的配置"><a href="#mvc-dispatcher-servlet-xml-的配置" class="headerlink" title="mvc-dispatcher-servlet.xml 的配置"></a>mvc-dispatcher-servlet.xml 的配置</h3><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+    xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:context=&quot;http://www.springframework.org/schema/context&quot;
+    xmlns:mvc=&quot;http://www.springframework.org/schema/mvc&quot;
+    xsi:schemaLocation=&quot;
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd&quot;&gt;
+
+    &lt;!-- 本配置文件是工名为mvc-dispatcher的DispatcherServlet使用， 提供其相关的Spring MVC配置 --&gt;
+
+    &lt;!-- 启用Spring基于annotation的DI, 使用户可以在Spring MVC中使用Spring的强大功能。 激活 @Required 
+        @Autowired,JSR 250&apos;s @PostConstruct, @PreDestroy and @Resource 等标注 --&gt;
+    &lt;context:annotation-config /&gt;
+
+    &lt;!-- DispatcherServlet上下文， 只管理@Controller类型的bean， 忽略其他型的bean, 如@Service --&gt;
+    &lt;context:component-scan base-package=&quot;com.imooc.mvcdemo&quot;&gt;
+        &lt;context:include-filter type=&quot;annotation&quot;
+            expression=&quot;org.springframework.stereotype.Controller&quot; /&gt;
+    &lt;/context:component-scan&gt;
+
+    &lt;!-- HandlerMapping, 无需配置， Spring MVC可以默认启动。 DefaultAnnotationHandlerMapping 
+        annotation-driven HandlerMapping --&gt;
+
+    &lt;!-- 扩充了注解驱动，可以将请求参数绑定到控制器参数 --&gt;
+    &lt;mvc:annotation-driven /&gt;
+
+    &lt;!-- 静态资源处理， css， js， imgs --&gt;
+    &lt;mvc:resources mapping=&quot;/resources/**&quot; location=&quot;/resources/&quot; /&gt;
+
+
+    &lt;!-- 配置ViewResolver。 可以用多个ViewResolver。 使用order属性排序。 InternalResourceViewResolver放在最后。 --&gt;
+    &lt;bean
+        class=&quot;org.springframework.web.servlet.view.ContentNegotiatingViewResolver&quot;&gt;
+        &lt;property name=&quot;order&quot; value=&quot;1&quot; /&gt;
+        &lt;property name=&quot;mediaTypes&quot;&gt;
+            &lt;map&gt;
+                &lt;entry key=&quot;json&quot; value=&quot;application/json&quot; /&gt;
+                &lt;entry key=&quot;xml&quot; value=&quot;application/xml&quot; /&gt;
+                &lt;entry key=&quot;htm&quot; value=&quot;text/html&quot; /&gt;
+            &lt;/map&gt;
+        &lt;/property&gt;
+
+        &lt;property name=&quot;defaultViews&quot;&gt;
+            &lt;list&gt;
+                &lt;!-- JSON View --&gt;
+                &lt;bean
+                    class=&quot;org.springframework.web.servlet.view.json.MappingJackson2JsonView&quot;&gt;
+                &lt;/bean&gt;
+            &lt;/list&gt;
+        &lt;/property&gt;
+        &lt;property name=&quot;ignoreAcceptHeader&quot; value=&quot;true&quot; /&gt;
+    &lt;/bean&gt;
+
+    &lt;bean
+        class=&quot;org.springframework.web.servlet.view.InternalResourceViewResolver&quot;&gt;
+        &lt;property name=&quot;viewClass&quot;
+            value=&quot;org.springframework.web.servlet.view.JstlView&quot; /&gt;
+        &lt;property name=&quot;prefix&quot; value=&quot;/WEB-INF/jsps/&quot; /&gt;
+        &lt;property name=&quot;suffix&quot; value=&quot;.jsp&quot; /&gt;
+    &lt;/bean&gt;
+
+
+    &lt;!--200*1024*1024即200M resolveLazily属性启用是为了推迟文件解析，以便捕获文件大小异常 --&gt;
+    &lt;bean id=&quot;multipartResolver&quot;
+        class=&quot;org.springframework.web.multipart.commons.CommonsMultipartResolver&quot;&gt;
+        &lt;property name=&quot;maxUploadSize&quot; value=&quot;209715200&quot; /&gt;
+        &lt;property name=&quot;defaultEncoding&quot; value=&quot;UTF-8&quot; /&gt;
+        &lt;property name=&quot;resolveLazily&quot; value=&quot;true&quot; /&gt;
+    &lt;/bean&gt;
+
+&lt;/beans&gt;
+</code></pre><h3 id="HelloMvcController-类的编写"><a href="#HelloMvcController-类的编写" class="headerlink" title="HelloMvcController 类的编写"></a>HelloMvcController 类的编写</h3><p>记得新建一个 /WEB-INF/jsps/home.jsp 页面</p>
+<pre><code>package com.imooc.mvcdemo.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+//告诉DispatcherServlet相关的容器， 这是一个Controller， 管理好这个bean哦
+@Controller
+//类级别的RequestMapping，告诉DispatcherServlet由这个类负责处理以跟URL。
+//HandlerMapping依靠这个标签来工作
+@RequestMapping(&quot;/hello&quot;)
+public class HelloMvcController {
+
+    //方法级别的RequestMapping， 限制并缩小了URL路径匹配，同类级别的标签协同工作，最终确定拦截到的URL由那个方法处理
+    @RequestMapping(&quot;/mvc&quot;)
+    public String helloMvc() {
+
+        //视图渲染，/WEB-INF/jsps/home.jsp
+        return &quot;home&quot;;
+    }
+
+}
+</code></pre><h3 id="验证结果"><a href="#验证结果" class="headerlink" title="验证结果"></a>验证结果</h3><pre><code>Hello Spring MVC!
+Here is iMooc!
+Here is qiji!
+</code></pre><h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li>Spring 官网 <a href="https://spring.io/" target="_blank" rel="external">https://spring.io/</a></li>
+<li>Spring wiki <a href="https://zh.wikipedia.org/wiki/Spring" target="_blank" rel="external">https://zh.wikipedia.org/wiki/Spring</a></li>
+<li>Spring MVC 起步 <a href="http://www.imooc.com/learn/47" target="_blank" rel="external">http://www.imooc.com/learn/47</a> -SpringMVC学习笔记 <a href="http://www.imooc.com/article/1392" target="_blank" rel="external">http://www.imooc.com/article/1392</a></li>
+<li>Spring 教程 <a href="http://www.yiibai.com/spring/" target="_blank" rel="external">http://www.yiibai.com/spring/</a></li>
+<li>Spring 核心技术学习总结 <a href="http://penghuaiyi.iteye.com/blog/182616" target="_blank" rel="external">http://penghuaiyi.iteye.com/blog/182616</a></li>
+<li>Spring知识点总结大全 <a href="http://www.open-open.com/lib/view/open1329298931749.html" target="_blank" rel="external">http://www.open-open.com/lib/view/open1329298931749.html</a></li>
+<li>Spring - 随笔分类 - 孤傲苍狼<a href="http://www.cnblogs.com/xdp-gacl/category/544380.html" target="_blank" rel="external">http://www.cnblogs.com/xdp-gacl/category/544380.html</a></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JAVA/" rel="tag">#JAVA</a>
+          
+            <a href="/tags/Spring/" rel="tag">#Spring</a>
+          
+            <a href="/tags/SpringMVC/" rel="tag">#SpringMVC</a>
+          
+            <a href="/tags/框架/" rel="tag">#框架</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/06/15/JAVA-设计模式之模板方法模式/" rel="next" title="[Java]设计模式之模板方法模式">
+                <i class="fa fa-chevron-left"></i> [Java]设计模式之模板方法模式
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/08/01/JAVA-设计模式之工厂模式/" rel="prev" title="[Java]设计模式之工厂模式">
+                [Java]设计模式之工厂模式 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Arno" />
+          <p class="site-author-name" itemprop="name">Arno</p>
+          <p class="site-description motion-element" itemprop="description">Simplicity is prerequisite for reliability</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">10</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是-MVC"><span class="nav-number">1.</span> <span class="nav-text">什么是 MVC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring-MVC-的基本概念"><span class="nav-number">2.</span> <span class="nav-text">Spring MVC 的基本概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码实践"><span class="nav-number">3.</span> <span class="nav-text">代码实践</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Maven-引入依赖，管理项目"><span class="nav-number">3.1.</span> <span class="nav-text">Maven 引入依赖，管理项目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WEB-xml-的配置"><span class="nav-number">3.2.</span> <span class="nav-text">WEB.xml 的配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#applicationContext-xml-的配置"><span class="nav-number">3.3.</span> <span class="nav-text">applicationContext.xml 的配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mvc-dispatcher-servlet-xml-的配置"><span class="nav-number">3.4.</span> <span class="nav-text">mvc-dispatcher-servlet.xml 的配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HelloMvcController-类的编写"><span class="nav-number">3.5.</span> <span class="nav-text">HelloMvcController 类的编写</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#验证结果"><span class="nav-number">3.6.</span> <span class="nav-text">验证结果</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Arno</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>

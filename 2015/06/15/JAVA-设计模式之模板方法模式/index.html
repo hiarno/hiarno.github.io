@@ -1,0 +1,621 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JAVA,Spring,SpringMVC,框架," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="模板方法模板定义模板方法模式定义了一个算法的步骤，并允许子类别为一个或多个步骤提供其实践方式。让子类别在不改变算法架构的情况下，重新定义算法中的某些步骤。
+模板方法模式的使用场景
+算法或操作遵循相似的逻辑
+
+重构时（把相同的代码抽取到父类中）
+
+重要、复杂的算法，核心算法设计为模板算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Java]设计模式之模板方法模式">
+<meta property="og:url" content="hiarno.github.io/2015/06/15/JAVA-设计模式之模板方法模式/index.html">
+<meta property="og:site_name" content="Arno's Blog">
+<meta property="og:description" content="模板方法模板定义模板方法模式定义了一个算法的步骤，并允许子类别为一个或多个步骤提供其实践方式。让子类别在不改变算法架构的情况下，重新定义算法中的某些步骤。
+模板方法模式的使用场景
+算法或操作遵循相似的逻辑
+
+重构时（把相同的代码抽取到父类中）
+
+重要、复杂的算法，核心算法设计为模板算法">
+<meta property="og:image" content="http://blog.qiji.tech/wp-content/uploads/2016/05/模板方法模式uml图.png">
+<meta property="og:updated_time" content="2016-05-24T09:06:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[Java]设计模式之模板方法模式">
+<meta name="twitter:description" content="模板方法模板定义模板方法模式定义了一个算法的步骤，并允许子类别为一个或多个步骤提供其实践方式。让子类别在不改变算法架构的情况下，重新定义算法中的某些步骤。
+模板方法模式的使用场景
+算法或操作遵循相似的逻辑
+
+重构时（把相同的代码抽取到父类中）
+
+重要、复杂的算法，核心算法设计为模板算法">
+<meta name="twitter:image" content="http://blog.qiji.tech/wp-content/uploads/2016/05/模板方法模式uml图.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> [Java]设计模式之模板方法模式 | Arno's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Arno's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Simplicity is prerequisite for reliability.</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                [Java]设计模式之模板方法模式
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-06-15T21:00:00+08:00" content="2015-06-15">
+              2015-06-15
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="模板方法模板定义"><a href="#模板方法模板定义" class="headerlink" title="模板方法模板定义"></a>模板方法模板定义</h2><p>模板方法模式定义了一个算法的步骤，并允许子类别为一个或多个步骤提供其实践方式。让子类别在不改变算法架构的情况下，重新定义算法中的某些步骤。</p>
+<h3 id="模板方法模式的使用场景"><a href="#模板方法模式的使用场景" class="headerlink" title="模板方法模式的使用场景"></a>模板方法模式的使用场景</h3><ul>
+<li><p>算法或操作遵循相似的逻辑</p>
+</li>
+<li><p>重构时（把相同的代码抽取到父类中）</p>
+</li>
+<li><p>重要、复杂的算法，核心算法设计为模板算法</p>
+</li>
+</ul>
+<a id="more"></a>
+<h3 id="模板方法的例子"><a href="#模板方法的例子" class="headerlink" title="模板方法的例子"></a>模板方法的例子</h3><p>我们去银行取钱的时候通常会有以下流程：</p>
+<ol>
+<li>取号</li>
+<li>填写单据</li>
+<li>等待叫号</li>
+<li>窗口办理</li>
+</ol>
+<p>每个人都是通过这个模板（流程）进行办理业务，接下来用代码来实践一下。</p>
+<h3 id="类图"><a href="#类图" class="headerlink" title="类图"></a>类图</h3><p><a href="http://blog.qiji.tech/wp-content/uploads/2016/05/模板方法模式uml图.png" target="_blank" rel="external"><img src="http://blog.qiji.tech/wp-content/uploads/2016/05/模板方法模式uml图.png" alt="模板方法模式uml图"></a></p>
+<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><h4 id="银行的模板方法"><a href="#银行的模板方法" class="headerlink" title="银行的模板方法"></a>银行的模板方法</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">package com.doity.templatemethod;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Created by Right on 2016/5/8.</span><br><span class="line"> */</span><br><span class="line">public abstract class Bank &#123;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 银行业务流程的模板方法</span><br><span class="line">     * 封装了所有子类共同遵循的算法框架</span><br><span class="line">     */</span><br><span class="line">    public final void bankTemplate() &#123;</span><br><span class="line">//          1、取号、</span><br><span class="line">        getTicket();</span><br><span class="line">//          2、填写单据</span><br><span class="line">        fillDocuments();</span><br><span class="line">//          3、等待叫号</span><br><span class="line">        attentionTheCalling();</span><br><span class="line">//          4、办理业务</span><br><span class="line">        handleBusiness();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 基本方法，取号</span><br><span class="line">     */</span><br><span class="line">    protected void getTicket() &#123;</span><br><span class="line">        System.out.println(&quot;在银行门口取号&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 抽象的基本方法，填写表格</span><br><span class="line">     */</span><br><span class="line">    protected abstract void fillDocuments();</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 基本方法，等待叫号</span><br><span class="line">     */</span><br><span class="line">    protected void attentionTheCalling() &#123;</span><br><span class="line">        System.out.println(&quot;等待叫号&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 抽象的基本方法，办理业务</span><br><span class="line">     */</span><br><span class="line">    protected abstract void handleBusiness();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="具体的子类，取钱"><a href="#具体的子类，取钱" class="headerlink" title="具体的子类，取钱"></a>具体的子类，取钱</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">package com.doity.templatemethod;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Created by Right on 2016/5/8.</span><br><span class="line"> *</span><br><span class="line"> * 具体的子类，取钱。</span><br><span class="line"> */</span><br><span class="line">public class WithdrawMoney extends Bank &#123;</span><br><span class="line">    @Override</span><br><span class="line">    protected void fillDocuments() &#123;</span><br><span class="line">        System.out.println(&quot;填表内容：取10000元人民币&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    protected void handleBusiness() &#123;</span><br><span class="line">        System.out.println(&quot;呼叫XX号&quot;);</span><br><span class="line">        System.out.println(&quot;柜台工作人员：这是您的10000元&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="具体的子类，开户"><a href="#具体的子类，开户" class="headerlink" title="具体的子类，开户"></a>具体的子类，开户</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">package com.doity.templatemethod;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Created by Right on 2016/5/8.</span><br><span class="line"> *</span><br><span class="line"> * 具体的子类，开户</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">public class OpenAccount extends Bank &#123;</span><br><span class="line">    @Override</span><br><span class="line">    protected void fillDocuments() &#123;</span><br><span class="line">        System.out.println(&quot;填表中，我是XXX，家在BB，收入AA&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    protected void handleBusiness() &#123;</span><br><span class="line">        System.out.println(&quot;叫号成功&quot;);</span><br><span class="line">        System.out.println(&quot;恭喜XXX先生你开户成功！&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="测试类"><a href="#测试类" class="headerlink" title="测试类"></a>测试类</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">package com.doity.templatemethod;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Created by Right on 2016/5/8.</span><br><span class="line"> *</span><br><span class="line"> * 模板方法模板的测试类</span><br><span class="line"> */</span><br><span class="line">public class TemplateMethodTest &#123;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line"></span><br><span class="line">        WithdrawMoney withdrawMoney = new WithdrawMoney();</span><br><span class="line">        withdrawMoney.bankTemplate();</span><br><span class="line"></span><br><span class="line">        System.out.println(&quot;----------分割线1-------------&quot;);</span><br><span class="line"></span><br><span class="line">        OpenAccount openAccount = new OpenAccount();</span><br><span class="line">        openAccount.bankTemplate();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="测试结果"><a href="#测试结果" class="headerlink" title="测试结果"></a>测试结果</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">在银行门口取号</span><br><span class="line">填表内容：取10000元人民币</span><br><span class="line">等待叫号</span><br><span class="line">呼叫XX号</span><br><span class="line">柜台工作人员：这是您的10000元</span><br><span class="line">----------分割线1-------------</span><br><span class="line">在银行门口取号</span><br><span class="line">填表中，我是XXX，家在BB，收入AA</span><br><span class="line">等待叫号</span><br><span class="line">叫号成功</span><br><span class="line">恭喜XXX先生你开户成功！</span><br></pre></td></tr></table></figure>
+<p>以上是最简单虚拟的场景，假设有不需要填表的业务：存钱。</p>
+<h3 id="钩子函数使子类选择挂载"><a href="#钩子函数使子类选择挂载" class="headerlink" title="钩子函数使子类选择挂载"></a>钩子函数使子类选择挂载</h3><p>修改一下Bank的类</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//          2、填写单据</span><br><span class="line">        if (isillDocuments())&#123;</span><br><span class="line">            fillDocuments();</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line"> * Hook, 钩子函数，提供一个默认或空的实现</span><br><span class="line"> * 具体的子类可以自行决定是否挂钩以及如何挂钩</span><br><span class="line"> * 部分业务不需要填表，可以选择</span><br><span class="line"> */</span><br><span class="line">protected boolean isillDocuments() &#123;</span><br><span class="line">    return true;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="测试类结果"><a href="#测试类结果" class="headerlink" title="测试类结果"></a>测试类结果</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(&quot;----------分割线2-------------&quot;);</span><br><span class="line">ToDeposit toDeposit = new ToDeposit();</span><br><span class="line">toDeposit.bankTemplate();</span><br></pre></td></tr></table></figure>
+<h4 id="使用钩子函数的测试结果"><a href="#使用钩子函数的测试结果" class="headerlink" title="使用钩子函数的测试结果"></a>使用钩子函数的测试结果</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">在银行门口取号</span><br><span class="line">填表中，我是XXX，家在BB，收入AA</span><br><span class="line">等待叫号</span><br><span class="line">叫号成功</span><br><span class="line">恭喜XXX先生你开户成功！</span><br><span class="line">----------分割线2-------------</span><br><span class="line">在银行门口取号</span><br><span class="line">等待叫号</span><br><span class="line">叫号成功</span><br><span class="line">存款成功</span><br></pre></td></tr></table></figure>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><h3 id="方法模板的总结"><a href="#方法模板的总结" class="headerlink" title="方法模板的总结"></a>方法模板的总结</h3><p>准备一个抽象类，将部分逻辑以具体方法的形式实现，然后声明一些抽象方法交由子类实现剩余逻辑，用钩子方法给予更大的灵活性。最后将方法汇总成一个不可以改变的模板方法。</p>
+<h3 id="模板方法模板的优点"><a href="#模板方法模板的优点" class="headerlink" title="模板方法模板的优点"></a>模板方法模板的优点</h3><ul>
+<li>封装性好</li>
+<li>复用性好</li>
+<li>屏蔽细节</li>
+<li>便于维护</li>
+</ul>
+<h3 id="模板方法模式的缺点"><a href="#模板方法模式的缺点" class="headerlink" title="模板方法模式的缺点"></a>模板方法模式的缺点</h3><blockquote>
+<p>Java 是一种单继承的语言。也就是一个类，只能继承一个类。</p>
+</blockquote>
+<p>我们设想在一个系统当中大量的使用了继承，如果我们需要重构，通过模板方法的模式来抽取共性，以及增加算法或者叫做增加架构的弹性的时候，因为我们的类已经处于了继承层次某个结构之中，再通过模板方法引入新的继承的时候，也许会遇到困难。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li>模式的秘密—模板方法模式 <a href="http://www.imooc.com/learn/145" title="模式的秘密---模板方法模式" target="_blank" rel="external">http://www.imooc.com/learn/145</a></li>
+<li>模板方法模式 - 维基百科 <a href="https://zh.wikipedia.org/wiki/%E6%A8%A1%E6%9D%BF%E6%96%B9%E6%B3%95" title="模板方法模式 - 维基百科" target="_blank" rel="external">https://zh.wikipedia.org/模板方法模式</a></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JAVA/" rel="tag">#JAVA</a>
+          
+            <a href="/tags/Spring/" rel="tag">#Spring</a>
+          
+            <a href="/tags/SpringMVC/" rel="tag">#SpringMVC</a>
+          
+            <a href="/tags/框架/" rel="tag">#框架</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/06/15/JAVA-Spring-框架学习总结（二）/" rel="next" title="[JAVA] Spring 框架学习总结（二）">
+                <i class="fa fa-chevron-left"></i> [JAVA] Spring 框架学习总结（二）
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/06/23/Spring-MVC-框架学习总结（一）/" rel="prev" title="[JAVA] Spring MVC 框架学习总结（一）">
+                [JAVA] Spring MVC 框架学习总结（一） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Arno" />
+          <p class="site-author-name" itemprop="name">Arno</p>
+          <p class="site-description motion-element" itemprop="description">Simplicity is prerequisite for reliability</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">10</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#模板方法模板定义"><span class="nav-number">1.</span> <span class="nav-text">模板方法模板定义</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#模板方法模式的使用场景"><span class="nav-number">1.1.</span> <span class="nav-text">模板方法模式的使用场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模板方法的例子"><span class="nav-number">1.2.</span> <span class="nav-text">模板方法的例子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类图"><span class="nav-number">1.3.</span> <span class="nav-text">类图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码实现"><span class="nav-number">1.4.</span> <span class="nav-text">代码实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#银行的模板方法"><span class="nav-number">1.4.1.</span> <span class="nav-text">银行的模板方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#具体的子类，取钱"><span class="nav-number">1.4.2.</span> <span class="nav-text">具体的子类，取钱</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#具体的子类，开户"><span class="nav-number">1.4.3.</span> <span class="nav-text">具体的子类，开户</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#测试类"><span class="nav-number">1.4.4.</span> <span class="nav-text">测试类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#测试结果"><span class="nav-number">1.4.5.</span> <span class="nav-text">测试结果</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#钩子函数使子类选择挂载"><span class="nav-number">1.5.</span> <span class="nav-text">钩子函数使子类选择挂载</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#测试类结果"><span class="nav-number">1.5.1.</span> <span class="nav-text">测试类结果</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用钩子函数的测试结果"><span class="nav-number">1.5.2.</span> <span class="nav-text">使用钩子函数的测试结果</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结论"><span class="nav-number">2.</span> <span class="nav-text">结论</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#方法模板的总结"><span class="nav-number">2.1.</span> <span class="nav-text">方法模板的总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模板方法模板的优点"><span class="nav-number">2.2.</span> <span class="nav-text">模板方法模板的优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模板方法模式的缺点"><span class="nav-number">2.3.</span> <span class="nav-text">模板方法模式的缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Arno</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -233,8 +233,8 @@
             
               
                 
-                <a class="post-title-link" href="/2016/02/16/服务器-Redis-内存数据库学习笔记（二）/" itemprop="url">
-                  [服务器] Redis 内存数据库学习笔记（二）
+                <a class="post-title-link" href="/2016/05/08/Spring-Boot-微框架/" itemprop="url">
+                  Spring Boot 微框架
                 </a>
               
             
@@ -247,8 +247,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-02-16T15:50:12+08:00" content="2016-02-16">
-              2016-02-16
+            <time itemprop="dateCreated" datetime="2016-05-08T21:00:00+08:00" content="2016-05-08">
+              2016-05-08
             </time>
           </span>
 
@@ -276,12 +276,11 @@
 
       
         
-          <h2 id="Redis-常见参数配置"><a href="#Redis-常见参数配置" class="headerlink" title="Redis 常见参数配置"></a>Redis 常见参数配置</h2><p>Redis的设置，基本是在其根目录下的 redis.conf 文件里保存的。我们可以通过修改这个文件来配置一些参数。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/redis/redis.conf</span><br></pre></td></tr></table></figure>
-<h3 id="修改为后台启动"><a href="#修改为后台启动" class="headerlink" title="修改为后台启动"></a>修改为后台启动</h3><p>Redis 默认是在前台启动的，会阻塞当前终端，使用 Ctrl + C 即可关闭。<br>在 redis.conf 将文件中 daemonize 为 yes 即可后台启动</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">daemonize yes</span><br></pre></td></tr></table></figure>
+          <h2 id="Spring-Boot-介绍"><a href="#Spring-Boot-介绍" class="headerlink" title="Spring Boot 介绍"></a>Spring Boot 介绍</h2><p>Spring 框架非常好用，但是会有大量的 XML 配置文件以及复杂的 Bean 依赖关系。而 Spring Boot 就是为此诞生的！</p>
+<p>Spring Boot 则采用了“约定优先配置” （convention over configuration）的思想来摆脱 Spring 框架中各类繁复纷杂的配置。</p>
+<p>Spring Boot 使开发独立的，产品级别的基于 Spring 的应用变得非常简单，你只需 “just run” 。 我们为 Spring 平台及第三方库提供开箱即用的设置，这样你就可以有条不紊地开始。多数 Spring Boot 应用需要很少的 Spring 配置。</p>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2016/02/16/服务器-Redis-内存数据库学习笔记（二）/#more" rel="contents">
+            <a class="btn" href="/2016/05/08/Spring-Boot-微框架/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -332,8 +331,8 @@
             
               
                 
-                <a class="post-title-link" href="/2016/02/15/服务器-Redis-内存数据库学习笔记（一）/" itemprop="url">
-                  [服务器] Redis 内存数据库学习笔记（一）
+                <a class="post-title-link" href="/2016/04/15/对称加密与非对称加密的一些基础知识/" itemprop="url">
+                  对称加密与非对称加密的一些基础知识
                 </a>
               
             
@@ -346,8 +345,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-02-15T15:48:45+08:00" content="2016-02-15">
-              2016-02-15
+            <time itemprop="dateCreated" datetime="2016-04-15T21:00:00+08:00" content="2016-04-15">
+              2016-04-15
             </time>
           </span>
 
@@ -375,14 +374,527 @@
 
       
         
-          <h2 id="什么是-Redis"><a href="#什么是-Redis" class="headerlink" title="什么是 Redis"></a>什么是 Redis</h2><p>Redis 是一个开源、支持网络、基于内存、键值对存储数据库。因为是基于内存，也就是将数据存储在内存的，所以存取速度非常的快。每秒能执行约 11 万集合，每秒约 81000+ 条记录。</p>
-<h2 id="Redis-的特点"><a href="#Redis-的特点" class="headerlink" title="Redis 的特点"></a>Redis 的特点</h2><ul>
-<li>Redis 数据库完全在内存中，使用磁盘仅用于持久性。</li>
-<li>相比许多键值数据存储，Redis 拥有一套较为丰富的数据类型。</li>
-<li>Redis 可以将数据复制到任意数量的从服务器。</li>
+          <h2 id="密码学常用术语"><a href="#密码学常用术语" class="headerlink" title="密码学常用术语"></a>密码学常用术语</h2><ul>
+<li>明文：待加密信息</li>
+<li>密文：经过加密后的明文</li>
+<li>加密：明文转为密文的过程</li>
+<li>加密算法:明文转密文的转换算法</li>
+<li>加密密钥：通过加密算法进行加密操作用的密钥。</li>
+<li>解密：将密文转为明文的过程。</li>
+<li>解密算法：密文转为明文的过程。</li>
+<li>解密密钥：铜管解密算法进行解密操作用的密钥</li>
 </ul>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2016/02/15/服务器-Redis-内存数据库学习笔记（一）/#more" rel="contents">
+            <a class="btn" href="/2016/04/15/对称加密与非对称加密的一些基础知识/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/08/15/JAVA-设计模式之单例模式/" itemprop="url">
+                  [Java]设计模式之单例模式
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-08-15T21:00:00+08:00" content="2015-08-15">
+              2015-08-15
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="什么是设计模式"><a href="#什么是设计模式" class="headerlink" title="什么是设计模式"></a>什么是设计模式</h2><p>设计模式（Design pattern）是一套被反复使用、多数人知晓的，经过分类编目的、代码设计经验的总结。</p>
+<h3 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h3><ul>
+<li>单例类只能有一个实例。</li>
+<li>单例类必须自己自己创建自己的唯一实例。</li>
+<li>单例类必须给所有其他对象提供这一实例。</li>
+</ul>
+<p>在应用这个模式时，单例对象的类必须保证只有一个实例存在。许多时候整个系统只需要拥有一个的全局对象，这样有利于我们协调系统整体的行为。比如在某个服务器程序中，该服务器的配置信息存放在一个文件中，这些配置数据由一个单例对象统一读取，然后服务进程中的其他对象再通过这个单例对象获取这些配置信息。这种方式简化了在复杂环境下的配置管理。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/15/JAVA-设计模式之单例模式/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/08/01/JAVA-设计模式之工厂模式/" itemprop="url">
+                  [Java]设计模式之工厂模式
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-08-01T21:00:00+08:00" content="2015-08-01">
+              2015-08-01
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="什么是设计模式"><a href="#什么是设计模式" class="headerlink" title="什么是设计模式"></a>什么是设计模式</h2><p>设计模式（Design pattern）是一套被反复使用、多数人知晓的，经过分类编目的、代码设计经验的总结。</p>
+<h3 id="工厂模式的概念"><a href="#工厂模式的概念" class="headerlink" title="工厂模式的概念"></a>工厂模式的概念</h3><ul>
+<li>实例化对象，用工厂方法代替 new 操作</li>
+<li>工厂模式包括工厂方法模式和抽象工厂模式</li>
+<li>抽象工厂模式是工厂方法模式的扩展</li>
+</ul>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/01/JAVA-设计模式之工厂模式/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/06/23/Spring-MVC-框架学习总结（一）/" itemprop="url">
+                  [JAVA] Spring MVC 框架学习总结（一）
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-06-23T21:00:00+08:00" content="2015-06-23">
+              2015-06-23
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="什么是-MVC"><a href="#什么是-MVC" class="headerlink" title="什么是 MVC"></a>什么是 MVC</h2><p>首先 MVC，是我们开发 Web 应用的一种架构方式。Spring MVC 则是其中的一种框架，与 Spring 框架紧密结合。</p>
+<ul>
+<li>模型-视图-控制器（MVC）是一个众所周知的以设计界面应用程序为基础的设计模式。它主要通过分离模型、视图及控制器在应用程序中的角色将业务逻辑从界面中解耦。</li>
+<li>MVC 的核心思想就是业务数据抽取同业务数据呈现相分离。</li>
+<li>程序分层，分工合作，既相互独立，又协同工作</li>
+</ul>
+<p>Spring MVC 是采用前端控制方式（Front Controller），如图所示。 </p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/06/23/Spring-MVC-框架学习总结（一）/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/06/15/JAVA-设计模式之模板方法模式/" itemprop="url">
+                  [Java]设计模式之模板方法模式
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-06-15T21:00:00+08:00" content="2015-06-15">
+              2015-06-15
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="模板方法模板定义"><a href="#模板方法模板定义" class="headerlink" title="模板方法模板定义"></a>模板方法模板定义</h2><p>模板方法模式定义了一个算法的步骤，并允许子类别为一个或多个步骤提供其实践方式。让子类别在不改变算法架构的情况下，重新定义算法中的某些步骤。</p>
+<h3 id="模板方法模式的使用场景"><a href="#模板方法模式的使用场景" class="headerlink" title="模板方法模式的使用场景"></a>模板方法模式的使用场景</h3><ul>
+<li><p>算法或操作遵循相似的逻辑</p>
+</li>
+<li><p>重构时（把相同的代码抽取到父类中）</p>
+</li>
+<li><p>重要、复杂的算法，核心算法设计为模板算法</p>
+</li>
+</ul>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/06/15/JAVA-设计模式之模板方法模式/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/06/15/JAVA-Spring-框架学习总结（二）/" itemprop="url">
+                  [JAVA] Spring 框架学习总结（二）
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-06-15T15:24:44+08:00" content="2015-06-15">
+              2015-06-15
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>续上一节，继续学习 Spring 的一些概念和理论。</p>
+<h2 id="什么是-AOP"><a href="#什么是-AOP" class="headerlink" title="什么是 AOP"></a>什么是 AOP</h2><p>AOP，Aspect-Oriented Programming，面向切面编程。（是一种程序设计思想）</p>
+<p>AOP：通过预编译方式和运行期间动态代理实现程序功能的统一维护的一种技术。</p>
+<p>主要的功能是：日志记录，性能统计，安全控制，事务处理，异常处理等等，如下图</p>
+<p><a href="http://blog.qiji.tech/wp-content/uploads/2016/04/切面.jpg"><img src="http://blog.qiji.tech/wp-content/uploads/2016/04/切面.jpg" alt="切面"></a></p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/06/15/JAVA-Spring-框架学习总结（二）/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -521,6 +1033,206 @@
 
 
     
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/01/22/服务器-Redis-内存数据库学习笔记（二）/" itemprop="url">
+                  [服务器] Redis 内存数据库学习笔记（二）
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-01-22T15:50:12+08:00" content="2015-01-22">
+              2015-01-22
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="Redis-常见参数配置"><a href="#Redis-常见参数配置" class="headerlink" title="Redis 常见参数配置"></a>Redis 常见参数配置</h2><p>Redis的设置，基本是在其根目录下的 redis.conf 文件里保存的。我们可以通过修改这个文件来配置一些参数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/redis/redis.conf</span><br></pre></td></tr></table></figure>
+<h3 id="修改为后台启动"><a href="#修改为后台启动" class="headerlink" title="修改为后台启动"></a>修改为后台启动</h3><p>Redis 默认是在前台启动的，会阻塞当前终端，使用 Ctrl + C 即可关闭。<br>在 redis.conf 将文件中 daemonize 为 yes 即可后台启动</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">daemonize yes</span><br></pre></td></tr></table></figure>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/01/22/服务器-Redis-内存数据库学习笔记（二）/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/01/15/服务器-Redis-内存数据库学习笔记（一）/" itemprop="url">
+                  [服务器] Redis 内存数据库学习笔记（一）
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-01-15T15:48:45+08:00" content="2015-01-15">
+              2015-01-15
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="什么是-Redis"><a href="#什么是-Redis" class="headerlink" title="什么是 Redis"></a>什么是 Redis</h2><p>Redis 是一个开源、支持网络、基于内存、键值对存储数据库。因为是基于内存，也就是将数据存储在内存的，所以存取速度非常的快。每秒能执行约 11 万集合，每秒约 81000+ 条记录。</p>
+<h2 id="Redis-的特点"><a href="#Redis-的特点" class="headerlink" title="Redis 的特点"></a>Redis 的特点</h2><ul>
+<li>Redis 数据库完全在内存中，使用磁盘仅用于持久性。</li>
+<li>相比许多键值数据存储，Redis 拥有一套较为丰富的数据类型。</li>
+<li>Redis 可以将数据复制到任意数量的从服务器。</li>
+</ul>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/01/15/服务器-Redis-内存数据库学习笔记（一）/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
   </section>
 
   
@@ -562,7 +1274,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-count">10</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -572,7 +1284,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">10</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
