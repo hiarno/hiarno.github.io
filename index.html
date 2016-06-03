@@ -233,6 +233,105 @@
             
               
                 
+                <a class="post-title-link" href="/2016/06/03/JAVA-线程与进程总结（二）/" itemprop="url">
+                  [JAVA]线程与进程总结（二）
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-06-03T15:24:44+08:00" content="2016-06-03">
+              2016-06-03
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><p>先解释一些名词和基本概念，后续代码演示</p>
+<h3 id="原子性"><a href="#原子性" class="headerlink" title="原子性"></a>原子性</h3><p>原子是世界上的最小单位，具有不可分割性。</p>
+<p>通俗的解释：<br>CUP 是一条一条指令执行,假设“读”、“写”是两条指令，如果在多线程并发中使用“读写”，那么可能会出现问题。</p>
+<p>原子性则是一条指令完成“读写”操作。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/06/03/JAVA-线程与进程总结（二）/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/05/27/JAVA-线程与进程总结（一）/" itemprop="url">
                   [JAVA]线程与进程总结（一）
                 </a>
@@ -1129,105 +1228,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/01/22/服务器-Redis-内存数据库学习笔记（二）/" itemprop="url">
-                  [服务器] Redis 内存数据库学习笔记（二）
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-01-22T15:50:12+08:00" content="2015-01-22">
-              2015-01-22
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="Redis-常见参数配置"><a href="#Redis-常见参数配置" class="headerlink" title="Redis 常见参数配置"></a>Redis 常见参数配置</h2><p>Redis的设置，基本是在其根目录下的 redis.conf 文件里保存的。我们可以通过修改这个文件来配置一些参数。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/redis/redis.conf</span><br></pre></td></tr></table></figure>
-<h3 id="修改为后台启动"><a href="#修改为后台启动" class="headerlink" title="修改为后台启动"></a>修改为后台启动</h3><p>Redis 默认是在前台启动的，会阻塞当前终端，使用 Ctrl + C 即可关闭。<br>在 redis.conf 将文件中 daemonize 为 yes 即可后台启动</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">daemonize yes</span><br></pre></td></tr></table></figure>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/01/22/服务器-Redis-内存数据库学习笔记（二）/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1273,7 +1273,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-count">12</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
