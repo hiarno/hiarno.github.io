@@ -1,0 +1,598 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JAVA,Spring,框架,MVC,MyBatis," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="前言继续进行整合">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring + SpringMVC + MyBatis 集成（二）">
+<meta property="og:url" content="hiarno.github.io/2016/06/15/Spring-SpringMVC-MyBatis-集成（二）/index.html">
+<meta property="og:site_name" content="Arno's Blog">
+<meta property="og:description" content="前言继续进行整合">
+<meta property="og:updated_time" content="2016-06-16T05:41:02.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring + SpringMVC + MyBatis 集成（二）">
+<meta name="twitter:description" content="前言继续进行整合">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> Spring + SpringMVC + MyBatis 集成（二） | Arno's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Arno's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Simplicity is prerequisite for reliability.</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Spring + SpringMVC + MyBatis 集成（二）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-06-15T22:00:00+08:00" content="2016-06-15">
+              2016-06-15
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>继续进行整合</p>
+<a id="more"></a>
+<h2 id="Service-层的配置"><a href="#Service-层的配置" class="headerlink" title="Service 层的配置"></a>Service 层的配置</h2><h3 id="spring-service-配置"><a href="#spring-service-配置" class="headerlink" title="spring-service 配置"></a>spring-service 配置</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/resources/spring/spring-service.xml</span><br></pre></td></tr></table></figure>
+<p>在上述文件中配置 Service 层。<br>主要有三步:</p>
+<ol>
+<li>扫描 service 包下所有使用注解的类型</li>
+<li>配置事务管理器，并注入数据库的连接池</li>
+<li>配置基于注解的声明式事务，默认使用注解来管理事务行为</li>
+</ol>
+<blockquote>
+<p>采用注解来管理事务行为，自由选择事务开启，提高性能，减少开启事务开销。</p>
+</blockquote>
+<p>代码如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span></span><br><span class="line">       <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span><br><span class="line">       <span class="attr">xmlns:context</span>=<span class="string">"http://www.springframework.org/schema/context"</span></span><br><span class="line">       <span class="attr">xmlns:tx</span>=<span class="string">"http://www.springframework.org/schema/tx"</span></span><br><span class="line">       <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.springframework.org/schema/beans</span><br><span class="line">        http://www.springframework.org/schema/beans/spring-beans.xsd</span><br><span class="line">        http://www.springframework.org/schema/context</span><br><span class="line">        http://www.springframework.org/schema/context/spring-context.xsd</span><br><span class="line">        http://www.springframework.org/schema/tx</span><br><span class="line">        http://www.springframework.org/schema/tx/spring-tx.xsd"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--扫描 service 包下所有使用注解的类型--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">"org.seckill.service"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--配置事务管理器--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"transactionManager"</span> <span class="attr">class</span>=<span class="string">"org.springframework.jdbc.datasource.DataSourceTransactionManager"</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--注入数据库的连接池--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"dataSource"</span> <span class="attr">ref</span>=<span class="string">"dataSource"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--配置基于注解的声明式事务，默认使用注解来管理事务行为--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">tx:annotation-driven</span> <span class="attr">transaction-manager</span>=<span class="string">"transactionManager"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="Service-类代码"><a href="#Service-类代码" class="headerlink" title="Service 类代码"></a>Service 类代码</h3><p>在 Service 包里面建立 Service 类，在类级别使用 @Service 注解。DAO 的类则使用 @Autowired 类，需要开启事务的方法则 使用 @Transactional 注解。</p>
+<p>比如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.seckill.service.impl;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> 此处省略</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * Created by ARNO on 2016/6/6/006.</span><br><span class="line"> */</span></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SeckillServiceImpl</span> <span class="keyword">implements</span> <span class="title">SeckillService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Logger logger = LoggerFactory.getLogger(<span class="keyword">this</span>.getClass());</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> SeckillDao seckillDao;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> SuccessKilledDao successKilledDao;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> RedisDao redisDao;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// MD5 字符串，用于混淆代码</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> String slat = <span class="string">"DFG$%^$%^YH45r7dfgdfgdfY#$%GBERH&amp;^*OL&gt;:"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * 查询所有秒杀记录</span><br><span class="line">     *</span><br><span class="line">     * <span class="doctag">@return</span></span><br><span class="line">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;Seckill&gt; <span class="title">getSeckillList</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> seckillDao.queryAll(<span class="number">0</span>, <span class="number">4</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * 查询单个秒杀记录</span><br><span class="line">     *</span><br><span class="line">     * <span class="doctag">@param</span> seckillId</span><br><span class="line">     * <span class="doctag">@return</span></span><br><span class="line">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Seckill <span class="title">getById</span><span class="params">(<span class="keyword">long</span> seckillId)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> seckillDao.queryById(seckillId);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * 执行秒杀操作</span><br><span class="line">     *</span><br><span class="line">     * <span class="doctag">@param</span> seckillId</span><br><span class="line">     * <span class="doctag">@param</span> userPhone</span><br><span class="line">     * <span class="doctag">@param</span> md5</span><br><span class="line">     *</span><br><span class="line">     * 使用注解控制事务方法的优点：</span><br><span class="line">     * 1、开发团队达成一致约定，明确标注事务方法的编程风格</span><br><span class="line">     * 2、保证事务方法的执行时间尽可能短，不要穿插其他网络操作（RPC/HTTP请求）。可以剥离到事务方法外部。</span><br><span class="line">     * 3、不是所有的方法都需要事务，如只有一条修改操作，只读操作不需要事务控制。</span><br><span class="line">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="meta">@Transactional</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> SeckillExecution <span class="title">executeSekill</span><span class="params">(<span class="keyword">long</span> seckillId, <span class="keyword">long</span> userPhone, String md5)</span></span><br><span class="line">            <span class="keyword">throws</span> SeckillException, SeckillCloseException, RepeatKillException </span>&#123;</span><br><span class="line">        此处省略</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="Service-类接口"><a href="#Service-类接口" class="headerlink" title="Service 类接口"></a>Service 类接口</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.seckill.service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> 此处省略</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * Created by ARNO on 2016/6/3/003.</span><br><span class="line"> * 业务接口：站在“使用者”角度设计接口</span><br><span class="line"> * 三个方面：</span><br><span class="line"> * 1. 方法定义粒度（明确，比如执行描述）</span><br><span class="line"> * 2. 参数 （越简练越好，少用  map 这样类型）</span><br><span class="line"> * 3. 返回类型 （友好，不建议用 map 这种类型。可以抛出异常）</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">SeckillService</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * 查询所有秒杀记录</span><br><span class="line">     *</span><br><span class="line">     * <span class="doctag">@return</span></span><br><span class="line">     */</span></span><br><span class="line">    <span class="function">List&lt;Seckill&gt; <span class="title">getSeckillList</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * 查询单个秒杀记录</span><br><span class="line">     *</span><br><span class="line">     * <span class="doctag">@param</span> seckillId</span><br><span class="line">     * <span class="doctag">@return</span></span><br><span class="line">     */</span></span><br><span class="line">    <span class="function">Seckill <span class="title">getById</span><span class="params">(<span class="keyword">long</span> seckillId)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * 输出秒杀接口地址。</span><br><span class="line">     * 秒杀开启时输出秒杀接口地址，否则输出系统时间和秒杀时间</span><br><span class="line">     * <span class="doctag">@param</span> seckillId</span><br><span class="line">     */</span></span><br><span class="line">    <span class="function">Exposer <span class="title">exportSeckillUrl</span><span class="params">(<span class="keyword">long</span> seckillId)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * 执行秒杀操作</span><br><span class="line">     * <span class="doctag">@param</span> seckillId</span><br><span class="line">     * <span class="doctag">@param</span> userPhone</span><br><span class="line">     * <span class="doctag">@param</span> md5</span><br><span class="line">     */</span></span><br><span class="line">    <span class="function">SeckillExecution <span class="title">executeSekill</span><span class="params">(<span class="keyword">long</span> seckillId, <span class="keyword">long</span> userPhone, String md5)</span> <span class="keyword">throws</span> SeckillException,SeckillCloseException,RepeatKillException</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="整合Spring-MVC"><a href="#整合Spring-MVC" class="headerlink" title="整合Spring MVC"></a>整合Spring MVC</h2><h3 id="spring-web-xml-配置"><a href="#spring-web-xml-配置" class="headerlink" title="spring-web.xml 配置"></a>spring-web.xml 配置</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/resources/spring/spring-web.xml</span><br></pre></td></tr></table></figure>
+<p>在上述文件中配置 web 层。<br>主要有四步:</p>
+<ol>
+<li>开启 SpringMVC 注解模式</li>
+<li>静态资源默认 servlet 配置</li>
+<li>配置 jsp 显示 ViewResolver</li>
+<li>扫描 Web 相关的 bean</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span></span><br><span class="line">       <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span><br><span class="line">       <span class="attr">xmlns:context</span>=<span class="string">"http://www.springframework.org/schema/context"</span></span><br><span class="line">       <span class="attr">xmlns:mvc</span>=<span class="string">"http://www.springframework.org/schema/mvc"</span></span><br><span class="line">       <span class="attr">xsi:schemaLocation</span>=<span class="string">"</span><br><span class="line">        http://www.springframework.org/schema/beans</span><br><span class="line">        http://www.springframework.org/schema/beans/spring-beans.xsd</span><br><span class="line">        http://www.springframework.org/schema/mvc</span><br><span class="line">        http://www.springframework.org/schema/mvc/spring-mvc.xsd</span><br><span class="line">        http://www.springframework.org/schema/context</span><br><span class="line">        http://www.springframework.org/schema/context/spring-context.xsd"</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--    No bean named 'cacheManager' is defined 是因为IDEA 自动补全导致的错误。  后面配置成了 cache --&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--配置 SpringMVC--&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--1、开启 SpringMVC 注解模式--&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--简化配置：</span><br><span class="line">        1.1 自动注册 DefaultAnnotationHandlerMapping（使用注解驱动的 Handler 映射），AnnotationMethodHandlerAdapter（注解方法的 Handler 适配器）</span><br><span class="line">        1.2 提供一系列：数据绑定，数字和日期的 format @NumberFormat，@DataTimeFormat，xml，json 默认读写支持</span><br><span class="line">    --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">mvc:annotation-driven</span>/&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--2、静态资源默认 servlet 配置--&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--2.1 加入对静态资源的处理：js，gif，png</span><br><span class="line">        2.2 允许使用“/”做整体映射</span><br><span class="line">    --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">mvc:default-servlet-handler</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--3、配置 jsp 显示 ViewResolver--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"org.springframework.web.servlet.view.InternalResourceViewResolver"</span> &gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"viewClass"</span>  <span class="attr">value</span>=<span class="string">"org.springframework.web.servlet.view.JstlView"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"prefix"</span> <span class="attr">value</span>=<span class="string">"/WEB-INF/jsp/"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"suffix"</span> <span class="attr">value</span>=<span class="string">".jsp"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--4、扫描 Web 相关的 bean--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">"org.seckill.web"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>此处有一个坑，Windows 下使用 IntelliJ IDEA 2016.1.2(64) 版本，把 xmlns:mvc 配置成 cache，导致报错，No bean named ‘cacheManager’ is defined。</p>
+<h3 id="web-xml-配置"><a href="#web-xml-配置" class="headerlink" title="web.xml 配置"></a>web.xml 配置</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/WEB-INF/web.xml</span><br></pre></td></tr></table></figure>
+<p>在上述文件中配置web.xml</p>
+<p>代码如下：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">web-app</span> <span class="attr">xmlns</span>=<span class="string">"http://xmlns.jcp.org/xml/ns/javaee"</span></span><br><span class="line">         <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span><br><span class="line">         <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"</span></span><br><span class="line">         <span class="attr">version</span>=<span class="string">"3.1"</span></span><br><span class="line">         <span class="attr">metadata-complete</span>=<span class="string">"true"</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--修改 servlet 版本为 3.1 --&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--配置 DispatcherServlet--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>seckill-dispatcher<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>org.springframework.web.servlet.DispatcherServlet<span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--配置 SpringMVC 需要加载的配置的文件：spring-dao.xml,spring-service.xml,spring-web.xml</span><br><span class="line">                MyBatis -&gt; Srping -&gt; SpringMVC</span><br><span class="line">        --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">init-param</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>contextConfigLocation<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>classpath:spring/spring-*.xml<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>seckill-dispatcher<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--默认匹配所有请求--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">web-app</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="Controller-类代码"><a href="#Controller-类代码" class="headerlink" title="Controller 类代码"></a>Controller 类代码</h3><p>在类界别使用 @Controller 注解，@RequestMapping 注解绑定 URL 路径。</p>
+<p>代码范例如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.seckill.web;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.seckill.dto.Exposer;</span><br><span class="line"><span class="keyword">import</span> org.seckill.dto.SeckillExecution;</span><br><span class="line"><span class="keyword">import</span> org.seckill.dto.SeckillResult;</span><br><span class="line"><span class="keyword">import</span> org.seckill.entity.Seckill;</span><br><span class="line"><span class="keyword">import</span> org.seckill.enums.SeckillStatEnum;</span><br><span class="line"><span class="keyword">import</span> org.seckill.exception.RepeatKillException;</span><br><span class="line"><span class="keyword">import</span> org.seckill.exception.SeckillCloseException;</span><br><span class="line"><span class="keyword">import</span> org.seckill.exception.SeckillException;</span><br><span class="line"><span class="keyword">import</span> org.seckill.service.SeckillService;</span><br><span class="line"><span class="keyword">import</span> org.slf4j.Logger;</span><br><span class="line"><span class="keyword">import</span> org.slf4j.LoggerFactory;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Controller;</span><br><span class="line"><span class="keyword">import</span> org.springframework.ui.Model;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Date;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * Created by ARNO on 2016/6/6/006.</span><br><span class="line"> */</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="meta">@RequestMapping</span>(<span class="string">"/seckill"</span>)     <span class="comment">// url:/模块/资源/&#123;id&#125;/细分/ seckill/list</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SeckillController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Logger logger = LoggerFactory.getLogger(<span class="keyword">this</span>.getClass());</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> SeckillService seckillService;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RequestMapping</span>(value = <span class="string">"list"</span>, method = RequestMethod.GET)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">list</span><span class="params">(Model model)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 获取列表页</span></span><br><span class="line">        List&lt;Seckill&gt; list = seckillService.getSeckillList();</span><br><span class="line">        model.addAttribute(<span class="string">"list"</span>, list);</span><br><span class="line">        <span class="comment">// list.jsp + modle =ModelAndView</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">"list"</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RequestMapping</span>(value = <span class="string">"/&#123;seckillId&#125;/detail"</span>, method = RequestMethod.GET)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">detail</span><span class="params">(@PathVariable(<span class="string">"seckillId"</span>)</span> Long seckillId, Model model) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (seckillId == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">"redirct:/seckill/list"</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        Seckill seckill = seckillService.getById(seckillId);</span><br><span class="line">        <span class="keyword">if</span> (seckillId == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">"forward:/seckill/list"</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        model.addAttribute(<span class="string">"seckill"</span>, seckill);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"detail"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    此处省略</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="友好的-Restful-设计范例"><a href="#友好的-Restful-设计范例" class="headerlink" title="友好的 Restful 设计范例"></a>友好的 Restful 设计范例</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">URL 设计</span><br><span class="line">/模块/资源/&#123;标识&#125;/集合1/...</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">GET /seckill/list</span><br><span class="line">友好</span><br><span class="line"></span><br><span class="line">POST /seckill/execute/&#123;seckillId&#125;</span><br><span class="line">不友好</span><br><span class="line"></span><br><span class="line">POST /seckill/&#123;seckillId&#125;/execution</span><br><span class="line">友好</span><br><span class="line">（execution，名词：执行）</span><br><span class="line"></span><br><span class="line">GET /seckill/delete/&#123;id&#125;</span><br><span class="line">不友好</span><br><span class="line"></span><br><span class="line">DELETE /seckill/&#123;id&#125;/delete</span><br><span class="line">友好</span><br></pre></td></tr></table></figure>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><a href="http://www.imooc.com/learn/587" target="_blank" rel="external">Java 高并发秒杀 API 之业务分析与 DAO 层</a></li>
+<li><a href="http://www.imooc.com/learn/631" target="_blank" rel="external">Java 高并发秒杀 API 之 Service 层</a></li>
+<li><a href="http://www.imooc.com/learn/630" target="_blank" rel="external">Java 高并发秒杀 API 之 web 层</a></li>
+<li><a href="http://www.imooc.com/learn/632" target="_blank" rel="external">Java 高并发秒杀 API 之高并发优化</a></li>
+<li><a href="http://spring.cndocs.tk/" target="_blank" rel="external">Spring 文档翻译网站</a></li>
+<li><a href="https://spring.io/" target="_blank" rel="external">Spring 官网</a></li>
+<li><a href="https://www.ibm.com/developerworks/cn/java/wa-spring1/" target="_blank" rel="external">Spring 系列: Spring 框架简介</a></li>
+<li><a href="http://blog.csdn.net/zhshulin/article/details/37956105" target="_blank" rel="external">SSM框架——详细整合教程</a></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JAVA/" rel="tag">#JAVA</a>
+          
+            <a href="/tags/Spring/" rel="tag">#Spring</a>
+          
+            <a href="/tags/框架/" rel="tag">#框架</a>
+          
+            <a href="/tags/MVC/" rel="tag">#MVC</a>
+          
+            <a href="/tags/MyBatis/" rel="tag">#MyBatis</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/06/08/Spring-SpringMVC-MyBatis-集成（一）/" rel="next" title="Spring + SpringMVC + MyBatis 集成">
+                <i class="fa fa-chevron-left"></i> Spring + SpringMVC + MyBatis 集成
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Arno" />
+          <p class="site-author-name" itemprop="name">Arno</p>
+          <p class="site-description motion-element" itemprop="description">Simplicity is prerequisite for reliability</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">14</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Service-层的配置"><span class="nav-number">2.</span> <span class="nav-text">Service 层的配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#spring-service-配置"><span class="nav-number">2.1.</span> <span class="nav-text">spring-service 配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Service-类代码"><span class="nav-number">2.2.</span> <span class="nav-text">Service 类代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Service-类接口"><span class="nav-number">2.3.</span> <span class="nav-text">Service 类接口</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#整合Spring-MVC"><span class="nav-number">3.</span> <span class="nav-text">整合Spring MVC</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#spring-web-xml-配置"><span class="nav-number">3.1.</span> <span class="nav-text">spring-web.xml 配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#web-xml-配置"><span class="nav-number">3.2.</span> <span class="nav-text">web.xml 配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Controller-类代码"><span class="nav-number">3.3.</span> <span class="nav-text">Controller 类代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#友好的-Restful-设计范例"><span class="nav-number">4.</span> <span class="nav-text">友好的 Restful 设计范例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Arno</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
