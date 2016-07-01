@@ -1,0 +1,622 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JAVA,框架,MyBatis," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="MyBatis GeneratorMyBatis 有一个非常棒的工具叫 MyBatis Generator，是一个代码生成器。能根据数据库里面的表生成：
+
+模型类
+Example 类（动态查询、更新和删除的类）
+Dao 接口
+兼容 SQL 映射 XML 文件
+…等等">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[JavaWeb] 集成 MyBatis Generator 以及 Generator  分页插件">
+<meta property="og:url" content="hiarno.github.io/2016/06/30/集成-MyBatis-Generator-以及-Generator-分页插件/index.html">
+<meta property="og:site_name" content="Arno's Blog">
+<meta property="og:description" content="MyBatis GeneratorMyBatis 有一个非常棒的工具叫 MyBatis Generator，是一个代码生成器。能根据数据库里面的表生成：
+
+模型类
+Example 类（动态查询、更新和删除的类）
+Dao 接口
+兼容 SQL 映射 XML 文件
+…等等">
+<meta property="og:updated_time" content="2016-07-01T02:20:14.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[JavaWeb] 集成 MyBatis Generator 以及 Generator  分页插件">
+<meta name="twitter:description" content="MyBatis GeneratorMyBatis 有一个非常棒的工具叫 MyBatis Generator，是一个代码生成器。能根据数据库里面的表生成：
+
+模型类
+Example 类（动态查询、更新和删除的类）
+Dao 接口
+兼容 SQL 映射 XML 文件
+…等等">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> [JavaWeb] 集成 MyBatis Generator 以及 Generator  分页插件 | Arno's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Arno's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Simplicity is prerequisite for reliability.</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                [JavaWeb] 集成 MyBatis Generator 以及 Generator  分页插件
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-06-30T22:00:00+08:00" content="2016-06-30">
+              2016-06-30
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="MyBatis-Generator"><a href="#MyBatis-Generator" class="headerlink" title="MyBatis Generator"></a>MyBatis Generator</h2><p>MyBatis 有一个非常棒的工具叫 MyBatis Generator，是一个代码生成器。能根据数据库里面的表生成：</p>
+<ul>
+<li>模型类</li>
+<li>Example 类（动态查询、更新和删除的类）</li>
+<li>Dao 接口</li>
+<li>兼容 SQL 映射 XML 文件</li>
+<li>…等等</li>
+</ul>
+<a id="more"></a>
+<p>MyBatis Generator 消除了大量的手工代码，避免了手写映射文件容易出错的问题，真心非常棒！</p>
+<p>官网介绍地址：<a href="http://www.mybatis.org/generator/" target="_blank" rel="external">http://www.mybatis.org/generator/</a></p>
+<p>Github下载地址：<a href="https://github.com/mybatis/generator/releases" target="_blank" rel="external">https://github.com/mybatis/generator/releases</a></p>
+<h3 id="官方自动生成的-SQL-语句"><a href="#官方自动生成的-SQL-语句" class="headerlink" title="官方自动生成的 SQL 语句"></a>官方自动生成的 SQL 语句</h3><ul>
+<li>insert  (插入)</li>
+<li>update by primary key  (根据主键更新记录)</li>
+<li>update by example  (根据条件更新记录)</li>
+<li>delete by primary  key (根据主键删除记录)</li>
+<li>delete by example  (根据条件删除记录)</li>
+<li>select by primary  key (根据主键查询记录)</li>
+<li>select by example  (根据条件查询记录集)</li>
+<li>count by example  (根据条件查询记录总数)</li>
+</ul>
+<h3 id="插件方式增加的-SQL-语句"><a href="#插件方式增加的-SQL-语句" class="headerlink" title="插件方式增加的 SQL 语句"></a>插件方式增加的 SQL 语句</h3><ul>
+<li>selectByExampleByPage （根据条件查询，并根据分页参数分页）</li>
+<li>insertSelective （根据条件选择性插入）</li>
+<li>updateByExampleSelective  (按条件更新值不为 null 的字段  )</li>
+<li>updateByPrimaryKeySelective  (按主键更新值不为 null 的字段 )</li>
+<li>selectByExampleWithBLOGs （按条件查询，包括BLOB字段。只有当数据表中的字段类型有为二进制的才会产生。 ）</li>
+<li>selectByPrimaryKeyForUpdate  （按主键查询并锁定）</li>
+</ul>
+<blockquote>
+<p>Selective 的意思是：选择性。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">比如User里面有三个字段：id，name，age，password，但是我只设置了一个字段。</span><br><span class="line">User u=new user();</span><br><span class="line">u.setName（&quot;张三&quot;）;</span><br><span class="line">insertSelective（u）;</span><br></pre></td></tr></table></figure>
+<p>insertSelective 执行对应的sql语句的时候，只插入对应的 name 字段；（主键是自动添加的，默认插入为空）<br><code>insert into tb_user （id，name） value （null，&quot;张三&quot;）；</code></p>
+<p>而 insert 则是不论你设置多少个字段，统一都要添加一遍，不论你设置几个字段，即使是一个。<br><code>insert into tb_user （id，name，age，password） value （null，&quot;张三&quot;，null，null）；</code></p>
+</blockquote>
+<h2 id="Maven-引入-MyBatis-Generator"><a href="#Maven-引入-MyBatis-Generator" class="headerlink" title="Maven 引入 MyBatis Generator"></a>Maven 引入 MyBatis Generator</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.mybatis.generator<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mybatis-generator-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.3.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">configurationFile</span>&gt;</span>$&#123;basedir&#125;/src/main/resources/generator/generatorConfig.xml<span class="tag">&lt;/<span class="name">configurationFile</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">verbose</span>&gt;</span>true<span class="tag">&lt;/<span class="name">verbose</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">overwrite</span>&gt;</span>true<span class="tag">&lt;/<span class="name">overwrite</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>mysql<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mysql-connector-java<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;mysql.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>cn.doity<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mybatis-generator-bySweb<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">scope</span>&gt;</span>system<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">systemPath</span>&gt;</span>$&#123;project.basedir&#125;/src/test/resources/mybatis-generator-bySweb.jar<span class="tag">&lt;/<span class="name">systemPath</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--通过 Maven 引入--&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--&lt;dependency&gt;--&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--&lt;groupId&gt;cn.doity&lt;/groupId&gt;--&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--&lt;artifactId&gt;mybatis-generator-bySweb&lt;/artifactId&gt;--&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--&lt;version&gt;1.0.1&lt;/version&gt;--&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--&lt;/dependency&gt;--&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>从上面配置可以看到，generator 引入 mysql 驱动以及一个插件 <code>mybatis-generator-bySweb.jar</code>，这是上述“插件方式增加的 SQL 语句”的插件，将自定义的 SQL 语句的类打包成 jar 包后再引入。</p>
+<h3 id="generator-配置"><a href="#generator-配置" class="headerlink" title="generator 配置"></a>generator 配置</h3><p>从配置上上可以看到，generator 配置放在 <code>/src/main/resources/generator/generatorConfig.xml</code><br>具体的配置如下<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;</span><br><span class="line"><span class="meta">&lt;!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"</span><br><span class="line">        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" &gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">generatorConfiguration</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--修改config.properties中的模块名称、表名即可--&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">properties</span> <span class="attr">resource</span>=<span class="string">"conn.properties"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">context</span> <span class="attr">id</span>=<span class="string">"mysqlTables"</span> <span class="attr">targetRuntime</span>=<span class="string">"MyBatis3"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">&lt;!--&lt;property name="daoPackage" value="cn.doity.$&#123;moduleName&#125;.persistence.custom"/&gt;--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"daoPackage"</span> <span class="attr">value</span>=<span class="string">"cn.doity.dao"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">&lt;!--序列化--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">plugin</span> <span class="attr">type</span>=<span class="string">"org.mybatis.generator.plugins.SerializablePlugin"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">&lt;!--插入成功后返回ID--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">plugin</span> <span class="attr">type</span>=<span class="string">"cn.doity.common.generator.plugin.InsertAndReturnKeyPlugin"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">&lt;!--分页查询功能--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">plugin</span> <span class="attr">type</span>=<span class="string">"cn.doity.common.generator.plugin.SelectByPagePlugin"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">&lt;!--生成带有for update后缀的select语句插件--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">plugin</span> <span class="attr">type</span>=<span class="string">"cn.doity.common.generator.plugin.SelectForUpdatePlugin"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">commentGenerator</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!-- 代码合并时需要用到 --&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"suppressAllComments"</span> <span class="attr">value</span>=<span class="string">"false"</span>/&gt;</span></span><br><span class="line">            <span class="comment">&lt;!--关闭注释--&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"suppressDate"</span> <span class="attr">value</span>=<span class="string">"true"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">commentGenerator</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">&lt;!-- 数据库连接方式 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">jdbcConnection</span> <span class="attr">driverClass</span>=<span class="string">"$&#123;jdbc.dr&#125;"</span> <span class="attr">connectionURL</span>=<span class="string">"$&#123;jdbc.uip&#125;"</span></span><br><span class="line">                        <span class="attr">userId</span>=<span class="string">"$&#123;jdbc.un&#125;"</span> <span class="attr">password</span>=<span class="string">"$&#123;jdbc.pw&#125;"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">jdbcConnection</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">javaTypeResolver</span> <span class="attr">type</span>=<span class="string">"cn.doity.common.generator.plugin.MyTypeResolver"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"forceBigDecimals"</span> <span class="attr">value</span>=<span class="string">"true"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">javaTypeResolver</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">&lt;!--生成的model 包路径 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">javaModelGenerator</span> <span class="attr">targetPackage</span>=<span class="string">"$&#123;model.package&#125;"</span> <span class="attr">targetProject</span>=<span class="string">"$&#123;target.project&#125;"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"enableSubPackages"</span> <span class="attr">value</span>=<span class="string">"ture"</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"trimStrings"</span> <span class="attr">value</span>=<span class="string">"true"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">javaModelGenerator</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">&lt;!--生成xml mapper文件 路径 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">sqlMapGenerator</span> <span class="attr">targetPackage</span>=<span class="string">"$&#123;xml.mapper.package&#125;"</span> <span class="attr">targetProject</span>=<span class="string">"$&#123;target.resources&#125;"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"enableSubPackages"</span> <span class="attr">value</span>=<span class="string">"ture"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">sqlMapGenerator</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">&lt;!-- 生成的Dao接口 的包路径 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">javaClientGenerator</span> <span class="attr">type</span>=<span class="string">"XMLMAPPER"</span> <span class="attr">targetPackage</span>=<span class="string">"$&#123;dao.package&#125;"</span> <span class="attr">targetProject</span>=<span class="string">"$&#123;target.project&#125;"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"enableSubPackages"</span> <span class="attr">value</span>=<span class="string">"ture"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">javaClientGenerator</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">&lt;!--表别名在mysql下面，删除语句会有问题，alias="t"--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">table</span> <span class="attr">tableName</span>=<span class="string">"$&#123;tableName&#125;"</span> <span class="attr">alias</span>=<span class="string">"t"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">table</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">context</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">generatorConfiguration</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="conn-properties-连接信息的配置"><a href="#conn-properties-连接信息的配置" class="headerlink" title="conn.properties 连接信息的配置"></a>conn.properties 连接信息的配置</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">## 数据库信息</span><br><span class="line">jdbc.dr=com.mysql.jdbc.Driver</span><br><span class="line">jdbc.uip=jdbc:mysql://127.0.0.1:3306/superweb?useUnicode=true&amp;characterEncoding=UTF8</span><br><span class="line">jdbc.un=root</span><br><span class="line">jdbc.pw=</span><br><span class="line"></span><br><span class="line">### Generator 相关设置</span><br><span class="line">## 表名</span><br><span class="line">tableName=%</span><br><span class="line">## 模块名</span><br><span class="line">moduleName=abc</span><br><span class="line"># 包路径配置</span><br><span class="line">model.package=cn.doity.entity</span><br><span class="line">dao.package=cn.doity.dao</span><br><span class="line">xml.mapper.package=mapper</span><br><span class="line">target.resources=src/main/resources</span><br><span class="line">target.project=src/main/java</span><br></pre></td></tr></table></figure>
+<h2 id="按条件查询并分页示例"><a href="#按条件查询并分页示例" class="headerlink" title="按条件查询并分页示例"></a>按条件查询并分页示例</h2><p><code>Country</code> 类是代表国家实体，里面 <code>countryName</code> 代表国家名字，示例是通过国家名字模糊查询。</p>
+<p><code>Page</code> 类封装了分页相关参数，<code>TotalCount</code> 表示总记录数，<code>PageNo</code> 页码，<code>PageSize</code> 页面大小。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> List&lt;Country&gt; <span class="title">selectByModelAndPage</span><span class="params">(Country country, Page page)</span> </span>&#123;</span><br><span class="line">    CountryExample countryExample = <span class="keyword">new</span> CountryExample();</span><br><span class="line">    CountryExample.Criteria criteria = countryExample.createCriteria();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (StringUtils.isNotBlank(country.getCountryname())) &#123;</span><br><span class="line">        StringBuilder stringBuilder = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">        stringBuilder.append(<span class="string">'%'</span>).append(country.getCountryname()).append(<span class="string">'%'</span>);</span><br><span class="line">        criteria.andCountrynameLike(stringBuilder.toString());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> count = countryMapper.countByExample(countryExample);</span><br><span class="line">    page.setTotalCount(count);</span><br><span class="line"></span><br><span class="line">    countryExample.setOrderByClause(<span class="string">"字段名 ASC"</span>); <span class="comment">//升序排列，desc为降序排列。</span></span><br><span class="line">    countryExample.setDistinct(<span class="keyword">false</span>)<span class="comment">//去除重复，boolean型，true为选择不重复的记录。</span></span><br><span class="line">    countryExample.setPageClause(page.getPageNo()+ <span class="string">","</span> + page.getPageSize());</span><br><span class="line">    countryExample.setOrderByClause(<span class="string">"id asc"</span>);</span><br><span class="line">    List&lt;Country&gt; countryList = countryMapper.selectByExampleByPage(countryExample);</span><br><span class="line">    <span class="keyword">return</span> countryList;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="MyBatis-相关工具推荐"><a href="#MyBatis-相关工具推荐" class="headerlink" title="MyBatis 相关工具推荐"></a>MyBatis 相关工具推荐</h2><p>abel533 作者有两个 MyBatis 相关工具：通用 Mapper 与 分页插件PageHelper。都挺好用，欢迎大家去使用一下。</p>
+<p>Github 地址：<a href="https://github.com/abel533" target="_blank" rel="external">https://github.com/abel533</a></p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><a href="http://blog.csdn.net/kenhins/article/details/44939873" target="_blank" rel="external">mybatis中的mapper接口文件以及example类的实例函数以及详解</a></li>
+<li><a href="http://generator.sturgeon.mopaas.com/" target="_blank" rel="external">MyBatis Generator介绍-中文</a></li>
+<li><a href="http://www.mybatis.org/generator/" target="_blank" rel="external">MyBatis Generator介绍-官方</a></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JAVA/" rel="tag">#JAVA</a>
+          
+            <a href="/tags/框架/" rel="tag">#框架</a>
+          
+            <a href="/tags/MyBatis/" rel="tag">#MyBatis</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/06/15/Spring-SpringMVC-MyBatis-集成（二）/" rel="next" title="Spring + SpringMVC + MyBatis 集成（二）">
+                <i class="fa fa-chevron-left"></i> Spring + SpringMVC + MyBatis 集成（二）
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/06/30/集成通用-Mapper-与分页插件-PageHelper/" rel="prev" title="[JavaWeb] 集成通用 Mapper 与 分页插件PageHelper">
+                [JavaWeb] 集成通用 Mapper 与 分页插件PageHelper <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Arno" />
+          <p class="site-author-name" itemprop="name">Arno</p>
+          <p class="site-description motion-element" itemprop="description">Simplicity is prerequisite for reliability</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">16</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#MyBatis-Generator"><span class="nav-number">1.</span> <span class="nav-text">MyBatis Generator</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#官方自动生成的-SQL-语句"><span class="nav-number">1.1.</span> <span class="nav-text">官方自动生成的 SQL 语句</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#插件方式增加的-SQL-语句"><span class="nav-number">1.2.</span> <span class="nav-text">插件方式增加的 SQL 语句</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Maven-引入-MyBatis-Generator"><span class="nav-number">2.</span> <span class="nav-text">Maven 引入 MyBatis Generator</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#generator-配置"><span class="nav-number">2.1.</span> <span class="nav-text">generator 配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#conn-properties-连接信息的配置"><span class="nav-number">2.2.</span> <span class="nav-text">conn.properties 连接信息的配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#按条件查询并分页示例"><span class="nav-number">3.</span> <span class="nav-text">按条件查询并分页示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MyBatis-相关工具推荐"><span class="nav-number">4.</span> <span class="nav-text">MyBatis 相关工具推荐</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Arno</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>

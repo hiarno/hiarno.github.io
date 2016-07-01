@@ -1,0 +1,577 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JAVA,框架,MyBatis," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="MyBatis 工具这次介绍两个 Mybatis 的两个工具：通用 Mapper 与 分页插件PageHelper
+都是 Github 上面的 abel533 作者写的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[JavaWeb] 集成通用 Mapper 与 分页插件PageHelper">
+<meta property="og:url" content="hiarno.github.io/2016/06/30/集成通用-Mapper-与分页插件-PageHelper/index.html">
+<meta property="og:site_name" content="Arno's Blog">
+<meta property="og:description" content="MyBatis 工具这次介绍两个 Mybatis 的两个工具：通用 Mapper 与 分页插件PageHelper
+都是 Github 上面的 abel533 作者写的">
+<meta property="og:updated_time" content="2016-07-01T02:21:56.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[JavaWeb] 集成通用 Mapper 与 分页插件PageHelper">
+<meta name="twitter:description" content="MyBatis 工具这次介绍两个 Mybatis 的两个工具：通用 Mapper 与 分页插件PageHelper
+都是 Github 上面的 abel533 作者写的">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> [JavaWeb] 集成通用 Mapper 与 分页插件PageHelper | Arno's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Arno's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Simplicity is prerequisite for reliability.</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                [JavaWeb] 集成通用 Mapper 与 分页插件PageHelper
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-06-30T22:00:00+08:00" content="2016-06-30">
+              2016-06-30
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="MyBatis-工具"><a href="#MyBatis-工具" class="headerlink" title="MyBatis 工具"></a>MyBatis 工具</h2><p>这次介绍两个 Mybatis 的两个工具：通用 Mapper 与 分页插件PageHelper</p>
+<p>都是 Github 上面的 abel533 作者写的</p>
+<a id="more"></a>
+<h3 id="通用-Mapper"><a href="#通用-Mapper" class="headerlink" title="通用 Mapper"></a>通用 Mapper</h3><p>极其方便的使用MyBatis单表的增删改查。（支持单表操作，不支持通用的多表联合查询）</p>
+<h3 id="分页插件-PageHelper"><a href="#分页插件-PageHelper" class="headerlink" title="分页插件 - PageHelper"></a>分页插件 - PageHelper</h3><p>PageHelper 是一款非常方便的分页插件，是物理分页。支持复杂的单表、多表分页。</p>
+<h2 id="Maven-引入"><a href="#Maven-引入" class="headerlink" title="Maven 引入"></a>Maven 引入</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--Mybatis 通用 Mapper --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">groupId</span>&gt;</span>tk.mybatis<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mapper<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">version</span>&gt;</span>3.3.7<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--分页助手--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.github.pagehelper<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>pagehelper<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>4.1.6<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="在-Mybatis-配置中配置拦截器插件"><a href="#在-Mybatis-配置中配置拦截器插件" class="headerlink" title="在 Mybatis 配置中配置拦截器插件"></a>在 Mybatis 配置中配置拦截器插件</h3><p>pagehelper 的相关配置</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- </span><br><span class="line">    plugins在配置文件中的位置必须符合要求，否则会报错，顺序如下:</span><br><span class="line">    properties?, settings?, </span><br><span class="line">    typeAliases?, typeHandlers?, </span><br><span class="line">    objectFactory?,objectWrapperFactory?, </span><br><span class="line">    plugins?, </span><br><span class="line">    environments?, databaseIdProvider?, mappers?</span><br><span class="line">--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- com.github.pagehelper为PageHelper类所在包名 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">plugin</span> <span class="attr">interceptor</span>=<span class="string">"com.github.pagehelper.PageHelper"</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 4.0.0以后版本可以不设置该参数 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"dialect"</span> <span class="attr">value</span>=<span class="string">"mysql"</span>/&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 该参数默认为false --&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 设置为true时，会将RowBounds第一个参数offset当成pageNum页码使用 --&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 和startPage中的pageNum效果一样--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"offsetAsPageNum"</span> <span class="attr">value</span>=<span class="string">"true"</span>/&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 该参数默认为false --&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 设置为true时，使用RowBounds分页会进行count查询 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"rowBoundsWithCount"</span> <span class="attr">value</span>=<span class="string">"true"</span>/&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 设置为true时，如果pageSize=0或者RowBounds.limit = 0就会查询出全部的结果 --&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- （相当于没有执行分页查询，但是返回结果仍然是Page类型）--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"pageSizeZero"</span> <span class="attr">value</span>=<span class="string">"true"</span>/&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 3.3.0版本可用 - 分页参数合理化，默认false禁用 --&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 启用合理化时，如果pageNum&lt;1会查询第一页，如果pageNum&gt;pages会查询最后一页 --&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 禁用合理化时，如果pageNum&lt;1或pageNum&gt;pages会返回空数据 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"reasonable"</span> <span class="attr">value</span>=<span class="string">"false"</span>/&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 3.5.0版本可用 - 为了支持startPage(Object params)方法 --&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 增加了一个`params`参数来配置参数映射，用于从Map或ServletRequest中取值 --&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 可以配置pageNum,pageSize,count,pageSizeZero,reasonable,orderBy,不配置映射的用默认值 --&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 不理解该含义的前提下，不要随便复制该配置 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"params"</span> <span class="attr">value</span>=<span class="string">"pageNum=pageHelperStart;pageSize=pageHelperRows;"</span>/&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 支持通过Mapper接口参数来传递分页参数 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"supportMethodsArguments"</span> <span class="attr">value</span>=<span class="string">"false"</span>/&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- always总是返回PageInfo类型,check检查返回类型是否为PageInfo,none返回Page --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"returnPageInfo"</span> <span class="attr">value</span>=<span class="string">"none"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="pagehelper-使用示例"><a href="#pagehelper-使用示例" class="headerlink" title="pagehelper 使用示例"></a>pagehelper 使用示例</h3><h4 id="Service-类"><a href="#Service-类" class="headerlink" title="Service 类"></a>Service 类</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * 采用 PageHelper 分页</span><br><span class="line"> * 紧跟在 PageHelper.startPage 方法后的第一个 Mybatis 查询方法会被进行分页。</span><br><span class="line"> * <span class="doctag">@param</span> country 国家的实体类，Countryname 代表国家的名字</span><br><span class="line"> * <span class="doctag">@param</span> pageNum  页码</span><br><span class="line"> * <span class="doctag">@param</span> pageSize 每页显示数量</span><br><span class="line"> * <span class="doctag">@return</span></span><br><span class="line"> */</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> List&lt;Country&gt; <span class="title">selectByModelAndPage</span><span class="params">(Country country, <span class="keyword">int</span> pageNum, <span class="keyword">int</span> pageSize)</span> </span>&#123;</span><br><span class="line">    CountryExample countryExample = <span class="keyword">new</span> CountryExample();</span><br><span class="line">    CountryExample.Criteria criteria = countryExample.createCriteria();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (StringUtils.isNotBlank(country.getCountryname())) &#123;</span><br><span class="line">        StringBuilder stringBuilder = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">        stringBuilder.append(<span class="string">'%'</span>).append(country.getCountryname()).append(<span class="string">'%'</span>);</span><br><span class="line">        criteria.andCountrynameLike(stringBuilder.toString());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//分页查询 ，紧跟在 PageHelper.startPage 方法后的第一个Mybatis查询方法会被进行分页</span></span><br><span class="line">    PageHelper.startPage(pageNum, pageSize);</span><br><span class="line">    <span class="keyword">return</span> countryMapper.selectByExample(countryExample);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="Controller-类"><a href="#Controller-类" class="headerlink" title="Controller 类"></a>Controller 类</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> CountryService countryService;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> String page_list = <span class="string">"index"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> String redirect_list = <span class="string">"redirect:list"</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RequestMapping</span>(value = &#123;<span class="string">"list"</span>, <span class="string">"index"</span>, <span class="string">"index.html"</span>, <span class="string">""</span>&#125;)</span><br><span class="line"><span class="function"><span class="keyword">public</span> ModelAndView <span class="title">getList</span><span class="params">(Country country,</span><br><span class="line">                            @RequestParam(required = <span class="keyword">false</span>, defaultValue = <span class="string">"1"</span>)</span> <span class="keyword">int</span> page,</span><br><span class="line">                            @<span class="title">RequestParam</span><span class="params">(required = <span class="keyword">false</span>, defaultValue = <span class="string">"10"</span>)</span> <span class="keyword">int</span> rows) </span>&#123;</span><br><span class="line">    ModelAndView result = <span class="keyword">new</span> ModelAndView(page_list);</span><br><span class="line">    List&lt;Country&gt; countryList = countryService.selectByCountry(country, page, rows);</span><br><span class="line">    result.addObject(<span class="string">"pageInfo"</span>, <span class="keyword">new</span> PageInfo&lt;Country&gt;(countryList));</span><br><span class="line">    result.addObject(<span class="string">"queryParam"</span>, country);</span><br><span class="line">    result.addObject(<span class="string">"page"</span>, page);</span><br><span class="line">    result.addObject(<span class="string">"rows"</span>, rows);</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="jsp-页面中"><a href="#jsp-页面中" class="headerlink" title="jsp 页面中"></a>jsp 页面中</h4><p>可以根据需要获取下列信息</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">$&#123;pageInfo.list&#125; 数据 List</span><br><span class="line"></span><br><span class="line">当前页号</span><br><span class="line"> $&#123;pageInfo.pageNum&#125;</span><br><span class="line">页面大小</span><br><span class="line"> $&#123;pageInfo.pageSize&#125;</span><br><span class="line">起始行号(&gt;=)</span><br><span class="line"> $&#123;pageInfo.startRow&#125;</span><br><span class="line">终止行号(&lt;=)</span><br><span class="line"> $&#123;pageInfo.endRow&#125;</span><br><span class="line">总结果数</span><br><span class="line"> $&#123;pageInfo.total&#125;</span><br><span class="line">总页数</span><br><span class="line"> $&#123;pageInfo.pages&#125;</span><br><span class="line">第一页</span><br><span class="line"> $&#123;pageInfo.firstPage&#125;</span><br><span class="line">前一页</span><br><span class="line"> $&#123;pageInfo.prePage&#125;</span><br><span class="line">下一页</span><br><span class="line"> $&#123;pageInfo.nextPage&#125;</span><br><span class="line">最后一页</span><br><span class="line"> $&#123;pageInfo.lastPage&#125;</span><br><span class="line">是否为第一页</span><br><span class="line"> $&#123;pageInfo.isFirstPage&#125;</span><br><span class="line">是否为最后一页</span><br><span class="line"> $&#123;pageInfo.isLastPage&#125;</span><br><span class="line">是否有前一页</span><br><span class="line"> $&#123;pageInfo.hasPreviousPage&#125;</span><br><span class="line">是否有下一页</span><br><span class="line"> $&#123;pageInfo.hasNextPage&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="通用-Mapper-配置"><a href="#通用-Mapper-配置" class="headerlink" title="通用 Mapper 配置"></a>通用 Mapper 配置</h3><p>个人在 Spring 的 xml 配置的<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"tk.mybatis.spring.mapper.MapperScannerConfigurer"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"basePackage"</span> <span class="attr">value</span>=<span class="string">"com.isea533.mybatis.mapper"</span>/&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 3.2.2版本新特性，markerInterface可以起到mappers配置的作用，详细情况需要看Marker接口类 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"markerInterface"</span> <span class="attr">value</span>=<span class="string">"com.isea533.mybatis.util.MyMapper"</span>/&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 通用Mapper通过属性注入进行配置，默认不配置时会注册Mapper&lt;T&gt;接口</span><br><span class="line">    &lt;property name="properties"&gt;</span><br><span class="line">        &lt;value&gt;</span><br><span class="line">            mappers=tk.mybatis.mapper.common.Mapper</span><br><span class="line">        &lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">    --&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="继承通用的-Mapper，必须指定泛型"><a href="#继承通用的-Mapper，必须指定泛型" class="headerlink" title="继承通用的 Mapper，必须指定泛型 "></a>继承通用的 Mapper<t>，必须指定泛型 <t></t></t></h3><p>公共 Mapper</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">MyMapper</span>&lt;<span class="title">T</span>&gt; <span class="keyword">extends</span> <span class="title">Mapper</span>&lt;<span class="title">T</span>&gt;, <span class="title">MySqlMapper</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>自己的Mapper<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">CountryMapper</span> <span class="keyword">extends</span> <span class="title">MyMapper</span>&lt;<span class="title">Country</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="Service-中使用"><a href="#Service-中使用" class="headerlink" title="Service 中使用"></a>Service 中使用</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span>(<span class="string">"countryService"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CountryServiceImpl</span> <span class="keyword">extends</span> <span class="title">BaseService</span>&lt;<span class="title">Country</span>&gt; <span class="keyword">implements</span> <span class="title">CountryService</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;Country&gt; <span class="title">selectByCountry</span><span class="params">(Country country, <span class="keyword">int</span> page, <span class="keyword">int</span> rows)</span> </span>&#123;</span><br><span class="line">        Example example = <span class="keyword">new</span> Example(Country.class);</span><br><span class="line">        Example.Criteria criteria = example.createCriteria();</span><br><span class="line">        <span class="keyword">if</span> (StringUtil.isNotEmpty(country.getCountryname())) &#123;</span><br><span class="line">            criteria.andLike(<span class="string">"countryname"</span>, <span class="string">"%"</span> + country.getCountryname() + <span class="string">"%"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (StringUtil.isNotEmpty(country.getCountrycode())) &#123;</span><br><span class="line">            criteria.andLike(<span class="string">"countrycode"</span>, <span class="string">"%"</span> + country.getCountrycode() + <span class="string">"%"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (country.getId() != <span class="keyword">null</span>) &#123;</span><br><span class="line">            criteria.andEqualTo(<span class="string">"id"</span>, country.getId());</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//分页查询</span></span><br><span class="line">        PageHelper.startPage(page, rows);</span><br><span class="line">        <span class="keyword">return</span> selectByExample(example);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>在作者的 Mybatis-Spring 示例项目中自动生成的 Mapper 接口需要手动继承 MyMapper，不然会报错</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li>Mybatis 分页插件 - PageHelper <a href="http://git.oschina.net/free/Mybatis_PageHelper" title="Mybatis 分页插件 PageHelper" target="_blank" rel="external">http://git.oschina.net/free/Mybatis_PageHelper</a></li>
+<li>MyBatis 通用 Mapper <a href="http://git.oschina.net/free/Mapper" title="MyBatis通用Mapper" target="_blank" rel="external">http://git.oschina.net/free/Mapper</a></li>
+<li>MyBatis Generator 介绍-中文 <a href="http://generator.sturgeon.mopaas.com/" target="_blank" rel="external">http://generator.sturgeon.mopaas.com/</a></li>
+<li>MyBatis Generator 介绍-官 <a href="http://www.mybatis.org/generator/" target="_blank" rel="external">http://www.mybatis.org/generator/</a></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JAVA/" rel="tag">#JAVA</a>
+          
+            <a href="/tags/框架/" rel="tag">#框架</a>
+          
+            <a href="/tags/MyBatis/" rel="tag">#MyBatis</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/06/30/集成-MyBatis-Generator-以及-Generator-分页插件/" rel="next" title="[JavaWeb] 集成 MyBatis Generator 以及 Generator  分页插件">
+                <i class="fa fa-chevron-left"></i> [JavaWeb] 集成 MyBatis Generator 以及 Generator  分页插件
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Arno" />
+          <p class="site-author-name" itemprop="name">Arno</p>
+          <p class="site-description motion-element" itemprop="description">Simplicity is prerequisite for reliability</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">16</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#MyBatis-工具"><span class="nav-number">1.</span> <span class="nav-text">MyBatis 工具</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#通用-Mapper"><span class="nav-number">1.1.</span> <span class="nav-text">通用 Mapper</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分页插件-PageHelper"><span class="nav-number">1.2.</span> <span class="nav-text">分页插件 - PageHelper</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Maven-引入"><span class="nav-number">2.</span> <span class="nav-text">Maven 引入</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#在-Mybatis-配置中配置拦截器插件"><span class="nav-number">2.1.</span> <span class="nav-text">在 Mybatis 配置中配置拦截器插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pagehelper-使用示例"><span class="nav-number">2.2.</span> <span class="nav-text">pagehelper 使用示例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Service-类"><span class="nav-number">2.2.1.</span> <span class="nav-text">Service 类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Controller-类"><span class="nav-number">2.2.2.</span> <span class="nav-text">Controller 类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#jsp-页面中"><span class="nav-number">2.2.3.</span> <span class="nav-text">jsp 页面中</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通用-Mapper-配置"><span class="nav-number">2.3.</span> <span class="nav-text">通用 Mapper 配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#继承通用的-Mapper，必须指定泛型"><span class="nav-number">2.4.</span> <span class="nav-text">继承通用的 Mapper，必须指定泛型 </span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Service-中使用"><span class="nav-number">2.5.</span> <span class="nav-text">Service 中使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小结"><span class="nav-number">2.6.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Arno</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
