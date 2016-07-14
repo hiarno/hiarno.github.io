@@ -1,0 +1,588 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JAVA,框架,Shiro,Apache," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="Apache Shiro 简介Apache Shiro 是 Java 的一个开源安全框架，提供身份验证、授权、密码学和会话管理。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[JavaWeb] Spring 集成 Apache Shiro 安全框架">
+<meta property="og:url" content="hiarno.github.io/2016/07/14/Spring-集成-Apache-Shiro-安全框架（一）/index.html">
+<meta property="og:site_name" content="Arno's Blog">
+<meta property="og:description" content="Apache Shiro 简介Apache Shiro 是 Java 的一个开源安全框架，提供身份验证、授权、密码学和会话管理。">
+<meta property="og:image" content="http://blog.qiji.tech/wp-content/uploads/2016/07/Shiro的三个核心组件.png">
+<meta property="og:image" content="http://blog.qiji.tech/wp-content/uploads/2016/07/Shiro完整架构图.png">
+<meta property="og:updated_time" content="2016-07-14T03:08:14.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[JavaWeb] Spring 集成 Apache Shiro 安全框架">
+<meta name="twitter:description" content="Apache Shiro 简介Apache Shiro 是 Java 的一个开源安全框架，提供身份验证、授权、密码学和会话管理。">
+<meta name="twitter:image" content="http://blog.qiji.tech/wp-content/uploads/2016/07/Shiro的三个核心组件.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> [JavaWeb] Spring 集成 Apache Shiro 安全框架 | Arno's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Arno's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Simplicity is prerequisite for reliability.</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                [JavaWeb] Spring 集成 Apache Shiro 安全框架
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-07-14T22:00:00+08:00" content="2016-07-14">
+              2016-07-14
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Apache-Shiro-简介"><a href="#Apache-Shiro-简介" class="headerlink" title="Apache Shiro 简介"></a>Apache Shiro 简介</h2><p>Apache Shiro 是 Java 的一个开源安全框架，提供身份验证、授权、密码学和会话管理。<br><a id="more"></a><br>Shiro 框架直观、易用，同时也能提供健壮的安全性。而 Spring Security 功能更强大，相对来说会比较复杂。本次选择的是 Apache Shiro，接下来开始 Shiro 安全框架之旅吧。</p>
+<h2 id="名词解释"><a href="#名词解释" class="headerlink" title="名词解释"></a>名词解释</h2><ul>
+<li>认证：用户身份识别，通常被称为用户“登录”</li>
+<li>授权：访问控制</li>
+<li>密码加密：保护或隐藏数据防止被偷窥</li>
+<li>会话管理：用户访问应用时保持的连接关系。这里主要指 SESSION 和 COOKIE</li>
+</ul>
+<h2 id="Apache-Shiro-架构介绍"><a href="#Apache-Shiro-架构介绍" class="headerlink" title="Apache Shiro 架构介绍"></a>Apache Shiro 架构介绍</h2><p><a href="http://blog.qiji.tech/wp-content/uploads/2016/07/Shiro的三个核心组件.png" target="_blank" rel="external"><img src="http://blog.qiji.tech/wp-content/uploads/2016/07/Shiro的三个核心组件.png" alt="Shiro的三个核心组件"></a><br>上图为 Shiro 的三个核心组件：Subject，SecurityManager 和 Realms。</p>
+<ul>
+<li>Subject：主体，代表当前操作用户。这个“用户”，不仅仅指代人，也指代与之交互的网络爬虫等等。</li>
+<li>SecurityManager：安全管理器，是 Shiro 的核心。它管理所有的 Subject，并负责与后面的组件交互。有点像  SpringMVC 中的 DispatcherServlet。</li>
+<li>Realm：域，可以看成是安全数据源。Shiro 从 Realm 获取安全数据（如用户、角色、权限）。例如用户登录的时候，Shiro 会从 Realm 配置角色和权限。</li>
+</ul>
+<blockquote>
+<p>Shiro 不提供维护用户或权限，而是通过 Realm 让开发人员自己注入。</p>
+</blockquote>
+<p>补上一张 Shiro 完整架构图<br><a href="http://blog.qiji.tech/wp-content/uploads/2016/07/Shiro完整架构图.png" target="_blank" rel="external"><img src="http://blog.qiji.tech/wp-content/uploads/2016/07/Shiro完整架构图.png" alt="Shiro完整架构图"></a></p>
+<h2 id="Maven-引入-jar-包"><a href="#Maven-引入-jar-包" class="headerlink" title="Maven 引入 jar 包"></a>Maven 引入 jar 包</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- shiro 安全框架--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.shiro<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>shiro-spring<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;shiro.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.shiro<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>shiro-ehcache<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;shiro.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.shiro<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>shiro-core<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;shiro.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.shiro<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>shiro-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;shiro.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.shiro<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>shiro-quartz<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;shiro.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--shiro 单点登录--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.shiro<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>shiro-cas<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;shiro.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="web-xml-配置"><a href="#web-xml-配置" class="headerlink" title="web.xml 配置"></a>web.xml 配置</h3><p>首先配置过滤器，让请求资源经过 Shiro 的过滤处理。<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- shiro 安全过滤器 配置在 DispatcherServlet 之前--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">filter</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>shiroFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-class</span>&gt;</span>org.springframework.web.filter.DelegatingFilterProxy<span class="tag">&lt;/<span class="name">filter-class</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">async-supported</span>&gt;</span>true<span class="tag">&lt;/<span class="name">async-supported</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">init-param</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>targetFilterLifecycle<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>true<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">filter</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">filter-mapping</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>shiroFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/*<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">filter-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="spring-web-xml-配置"><a href="#spring-web-xml-配置" class="headerlink" title="spring-web.xml 配置"></a>spring-web.xml 配置</h3><p>在 SpringMVC 中启用注解方式授权。<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 配置使 Spring 采用 CGLIB 代理 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">aop:aspectj-autoproxy</span> <span class="attr">proxy-target-class</span>=<span class="string">"true"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 启用shrio授权注解拦截方式 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">aop:config</span> <span class="attr">proxy-target-class</span>=<span class="string">"true"</span>&gt;</span><span class="tag">&lt;/<span class="name">aop:config</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"securityManager"</span> <span class="attr">ref</span>=<span class="string">"securityManager"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- shiro cacheManager 配置 ，还是没有成功 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">cache:annotation-driven</span> <span class="attr">cache-manager</span>=<span class="string">"cacheManager"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"ehCacheManagerFactory"</span> <span class="attr">class</span>=<span class="string">"org.springframework.cache.ehcache.EhCacheManagerFactoryBean"</span></span><br><span class="line">      <span class="attr">p:configLocation</span>=<span class="string">"classpath:shiro/ehcache.xml"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"cacheManager"</span> <span class="attr">class</span>=<span class="string">"org.springframework.cache.ehcache.EhCacheCacheManager"</span></span><br><span class="line">      <span class="attr">p:cacheManager-ref</span>=<span class="string">"ehCacheManagerFactory"</span>/&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="applicationContext-shiro-xml-配置"><a href="#applicationContext-shiro-xml-配置" class="headerlink" title="applicationContext-shiro.xml 配置"></a>applicationContext-shiro.xml 配置</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;</span><br><span class="line">       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd&quot;&gt;</span><br><span class="line"></span><br><span class="line">    &lt;description&gt;apache shiro配置&lt;/description&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!--注入自己写好的 shiro Realm 组件--&gt;</span><br><span class="line">    &lt;bean id=&quot;securityRealm&quot; class=&quot;cn.doity.security.SecurityRealm&quot;&gt;&lt;/bean&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &lt;bean id=&quot;shiroFilter&quot; class=&quot;org.apache.shiro.spring.web.ShiroFilterFactoryBean&quot;&gt;</span><br><span class="line">        &lt;property name=&quot;securityManager&quot; ref=&quot;securityManager&quot;/&gt;</span><br><span class="line">        &lt;property name=&quot;loginUrl&quot; value=&quot;/page/login&quot;/&gt;</span><br><span class="line">        &lt;property name=&quot;successUrl&quot; value=&quot;/index&quot;/&gt;</span><br><span class="line">        &lt;property name=&quot;unauthorizedUrl&quot; value=&quot;/page/401&quot;/&gt;</span><br><span class="line">        &lt;property name=&quot;filterChainDefinitions&quot;&gt;</span><br><span class="line">            &lt;value&gt;</span><br><span class="line">                &lt;!-- 静态资源允许访问 --&gt;</span><br><span class="line">                /resources/css/** = anon</span><br><span class="line">                /resources/fonts/** = anon</span><br><span class="line">                /resources/img/** = anon</span><br><span class="line">                /resources/js/** = anon</span><br><span class="line">                /resources/plugins/** = anon</span><br><span class="line">                /resources/favicon.ico = anon</span><br><span class="line">                &lt;!-- 登录页允许访问 --&gt;</span><br><span class="line">                /user/login = anon</span><br><span class="line">                &lt;!-- 其他资源需要认证 --&gt;</span><br><span class="line">                &lt;!--/** = anon--&gt;</span><br><span class="line">                /** = authc</span><br><span class="line">            &lt;/value&gt;</span><br><span class="line">        &lt;/property&gt;</span><br><span class="line">    &lt;/bean&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- 缓存管理器 使用Ehcache实现 --&gt;</span><br><span class="line">    &lt;bean id=&quot;shiroEhcacheManager&quot; class=&quot;org.apache.shiro.cache.ehcache.EhCacheManager&quot;&gt;</span><br><span class="line">        &lt;property name=&quot;cacheManagerConfigFile&quot; value=&quot;classpath:shiro/ehcache-shiro.xml&quot;/&gt;</span><br><span class="line">    &lt;/bean&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- 会话DAO --&gt;</span><br><span class="line">    &lt;bean id=&quot;sessionDAO&quot; class=&quot;org.apache.shiro.session.mgt.eis.MemorySessionDAO&quot;/&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- 会话管理器 --&gt;</span><br><span class="line">    &lt;bean id=&quot;sessionManager&quot; class=&quot;org.apache.shiro.web.session.mgt.DefaultWebSessionManager&quot;&gt;</span><br><span class="line">        &lt;property name=&quot;sessionDAO&quot; ref=&quot;sessionDAO&quot;/&gt;</span><br><span class="line">    &lt;/bean&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- 安全管理器 --&gt;</span><br><span class="line">    &lt;bean id=&quot;securityManager&quot; class=&quot;org.apache.shiro.web.mgt.DefaultWebSecurityManager&quot;&gt;</span><br><span class="line">        &lt;property name=&quot;realms&quot;&gt;</span><br><span class="line">            &lt;list&gt;</span><br><span class="line">                &lt;ref bean=&quot;securityRealm&quot;/&gt;</span><br><span class="line">            &lt;/list&gt;</span><br><span class="line">        &lt;/property&gt;</span><br><span class="line">        &lt;!-- cacheManager,集合spring缓存工厂 --&gt;</span><br><span class="line">         &lt;property name=&quot;cacheManager&quot; ref=&quot;shiroEhcacheManager&quot; /&gt;</span><br><span class="line">         &lt;!--&lt;property name=&quot;sessionManager&quot; ref=&quot;sessionManager&quot; /&gt;--&gt;</span><br><span class="line">    &lt;/bean&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- Shiro生命周期处理器 --&gt;</span><br><span class="line">    &lt;bean id=&quot;lifecycleBeanPostProcessor&quot; class=&quot;org.apache.shiro.spring.LifecycleBeanPostProcessor&quot;/&gt;</span><br><span class="line"></span><br><span class="line">&lt;/beans&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="ehcache-shiro-xml-配置"><a href="#ehcache-shiro-xml-配置" class="headerlink" title="ehcache-shiro.xml 配置"></a>ehcache-shiro.xml 配置</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ehcache</span> <span class="attr">updateCheck</span>=<span class="string">"false"</span> <span class="attr">name</span>=<span class="string">"shiroCache"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">defaultCache</span></span><br><span class="line">            <span class="attr">maxElementsInMemory</span>=<span class="string">"10000"</span></span><br><span class="line">            <span class="attr">eternal</span>=<span class="string">"false"</span></span><br><span class="line">            <span class="attr">timeToIdleSeconds</span>=<span class="string">"120"</span></span><br><span class="line">            <span class="attr">timeToLiveSeconds</span>=<span class="string">"120"</span></span><br><span class="line">            <span class="attr">overflowToDisk</span>=<span class="string">"false"</span></span><br><span class="line">            <span class="attr">diskPersistent</span>=<span class="string">"false"</span></span><br><span class="line">            <span class="attr">diskExpiryThreadIntervalSeconds</span>=<span class="string">"120"</span></span><br><span class="line">            /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ehcache</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="登录示例"><a href="#登录示例" class="headerlink" title="登录示例"></a>登录示例</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * 用户登录</span><br><span class="line"> * <span class="doctag">@param</span> user</span><br><span class="line"> * <span class="doctag">@param</span> result</span><br><span class="line"> * <span class="doctag">@param</span> model</span><br><span class="line"> * <span class="doctag">@param</span> request</span><br><span class="line"> * <span class="doctag">@return</span></span><br><span class="line"> */</span></span><br><span class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"/login"</span>, method = RequestMethod.POST)</span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">login</span><span class="params">(@Valid User user, BindingResult result, Model model, HttpServletRequest request)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        Subject subject = SecurityUtils.getSubject();</span><br><span class="line">        <span class="comment">// 已登陆则 跳到首页</span></span><br><span class="line">        <span class="keyword">if</span> (subject.isAuthenticated()) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">"redirect:/"</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (result.hasErrors()) &#123;</span><br><span class="line">            model.addAttribute(<span class="string">"error"</span>, <span class="string">"参数错误！"</span>);</span><br><span class="line">            <span class="keyword">return</span> <span class="string">"login"</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 身份验证</span></span><br><span class="line">        subject.login(<span class="keyword">new</span> UsernamePasswordToken(user.getUsername(), user.getPassword()));</span><br><span class="line">        <span class="comment">// 验证成功在Session中保存用户信息</span></span><br><span class="line">        <span class="keyword">final</span> User authUserInfo = userService.selectByUsername(user.getUsername());</span><br><span class="line">        request.getSession().setAttribute(authUserInfo, authUserInfo);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (AuthenticationException e) &#123;</span><br><span class="line">        <span class="comment">// 身份验证失败</span></span><br><span class="line">        model.addAttribute(<span class="string">"error"</span>, <span class="string">"用户名或密码错误 ！"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"login"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"redirect:/"</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * 用户退出登录</span><br><span class="line"> */</span></span><br><span class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"/logout"</span>, method = RequestMethod.GET)</span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">logout</span><span class="params">(HttpSession session)</span> </span>&#123;</span><br><span class="line">    session.removeAttribute(authUserInfo);</span><br><span class="line">    <span class="comment">// 登出操作</span></span><br><span class="line">    Subject subject = SecurityUtils.getSubject();</span><br><span class="line">    subject.logout();</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"login"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="小记"><a href="#小记" class="headerlink" title="小记"></a>小记</h3><p>未完待续。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li>Apache Shiro官网 <a href="http://shiro.apache.org/" title="Apache_Shiro官网" target="_blank" rel="external">http://shiro.apache.org/</a></li>
+<li>Apache Shiro 维基百科 <a href="https://zh.wikipedia.org/wiki/Apache_Shiro" title="Apache_Shiro 维基百科" target="_blank" rel="external">https://zh.wikipedia.org/wiki/Apache_Shiro</a></li>
+<li>Apache Shiro 使用手册  <a href="http://www.iteye.com/blogs/tag/%E5%AE%89%E5%85%A8%E6%A1%86%E6%9E%B6" title="Apache Shiro 使用手册" target="_blank" rel="external">http://www.iteye.com/blogs/tag/%E5%AE%89%E5%85%A8%E6%A1%86%E6%9E%B6</a></li>
+<li>跟我学Shiro目录贴 <a href="http://jinnianshilongnian.iteye.com/blog/2018398" title="跟我学Shiro目录贴" target="_blank" rel="external">http://jinnianshilongnian.iteye.com/blog/2018398</a></li>
+<li>让Apache Shiro保护你的应用 <a href="http://www.infoq.com/cn/articles/apache-shiro" title="让Apache Shiro保护你的应用" target="_blank" rel="external">http://www.infoq.com/cn/articles/apache-shiro</a></li>
+<li>在 Web 项目中应用 Apache Shiro <a href="https://www.ibm.com/developerworks/cn/java/j-lo-shiro/" title="在 Web 项目中应用 Apache Shiro" target="_blank" rel="external">https://www.ibm.com/developerworks/cn/java/j-lo-shiro/</a></li>
+<li>quick4j 通用 JavaWeb 项目骨架 <a href="https://github.com/starzou/quick4j" title="通用 JavaWeb 项目骨架" target="_blank" rel="external">https://github.com/starzou/quick4j</a></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JAVA/" rel="tag">#JAVA</a>
+          
+            <a href="/tags/框架/" rel="tag">#框架</a>
+          
+            <a href="/tags/Shiro/" rel="tag">#Shiro</a>
+          
+            <a href="/tags/Apache/" rel="tag">#Apache</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/06/30/集成-MyBatis-Generator-以及-Generator-分页插件/" rel="next" title="[JavaWeb] 集成 MyBatis Generator 以及 Generator  分页插件">
+                <i class="fa fa-chevron-left"></i> [JavaWeb] 集成 MyBatis Generator 以及 Generator  分页插件
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Arno" />
+          <p class="site-author-name" itemprop="name">Arno</p>
+          <p class="site-description motion-element" itemprop="description">Simplicity is prerequisite for reliability</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">17</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Apache-Shiro-简介"><span class="nav-number">1.</span> <span class="nav-text">Apache Shiro 简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#名词解释"><span class="nav-number">2.</span> <span class="nav-text">名词解释</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Apache-Shiro-架构介绍"><span class="nav-number">3.</span> <span class="nav-text">Apache Shiro 架构介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Maven-引入-jar-包"><span class="nav-number">4.</span> <span class="nav-text">Maven 引入 jar 包</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#web-xml-配置"><span class="nav-number">4.1.</span> <span class="nav-text">web.xml 配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#spring-web-xml-配置"><span class="nav-number">4.2.</span> <span class="nav-text">spring-web.xml 配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#applicationContext-shiro-xml-配置"><span class="nav-number">4.3.</span> <span class="nav-text">applicationContext-shiro.xml 配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ehcache-shiro-xml-配置"><span class="nav-number">4.4.</span> <span class="nav-text">ehcache-shiro.xml 配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#登录示例"><span class="nav-number">4.5.</span> <span class="nav-text">登录示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小记"><span class="nav-number">4.6.</span> <span class="nav-text">小记</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Arno</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
