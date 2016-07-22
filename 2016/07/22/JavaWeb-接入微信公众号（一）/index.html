@@ -1,0 +1,617 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JAVA,Wechat,微信," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="微信公众号相信大家对微信公众号都不陌生，本文就从开发者角度，简单说说目前微信公众号的状况。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[JavaWeb] 接入微信公众号（一）">
+<meta property="og:url" content="hiarno.github.io/2016/07/22/JavaWeb-接入微信公众号（一）/index.html">
+<meta property="og:site_name" content="Arno's Blog">
+<meta property="og:description" content="微信公众号相信大家对微信公众号都不陌生，本文就从开发者角度，简单说说目前微信公众号的状况。">
+<meta property="og:image" content="http://blog.qiji.tech/wp-content/uploads/2016/07/微信公众号类型介绍.jpg">
+<meta property="og:image" content="http://blog.qiji.tech/wp-content/uploads/2016/07/微信公众号交互模型2.png">
+<meta property="og:image" content="http://blog.qiji.tech/wp-content/uploads/2016/07/接口配置.png">
+<meta property="og:updated_time" content="2016-07-22T08:12:26.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[JavaWeb] 接入微信公众号（一）">
+<meta name="twitter:description" content="微信公众号相信大家对微信公众号都不陌生，本文就从开发者角度，简单说说目前微信公众号的状况。">
+<meta name="twitter:image" content="http://blog.qiji.tech/wp-content/uploads/2016/07/微信公众号类型介绍.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> [JavaWeb] 接入微信公众号（一） | Arno's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Arno's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Simplicity is prerequisite for reliability.</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                [JavaWeb] 接入微信公众号（一）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-07-22T22:00:00+08:00" content="2016-07-22">
+              2016-07-22
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="微信公众号"><a href="#微信公众号" class="headerlink" title="微信公众号"></a>微信公众号</h2><p>相信大家对微信公众号都不陌生，本文就从开发者角度，简单说说目前微信公众号的状况。</p>
+<a id="more"></a>
+<p>分为三个类型：订阅号、服务号、企业号，一旦选定不可以修改。</p>
+<p><a href="http://blog.qiji.tech/wp-content/uploads/2016/07/微信公众号类型介绍.jpg" target="_blank" rel="external"><img src="http://blog.qiji.tech/wp-content/uploads/2016/07/微信公众号类型介绍.jpg" alt="微信公众号类型介绍"></a></p>
+<h3 id="微信公众平台测试账号"><a href="#微信公众平台测试账号" class="headerlink" title="微信公众平台测试账号"></a>微信公众平台测试账号</h3><p>我们直接申请测试账号，减少很多麻烦，很多权限也可以直接使用，不需要认证。</p>
+<p>申请链接：<a href="http://mp.weixin.qq.com/debug/cgi-bin/sandbox?t=sandbox/login" title="微信公众平台接口测试帐号申请页" target="_blank" rel="external">微信公众平台接口测试帐号申请页</a></p>
+<h2 id="微信公众号交互模型"><a href="#微信公众号交互模型" class="headerlink" title="微信公众号交互模型"></a>微信公众号交互模型</h2><p>如下图，用户给公众号发送消息后，通过“微信后台”转发给“我们开发的服务”，“我们开发的后台”根据请求进行响应，返回给“微信后台”，微信后台再转发给我们的用户。<br><a href="http://blog.qiji.tech/wp-content/uploads/2016/07/微信公众号交互模型2.png" target="_blank" rel="external"><img src="http://blog.qiji.tech/wp-content/uploads/2016/07/微信公众号交互模型2.png" alt="微信公众号交互模型2"></a></p>
+<h2 id="接入微信公众号"><a href="#接入微信公众号" class="headerlink" title="接入微信公众号"></a>接入微信公众号</h2><p>接入微信时，微信服务器将发送 GET 请求到填写的服务器地址 URL 上，GET 请求携带四个参数：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>signature</td>
+<td>微信加密签名，signature 结合了开发者填写的 token 参数和请求中的 timestamp 参数、nonce 参数。</td>
+</tr>
+<tr>
+<td>timestamp</td>
+<td>时间戳</td>
+</tr>
+<tr>
+<td>nonce</td>
+<td>随机数</td>
+</tr>
+<tr>
+<td>echostr</td>
+<td>随机字符串</td>
+</tr>
+</tbody>
+</table>
+<p>开发者通过检验 signature 对请求进行校验（下面有校验方式）。若确认此次GET请求来自微信服务器，请原样返回 echostr 参数内容，则接入生效，成为开发者成功，否则接入失败。</p>
+<h3 id="验证服务器地址的有效性"><a href="#验证服务器地址的有效性" class="headerlink" title="验证服务器地址的有效性"></a>验证服务器地址的有效性</h3><p>此代码仅适用于明文传输模式<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 接口代码 ，采用 SpringMVC 框架</span></span><br><span class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"/weixin"</span>, method = RequestMethod.GET)</span><br><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">renzheng</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    String signature = request.getParameter(<span class="string">"signature"</span>);</span><br><span class="line">    String timestamp = request.getParameter(<span class="string">"timestamp"</span>);</span><br><span class="line">    String nonce = request.getParameter(<span class="string">"nonce"</span>);</span><br><span class="line">    String echostr = request.getParameter(<span class="string">"echostr"</span>);</span><br><span class="line"></span><br><span class="line">    PrintWriter out = response.getWriter();</span><br><span class="line">    <span class="comment">// 判断该请求是否来源于微信</span></span><br><span class="line">    <span class="keyword">if</span> (WeChatCheckUtil.checkSignature(signature, timestamp, nonce)) &#123;</span><br><span class="line">        out.print(echostr);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>具体的校验方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String token = <span class="string">"aaaaaaaa"</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String EncodingAESKey = <span class="string">"sh5xZjYG1oKWc0douiZVzgaAP3n6ZH111CkZ5haaaa"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">checkSignature</span><span class="params">(String signature, String timestamp, String nonce)</span> </span>&#123;</span><br><span class="line">        String[] arr = <span class="keyword">new</span> String[]&#123;token, timestamp, nonce&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//        1. 将token、timestamp、nonce三个参数进行字典序排序</span></span><br><span class="line">        Arrays.sort(arr);</span><br><span class="line"></span><br><span class="line"><span class="comment">//        2. 将三个参数字符串拼接成一个字符串</span></span><br><span class="line">        StringBuffer content = <span class="keyword">new</span> StringBuffer();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; arr.length; i++) &#123;</span><br><span class="line">            content.append(arr[i]);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//sha1 加密</span></span><br><span class="line">        String temp = getSha1(content.toString());</span><br><span class="line"></span><br><span class="line"><span class="comment">//        开发者获得加密后的字符串可与signature对比，标识该请求来源于微信</span></span><br><span class="line">        <span class="keyword">return</span> temp.equals(signature);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 具体的 SHA1 加密方法</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">getSha1</span><span class="params">(String str)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">null</span> == str || <span class="number">0</span> == str.length()) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">char</span>[] hexDigits = &#123;<span class="string">'0'</span>, <span class="string">'1'</span>, <span class="string">'2'</span>, <span class="string">'3'</span>, <span class="string">'4'</span>, <span class="string">'5'</span>, <span class="string">'6'</span>, <span class="string">'7'</span>, <span class="string">'8'</span>, <span class="string">'9'</span>,</span><br><span class="line">                <span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>, <span class="string">'d'</span>, <span class="string">'e'</span>, <span class="string">'f'</span>&#125;;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            MessageDigest mdTemp = MessageDigest.getInstance(<span class="string">"SHA1"</span>);</span><br><span class="line">            mdTemp.update(str.getBytes(<span class="string">"UTF-8"</span>));</span><br><span class="line"></span><br><span class="line">            <span class="keyword">byte</span>[] md = mdTemp.digest();</span><br><span class="line">            <span class="keyword">int</span> j = md.length;</span><br><span class="line">            <span class="keyword">char</span>[] buf = <span class="keyword">new</span> <span class="keyword">char</span>[j * <span class="number">2</span>];</span><br><span class="line">            <span class="keyword">int</span> k = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; j; i++) &#123;</span><br><span class="line">                <span class="keyword">byte</span> byte0 = md[i];</span><br><span class="line">                buf[k++] = hexDigits[byte0 &gt;&gt;&gt; <span class="number">4</span> &amp; <span class="number">0xf</span>];</span><br><span class="line">                buf[k++] = hexDigits[byte0 &amp; <span class="number">0xf</span>];</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> String(buf);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line"><span class="comment">//            e.printStackTrace();</span></span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="填写服务器配置"><a href="#填写服务器配置" class="headerlink" title="填写服务器配置"></a>填写服务器配置</h3><p>官方接口配置图<br><a href="http://blog.qiji.tech/wp-content/uploads/2016/07/接口配置.png" target="_blank" rel="external"><img src="http://blog.qiji.tech/wp-content/uploads/2016/07/接口配置.png" alt="接口配置"></a></p>
+<p>目前微信接口配置时仅支持以 http:// 或 https:// 开头，分别支持 80 端口和 443 端口。</p>
+<p>我们大多数人开发环境都没有公网 80 端口，本次采用解决的方法是 ngrok 局域网穿透。</p>
+<h4 id="采用-ngrok-局域网穿透"><a href="#采用-ngrok-局域网穿透" class="headerlink" title="采用 ngrok 局域网穿透"></a>采用 ngrok 局域网穿透</h4><p>ngrok 的官网 是 <a href="https://ngrok.com/" target="_blank" rel="external">https://ngrok.com/</a>，服务器在国外。个人比较推荐国内的 <a href="http://ngrok.cc/" target="_blank" rel="external">http://ngrok.cc/</a>，自己申请一个账号，按照教程自己配置就行了。如果还是遇到困难可以给我留言或者发邮件。</p>
+<blockquote>
+<p>有经济实力的可以赞助一下作者。</p>
+</blockquote>
+<h4 id="配置接口信息"><a href="#配置接口信息" class="headerlink" title="配置接口信息"></a>配置接口信息</h4><p>假设已经配置 ngrok 了，并启动。在微信公众平台接口测试帐号里面填入”接口配置信息”，URL 和 Token。</p>
+<p>没有意外就会提示配置成功。</p>
+<h2 id="消息的接收和响应"><a href="#消息的接收和响应" class="headerlink" title="消息的接收和响应"></a>消息的接收和响应</h2><p>当普通微信用户向公众账号发消息时，微信服务器将 POST 消息的 XML 数据包到开发者填写的 URL 上。</p>
+<h3 id="文本消息"><a href="#文本消息" class="headerlink" title="文本消息"></a>文本消息</h3><p>微信中推送的一条普通的文本格式如下：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">xml</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">ToUserName</span>&gt;</span>&lt;![CDATA[toUser]]&gt;<span class="tag">&lt;/<span class="name">ToUserName</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">FromUserName</span>&gt;</span>&lt;![CDATA[fromUser]]&gt;<span class="tag">&lt;/<span class="name">FromUserName</span>&gt;</span> </span><br><span class="line"> <span class="tag">&lt;<span class="name">CreateTime</span>&gt;</span>1348831860<span class="tag">&lt;/<span class="name">CreateTime</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">MsgType</span>&gt;</span>&lt;![CDATA[text]]&gt;<span class="tag">&lt;/<span class="name">MsgType</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">Content</span>&gt;</span>&lt;![CDATA[this is a test]]&gt;<span class="tag">&lt;/<span class="name">Content</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">MsgId</span>&gt;</span>1234567890123456<span class="tag">&lt;/<span class="name">MsgId</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">xml</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="Mavem-引入-xml-解析相关依赖"><a href="#Mavem-引入-xml-解析相关依赖" class="headerlink" title="Mavem 引入 xml 解析相关依赖"></a>Mavem 引入 xml 解析相关依赖</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--XML 解析--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>dom4j<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>dom4j<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.6.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 对象类型转成 XML--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.thoughtworks.xstream<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>xstream<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.4.7<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="消息工具类代码"><a href="#消息工具类代码" class="headerlink" title="消息工具类代码"></a>消息工具类代码</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MessageUtil</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 消息类型</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String MESSAGE_TEXT = <span class="string">"text"</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String MESSAGE_IMAGE = <span class="string">"image"</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String MESSAGE_VOICE = <span class="string">"voice"</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String MESSAGE_VIDEO = <span class="string">"video"</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String MESSAGE_LINK = <span class="string">"link"</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String MESSAGE_LOCATION = <span class="string">"location"</span>;</span><br><span class="line">    <span class="comment">// 事件推送 event</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String MESSAGE_EVENT = <span class="string">"event"</span>;</span><br><span class="line">    <span class="comment">// 关注</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String MESSAGE_SUBSCRIBE = <span class="string">"subscribe"</span>;</span><br><span class="line">    <span class="comment">// 取消关注</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String MESSAGE_UNSUBSCRIBE = <span class="string">"unsubscribe"</span>;</span><br><span class="line">    <span class="comment">//菜单点击</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String MESSAGE_CLICK = <span class="string">"CLICK"</span>;</span><br><span class="line">    <span class="comment">// 浏览</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String MESSAGE_VIEW = <span class="string">"VIEW"</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * 将 xml 转换成 Map 集合</span><br><span class="line">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Map&lt;String, String&gt; <span class="title">xmlToMap</span><span class="params">(HttpServletRequest request)</span></span>&#123;</span><br><span class="line">        Map&lt;String, String&gt; map = <span class="keyword">new</span> LinkedHashMap&lt;String, String&gt;();</span><br><span class="line">        SAXReader reader = <span class="keyword">new</span> SAXReader();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            ServletInputStream inputStream = request.getInputStream();</span><br><span class="line">            Document document = reader.read(inputStream);</span><br><span class="line">            Element rootElement = document.getRootElement();</span><br><span class="line">            List&lt;Element&gt; elements = rootElement.elements();</span><br><span class="line">            <span class="keyword">for</span> (Element e: elements) &#123;</span><br><span class="line">                map.put(e.getName(), e.getText());</span><br><span class="line">            &#125;</span><br><span class="line">            inputStream.close();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (DocumentException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> map;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * 对象类型转换成 xml</span><br><span class="line">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">textMessageToXml</span><span class="params">(TextMessage textMessage)</span></span>&#123;</span><br><span class="line">        XStream xStream = <span class="keyword">new</span> XStream();</span><br><span class="line">        xStream.alias(<span class="string">"xml"</span>, textMessage.getClass());</span><br><span class="line">        <span class="keyword">return</span> xStream.toXML(textMessage);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>封装了消息的基本类型，提供了对象转成 xml 方法，以及 xml 转成 Map 集合。</p>
+<h3 id="响应服务器的代码"><a href="#响应服务器的代码" class="headerlink" title="响应服务器的代码"></a>响应服务器的代码</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">    <span class="meta">@RequestMapping</span>(value = <span class="string">"/weixin"</span>, method = RequestMethod.POST)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">xiaoxi</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> </span>&#123;</span><br><span class="line">        Map&lt;String, String&gt; map = MessageUtil.xmlToMap(request);</span><br><span class="line">        String fromUserName = map.get(<span class="string">"FromUserName"</span>);</span><br><span class="line">        String toUserName = map.get(<span class="string">"ToUserName"</span>);</span><br><span class="line">        String msgType = map.get(<span class="string">"MsgType"</span>);</span><br><span class="line">        String content = map.get(<span class="string">"Content"</span>);</span><br><span class="line"><span class="comment">//        request.setCharacterEncoding("utf-8");</span></span><br><span class="line">        PrintWriter responseWriter = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            responseWriter = response.getWriter();</span><br><span class="line">            String message = <span class="keyword">null</span>;</span><br><span class="line">            <span class="keyword">if</span> (MessageUtil.MESSAGE_TEXT.equals(msgType)) &#123;</span><br><span class="line">                TextMessage textMessage = <span class="keyword">new</span> TextMessage();</span><br><span class="line">                textMessage.setFromUserName(toUserName);</span><br><span class="line">                textMessage.setToUserName(fromUserName);</span><br><span class="line">                textMessage.setMsgType(<span class="string">"text"</span>);</span><br><span class="line">                textMessage.setCreateTime(<span class="keyword">new</span> Date().getTime());</span><br><span class="line">                textMessage.setContent(<span class="string">"您发送的消息为:"</span> + content);</span><br><span class="line">                message = MessageUtil.textMessageToXml(textMessage);</span><br><span class="line">                System.out.println(<span class="string">"消息："</span>);</span><br><span class="line">                System.out.println(message);</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span> (MessageUtil.MESSAGE_EVENT.equals(msgType))&#123;</span><br><span class="line">                <span class="comment">// TODO 关注后等各种操作</span></span><br><span class="line">                System.out.println(<span class="string">"关注后的操作。"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            responseWriter.print(message);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            responseWriter.close();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>这样就简单的实现了，发送什么回复什么了。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li>Ngrok 穿透利器（国内版）<a href="http://ngrok.cc/" title="Ngrok 穿透利器（国内版）" target="_blank" rel="external">http://ngrok.cc/</a></li>
+<li>微信开发者文档 <a href="http://mp.weixin.qq.com/wiki" title="微信开发者文档" target="_blank" rel="external">http://mp.weixin.qq.com/wiki</a></li>
+<li>微信公众平台接口测试帐号申请页 <a href="http://mp.weixin.qq.com/debug/cgi-bin/sandbox?t=sandbox/login" title="微信公众平台接口测试帐号申请页" target="_blank" rel="external">http://mp.weixin.qq.com/debug/cgi-bin/sandbox?t=sandbox/login</a></li>
+<li>微信公众平台接口调试工具 <a href="https://mp.weixin.qq.com/debug" title="微信公众平台接口调试工具" target="_blank" rel="external">https://mp.weixin.qq.com/debug</a></li>
+<li>初识 Java 微信公众号开发 <a href="http://www.imooc.com/learn/368" title="初识 Java 微信公众号开发" target="_blank" rel="external">http://www.imooc.com/learn/368</a></li>
+<li>Java 微信公众号开发进阶 <a href="http://www.imooc.com/learn/401" title="Java微信公众号开发进阶" target="_blank" rel="external">http://www.imooc.com/learn/401</a></li>
+<li>微信公众号、企业号Java SDK <a href="https://github.com/chanjarster/weixin-java-tools" title="微信公众号、企业号Java SDK" target="_blank" rel="external">https://github.com/chanjarster/weixin-java-tools</a></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JAVA/" rel="tag">#JAVA</a>
+          
+            <a href="/tags/Wechat/" rel="tag">#Wechat</a>
+          
+            <a href="/tags/微信/" rel="tag">#微信</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/07/14/Spring-集成-Apache-Shiro-安全框架（一）/" rel="next" title="[JavaWeb] Spring 集成 Apache Shiro 安全框架">
+                <i class="fa fa-chevron-left"></i> [JavaWeb] Spring 集成 Apache Shiro 安全框架
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Arno" />
+          <p class="site-author-name" itemprop="name">Arno</p>
+          <p class="site-description motion-element" itemprop="description">Simplicity is prerequisite for reliability</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">18</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#微信公众号"><span class="nav-number">1.</span> <span class="nav-text">微信公众号</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#微信公众平台测试账号"><span class="nav-number">1.1.</span> <span class="nav-text">微信公众平台测试账号</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#微信公众号交互模型"><span class="nav-number">2.</span> <span class="nav-text">微信公众号交互模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#接入微信公众号"><span class="nav-number">3.</span> <span class="nav-text">接入微信公众号</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#验证服务器地址的有效性"><span class="nav-number">3.1.</span> <span class="nav-text">验证服务器地址的有效性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#填写服务器配置"><span class="nav-number">3.2.</span> <span class="nav-text">填写服务器配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#采用-ngrok-局域网穿透"><span class="nav-number">3.2.1.</span> <span class="nav-text">采用 ngrok 局域网穿透</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置接口信息"><span class="nav-number">3.2.2.</span> <span class="nav-text">配置接口信息</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#消息的接收和响应"><span class="nav-number">4.</span> <span class="nav-text">消息的接收和响应</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#文本消息"><span class="nav-number">4.1.</span> <span class="nav-text">文本消息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mavem-引入-xml-解析相关依赖"><span class="nav-number">4.2.</span> <span class="nav-text">Mavem 引入 xml 解析相关依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#消息工具类代码"><span class="nav-number">4.3.</span> <span class="nav-text">消息工具类代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#响应服务器的代码"><span class="nav-number">4.4.</span> <span class="nav-text">响应服务器的代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Arno</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
